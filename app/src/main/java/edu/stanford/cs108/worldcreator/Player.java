@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class Player extends AppCompatActivity {
     SQLiteDatabase db;
-    Game curGame;
+    //Game curGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,8 @@ public class Player extends AppCompatActivity {
         Intent intent = getIntent();
         String gameName = intent.getStringExtra("game_name");
         //TODO FILL OUT curGame
+
+        setTitle(gameName);
 
     }
 }
