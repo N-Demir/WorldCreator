@@ -25,15 +25,36 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <EditText
+                android:textSize="15dp"
+                android:hint="GameName"
+                android:width="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:text="Create Game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <Spinner
+                android:id="@+id/game_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
             </Spinner>
 
             <Button
-                android:text="Select"
+                android:text="Remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="0dp"
                 android:minHeight="0dp"/>
 
 
@@ -43,11 +64,15 @@
         <Button
             android:text="Go to Player"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="onGotoPlayer"
+            android:enabled="false"/>
         <Button
             android:text="Go to Editor"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="onGotoEditor"
+            android:enabled="false"/>
 
 
 
