@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //TODO:FINISH DATABASE STUFF
 
-
+        //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
         //String[] fromArray = {"name"}; //Or whatever
         //String[] toArray =
@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onGameSelect(View view) {
-        //TODO: DO STUFF
-    }
 
     public void onGameRemove(View view) {
         //TODO: DO STUFF
@@ -51,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onGotoPlayer(View view) {
         Intent intent = new Intent(this,Player.class);
+        //TODO: Pass in string of game?
+        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
+        String gameName = spinner.getSelectedItem().toString();
+        intent.putExtra("game_name", gameName);
+
         startActivity(intent);
     }
 
@@ -60,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void gotoEditor() {
         Intent intent = new Intent(this, Editor.class);
+        //TODO: Pass in string of game?
+        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
+        String gameName = spinner.getSelectedItem().toString();
+        intent.putExtra("game_name", gameName);
+
         startActivity(intent);
     }
 }
