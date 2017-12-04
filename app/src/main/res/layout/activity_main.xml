@@ -66,13 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onGotoPlayer"
-            android:enabled="false"/>
+            android:enabled="true"/>
         <Button
             android:text="Go to Editor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onGotoEditor"
-            android:enabled="false"/>
+            android:enabled="true"/>
 
 
 

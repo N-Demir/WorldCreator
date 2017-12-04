@@ -17,9 +17,6 @@ public class Player extends AppCompatActivity {
         //Assume a database exists cause we've gotten here
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
 
-        //Assume a database exists cause we've gotten here
-        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
-
         // Get game
         Intent intent = getIntent();
         String gameName = intent.getStringExtra("game_name");
