@@ -19,7 +19,11 @@ import java.util.List;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
+    /* So that other classes can access resources */
+    public static Context curContext;
     SQLiteDatabase db;
+
+    //TODO:REMOVE
     List<String> adapt;
     SpinnerAdapter adapter;
 
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivity.curContext = getApplicationContext();
 
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
