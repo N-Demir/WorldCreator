@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 s.setHidden(visiblity);
                 s.setMoveable(mover);
                 s.setText(label);
-                cur.addShape(s);
                 s.setScript(nscript);
+                cur.addShape(s);
             }
             document.add(cur);
         }
