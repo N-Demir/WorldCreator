@@ -81,7 +81,7 @@ public class Shape {
 		} else {
 			Paint paint = new Paint();
 			paint.setColor(Color.LTGRAY);
-			c.drawRect(x, y, width, height, paint);
+			//c.drawRect(x, y, width, height, paint);
 		}
 	}
 }
