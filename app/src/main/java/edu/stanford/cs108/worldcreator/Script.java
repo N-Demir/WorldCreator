@@ -55,7 +55,7 @@ public class Script{
 		case "goto": 
 			onClick[0].add(Game.curGame.getPage(target));
 		case "play":
-			onClick[1].add(Game.curGame.getSound(target));
+//			onClick[1].add(Game.curGame.getSound(target));
 		case "hide":
 			onClick[2].add(Game.curGame.getShape(target));
 		case "show":
@@ -68,7 +68,7 @@ public class Script{
 		case "goto": 
 			onDrop[0].add(Game.curGame.getPage(target));
 		case "play":
-			onDrop[1].add(Game.curGame.getSound(target));
+//			onDrop[1].add(Game.curGame.getSound(target));
 		case "hide":
 			onDrop[2].add(Game.curGame.getShape(target));
 		case "show":
@@ -81,7 +81,7 @@ public class Script{
 		case "goto": 
 			onEnter[0].add(Game.curGame.getPage(target));
 		case "play":
-			onEnter[1].add(Game.curGame.getSound(target));
+//			onEnter[1].add(Game.curGame.getSound(target));
 		case "hide":
 			onEnter[2].add(Game.curGame.getShape(target));
 		case "show":

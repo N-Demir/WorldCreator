@@ -28,13 +28,16 @@
             <EditText
                 android:textSize="15dp"
                 android:hint="GameName"
+                android:id="@+id/gname"
                 android:width="150dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
                 android:text="Create Game"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:onClick="createGame"
+                />
 
 
         </LinearLayout>

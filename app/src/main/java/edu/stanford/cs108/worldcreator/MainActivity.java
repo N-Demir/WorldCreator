@@ -8,14 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     SQLiteDatabase db;
+    List<String> adapt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         //TODO:FINISH DATABASE STUFF
 
-
+        adapt = new ArrayList<String>();
         //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
 
@@ -84,7 +88,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createGame(View view){
-        // make sure data base does not execute
+        Vector<Page> document = new Vector<Page>();
+        EditText editText = (EditText) findViewById(R.id.gname);
+        String newGame = editText.getText().toString();
+        editText.setText("");
+        adapt.add(newGame);
+        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
+        ArrayAdapter<String> nadapt = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, adapt);
+        nadapt.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(nadapt);
+        Page page = new Page("page1");
+        document.add(page);
+        Game game = new Game(document,null,newGame);
+        Game.curGame = game;
         // create new page one add that game and page one to
         //
     }

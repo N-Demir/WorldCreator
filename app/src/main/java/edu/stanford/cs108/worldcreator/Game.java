@@ -31,11 +31,11 @@ public class Game {
 		return null;
 	}
 	
-	public MediaPlayer getSound(String name) {
-		int soundID = getResources().getIdentifier(name, null, null); 
-		MediaPlayer mp = MediaPlayer.create(getActivityContext(), soundID);
-		return mp;
-	}
+//	public MediaPlayer getSound(String name) {
+//		int soundID = getResources().getIdentifier(name, null, null);
+//		MediaPlayer mp = MediaPlayer.create(getActivityContext(), soundID);
+//		return mp;
+//	}
 	
 	public Shape getShape(String name) {
 		for(Page page: pages) {
