@@ -5,12 +5,15 @@ import android.graphics.Canvas;
 import java.util.Vector;
 
 public class Game {
+	/* THE ENTRYWAY FOR ALL CURRENT GAME METHODS */
 	public static Game curGame;
 
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
 	private String gameName;
+
+	//TODO:Figure out better way to do this based on shape widths
 	private int nextInventoryXPos = 50;
 	private static final int inventoryYPos = 500;
 	
@@ -23,7 +26,7 @@ public class Game {
 
 	public String getGameName() {return gameName;}
 	
-	public Vector<Shape> getInvetory(){
+	public Vector<Shape> getInventory(){
 		return inventory;
 	}
 	

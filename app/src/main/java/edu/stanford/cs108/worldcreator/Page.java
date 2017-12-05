@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Page {
 	private String pName;
-	private int pageID;
+	//private int pageID;
 	private ArrayList<Shape> shapes; 
 	
 	public Page(String name) {

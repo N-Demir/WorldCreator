@@ -67,7 +67,7 @@ public class Shape {
 	public void setPage(Page temp) { page = temp;}
 	
 	public void draw(Canvas canvas) {
-		/*if(text != "") {
+		if(text != "") {
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
 			paint.setTextSize(16);
@@ -82,6 +82,6 @@ public class Shape {
 			Paint paint = new Paint();
 			paint.setColor(Color.LTGRAY);
 			c.drawRect(x, y, width, height, paint);
-		}*/
+		}
 	}
 }
