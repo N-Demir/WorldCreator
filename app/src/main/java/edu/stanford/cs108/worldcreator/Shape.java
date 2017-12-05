@@ -1,6 +1,12 @@
 package edu.stanford.cs108.worldcreator;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 
 public class Shape {
 	private static final int defaultWidth = 20;
@@ -38,7 +44,7 @@ public class Shape {
 	public boolean getMoveable() { return moveable;}
 	public int getX() { return x;}
 	public int getY() { return y;}
-	public int getWdith() { return width;}
+	public int getWidth() { return width;}
 	public int getHeight() { return height;}
 	public String getName() { return name;}
 	public String getText() { return text;}
@@ -61,20 +67,21 @@ public class Shape {
 	public void setPage(Page temp) { page = temp;}
 	
 	public void draw(Canvas canvas) {
-		if(text != "") {
-			Paint paint = new Paint;
-			paint.setColor(Color.black);
+		/*if(text != "") {
+			Paint paint = new Paint();
+			paint.setColor(Color.BLACK);
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
 		} else if(imageName != "") {
-			int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
-			Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.imageName, null);
+			//Context context =
+			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
+			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
 			d.setBounds(x, y, x + width, y + height);
 			d.draw(canvas);
 		} else {
 			Paint paint = new Paint();
 			paint.setColor(Color.LTGRAY);
 			c.drawRect(x, y, width, height, paint);
-		}
+		}*/
 	}
 }
