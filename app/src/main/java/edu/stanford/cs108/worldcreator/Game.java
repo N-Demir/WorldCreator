@@ -16,6 +16,7 @@ public class Game {
 		pages = pageVec;
 		inventory = initialInventory;
 		this.gameName = gameName;
+		//TODO: currentPage = get page1 from pages
 	}
 
 	public String getGameName() {return gameName;}

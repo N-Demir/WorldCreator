@@ -15,6 +15,7 @@
 
         <TextView
             android:text="Select page:"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Spinner
@@ -24,16 +25,23 @@
             android:layout_height="wrap_content">
         </Spinner>
 
+        <Button
+            android:text="Delete"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+
         <EditText
             android:layout_weight="0.6"
             android:textSize="12dp"
-            android:hint="Enter page to add... "
+            android:hint="New page name... "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-
         <Button
-            android:text="Add"
+            android:text="Rename"
             android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package edu.stanford.cs108.worldcreator;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -27,4 +28,9 @@ public class EditorGameView extends View {
         height = h;
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Game.curGame.drawPage(canvas); //TODO:disable inventory somehow?
+    }
 }
