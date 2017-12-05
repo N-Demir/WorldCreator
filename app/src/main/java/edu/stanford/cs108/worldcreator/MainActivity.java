@@ -21,6 +21,7 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity {
     SQLiteDatabase db;
     List<String> adapt;
+    SpinnerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         //String[] toArray =
         //SpinnerAdapter adapter = new SimpleCursorAdapter() //TODO: Base on database
         String[] testArray = {"BunnyWorld", "SherlockWorld"};
-        SpinnerAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
                 testArray);
         spinner.setAdapter(adapter);
 
@@ -101,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
         Game.curGame = new Game(newGameName);
 
         //TODO: ADD GAME TO DATABASE? YOUR CALL RUSS
+        //Reasons to add to database here:
+        //Spinner needs to be updated with new gameName, best place to do that is here
+         //adapt.add(newGameName); //DOES NOT WORK?
+
+
+
 
         setButtonsEnabled(/*Boolean enabled*/ true);
 
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onGameRemove(View view) {
         //TODO: DO Database stuff
+        //TODO: If games table is empty, setButtonsEnabled(false);
     }
 
 

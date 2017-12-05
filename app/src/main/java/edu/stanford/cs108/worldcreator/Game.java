@@ -6,17 +6,19 @@ import android.media.MediaPlayer;
 import java.util.Vector;
 
 public class Game {
+	/* Entryway into all current game related things */
 	public static Game curGame;
 
 	private static final String INITIAL_PAGE_NAME = "page1";
 
+	private int nextInventoryXPos = 50; //TODO: FIX THESE
+	private static final int inventoryYPos = 500;
+
+	/* Private IVARS */
 	private String gameName;
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
-
-	private int nextInventoryXPos = 50; //TODO: FIX THESE
-	private static final int inventoryYPos = 500;
 
 	/**
 	 * Fresh constructor. Sets up brand new fresh game with provided gameName
@@ -24,6 +26,7 @@ public class Game {
 	public Game(String gameName) {
 		this.gameName = gameName;
 		pages = new Vector<Page>();
+		inventory = new Vector<Shape>();
 		currentPage = new Page(INITIAL_PAGE_NAME);
 		pages.add(currentPage);
 	}
