@@ -26,7 +26,6 @@ public class Shape {
 	private boolean inventoryItem;
 
 	public Shape(String shapeName, int xCord, int yCord) {
-		script = new Script(this);
 		inventoryItem = false;
 		name = shapeName;
 		x = xCord;
