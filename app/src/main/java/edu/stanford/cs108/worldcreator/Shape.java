@@ -25,10 +25,9 @@ public class Shape {
 	private Page page;
 	private boolean inventoryItem;
 
-	public Shape(String shapeName, int xCord, int yCord, Page location) {
+	public Shape(String shapeName, int xCord, int yCord) {
 		script = new Script(this);
 		inventoryItem = false;
-		page = location;
 		name = shapeName;
 		x = xCord;
 		y = yCord;
