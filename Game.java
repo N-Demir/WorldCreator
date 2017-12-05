@@ -40,5 +40,8 @@ public class Game {
 	
 	public void onDraw() {
 		currentPage.draw();
+		for(Shape shape: inventory) {
+			shape.draw();
+		}
 	}
 }
