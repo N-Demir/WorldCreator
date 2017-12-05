@@ -1,19 +1,17 @@
 package edu.stanford.cs108.worldcreator;
 
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 
 import java.util.Vector;
 
 public class Game {
-	/* THE ENTRYWAY FOR ALL CURRENT GAME METHODS */
 	public static Game curGame;
 
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
 	private String gameName;
-
-	//TODO:Figure out better way to do this based on shape widths
 	private int nextInventoryXPos = 50;
 	private static final int inventoryYPos = 500;
 	
@@ -21,12 +19,34 @@ public class Game {
 		pages = pageVec;
 		inventory = initialInventory;
 		this.gameName = gameName;
-		//TODO: currentPage = get page1 from pages
+		currentPage = getPage("page1");
 	}
 
 	public String getGameName() {return gameName;}
 	
-	public Vector<Shape> getInventory(){
+	public Page getPage(String name) {
+		for(Page page: pages) {
+			if(page.getName() == name) return page;
+		}
+		return null;
+	}
+	
+	public MediaPlayer getSound(String name) {
+		int soundID = getResources().getIdentifier(name, null, null); 
+		MediaPlayer mp = MediaPlayer.create(getActivityContext(), soundID);
+		return mp;
+	}
+	
+	public Shape getShape(String name) {
+		for(Page page: pages) {
+			for(Shape shape: page.getShapes()) {
+				if(shape.getName() == name) return shape;
+			}
+		}
+		return null;
+	}
+	
+	public Vector<Shape> getInvetory(){
 		return inventory;
 	}
 	
@@ -69,4 +89,6 @@ public class Game {
 			shape.draw(canvas);
 		}
 	}
+	
+	
 }
