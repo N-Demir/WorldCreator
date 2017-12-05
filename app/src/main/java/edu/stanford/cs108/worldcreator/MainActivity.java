@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateGameSpinner() {
-        String[] fromArray = {"name", "_id"};
-        int[] toArray = {android.R.id.text1, android.R.id.text2};
+        String[] fromArray = {"name"};
+        int[] toArray = {android.R.id.text1};
         Cursor cursor = db.rawQuery("SELECT * FROM games",null);
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        CursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2,
+        CursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
                 cursor, fromArray, toArray, 0);
         spinner.setAdapter(adapter);
     }
@@ -117,13 +117,15 @@ public class MainActivity extends AppCompatActivity {
         editText.setText(""); //NECESSARY?
         Game.curGame = new Game(newGameName);
 
-        //TODO: ADD GAME TO DATABASE? YOUR CALL RUSS
-        //Reasons to add to database here:
-        //Spinner needs to be updated with new gameName, best place to do that is here
-         //adapt.add(newGameName); //DOES NOT WORK?
+        /* Adds game to the database */
+        String gameStr = "INSERT INTO games VALUES "+ //TODO: Need to add the pages too
+                "('" + newGameName + "',NULL);";
+        db.execSQL(gameStr);
+        String pageStr = "INSERT INTO pages VALUES " +
+                "('" + Game.curGame.getCurPageName() + "','" + newGameName + "',NULL);";
+        db.execSQL(pageStr);
 
-
-
+        updateGameSpinner();
 
         setButtonsEnabled(/*Boolean enabled*/ true);
 
@@ -157,15 +159,16 @@ public class MainActivity extends AppCompatActivity {
      * @param intent
      */
     private void gotoActivity(Intent intent) {
+        //TODO:FIX BUGS HERE
         Vector<Page> document = new Vector<Page>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
-        Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game =" + gameName, null);
+        Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         while (pCursor.moveToNext()){
             String pageName = pCursor.getString(0);
             Page cur = new Page(pCursor.getString(0));
             // check if queries are correct
-            Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page = " + pageName, null);
+            Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pageName + "'", null);
             while (sCursor.moveToNext()){
                 String name = sCursor.getString(0);
                 int xCord = sCursor.getInt(3);

@@ -45,6 +45,7 @@ public class Game {
 	}
 
 	public String getGameName() {return gameName;}
+	public String getCurPageName() {return currentPage.getName();}
 	
 	public Page getPage(String name) {
 		for(Page page: pages) {
