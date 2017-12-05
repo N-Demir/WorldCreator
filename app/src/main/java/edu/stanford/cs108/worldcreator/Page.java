@@ -1,17 +1,18 @@
 package edu.stanford.cs108.worldcreator;
 
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 
 import java.util.*;
 
 public class Page {
 	private String pName;
-	//private int pageID;
-	private ArrayList<Shape> shapes; 
+	private int pageID;
+	private Vector<Shape> shapes; 
 	
 	public Page(String name) {
 		this.pName = name; 
-		shapes = new ArrayList<Shape>();
+		shapes = new Vector<Shape>();
 	}
 	
 	public String getName() {
@@ -24,6 +25,10 @@ public class Page {
 			return 1;
 		}
 		return 0; 
+	}
+	
+	public Vector<Shape> getShapes(){
+		return shapes;
 	}
 	
 	public void addShape(Shape s) {
