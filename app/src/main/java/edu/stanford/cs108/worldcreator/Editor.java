@@ -20,6 +20,6 @@ public class Editor extends AppCompatActivity {
 
 
 
-        setTitle(gameName);
+        setTitle(gameN);
     }
 }

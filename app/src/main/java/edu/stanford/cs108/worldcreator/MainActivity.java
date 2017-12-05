@@ -47,21 +47,26 @@ public class MainActivity extends AppCompatActivity {
         //TODO: DO STUFF
     }
 
+    /**
+     * Button on click methods that load up intents and send them to a shared method gotoActivity
+     * that actually does the launching of the activity stuff.
+     * @param view
+     */
     public void onGotoPlayer(View view) {
         Intent intent = new Intent(this,Player.class);
-
-        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        String gameName = spinner.getSelectedItem().toString();
-        //intent.putExtra("game_name", gameName); //TODO: old code, should be removed
-
-        //TODO: Fill out curGame static field in Game
-
-        startActivity(intent);
+        gotoActivity(intent);
     }
-
     public void onGotoEditor(View view) {
         Intent intent = new Intent(this, Editor.class);
+        gotoActivity(intent);
+    }
 
+    /**
+     * Actually does the work of launching activity. First must get user selected game
+     * and load it into the curGame static field in Game class.
+     * @param intent
+     */
+    private void gotoActivity(Intent intent) {
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
         //intent.putExtra("game_name", gameName);

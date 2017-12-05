@@ -10,11 +10,15 @@ public class Game {
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
+	private String gameName;
 	
-	public Game(Vector<Page> pageVec, Vector<Shape> initialInventory) {
+	public Game(Vector<Page> pageVec, Vector<Shape> initialInventory, String gameName) {
 		pages = pageVec;
 		inventory = initialInventory;
+		this.gameName = gameName;
 	}
+
+	public String getGameName() {return gameName;}
 	
 	public Vector<Shape> getInvetory(){
 		return inventory;
