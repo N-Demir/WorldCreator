@@ -1,3 +1,5 @@
+package edu.stanford.cs108.worldcreator;
+
 import java.util.Vector;
 
 public class Script{

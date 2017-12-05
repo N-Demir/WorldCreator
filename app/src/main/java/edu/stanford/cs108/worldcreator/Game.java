@@ -1,3 +1,7 @@
+package edu.stanford.cs108.worldcreator;
+
+import android.graphics.Canvas;
+
 import java.util.Vector;
 
 public class Game {
@@ -40,10 +44,14 @@ public class Game {
 		shape.sety(y);
 	}
 	
-	public void onDraw() {
-		currentPage.draw();
+	public void drawPage(Canvas canvas) {
+		currentPage.draw(canvas);
+	}
+
+	public void drawInventory(Canvas canvas) {
+		//TODO: MAKE SURE SHAPES ARE PROPERLY PLACED IN INVENTORY
 		for(Shape shape: inventory) {
-			shape.draw();
+			shape.draw(canvas);
 		}
 	}
 }

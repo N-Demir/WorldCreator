@@ -1,3 +1,5 @@
+package edu.stanford.cs108.worldcreator;
+
 import android.graphics.Canvas;
 
 public class Shape {

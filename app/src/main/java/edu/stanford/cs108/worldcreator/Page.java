@@ -1,3 +1,7 @@
+package edu.stanford.cs108.worldcreator;
+
+import android.graphics.Canvas;
+
 import java.util.*;
 
 public class Page {
@@ -26,9 +30,9 @@ public class Page {
 		shapes.add(s); 
 	}
 	
-	public void draw() {
+	public void draw(Canvas canvas) {
 		for(Shape shape: shapes) {
-			shape.draw();
+			shape.draw(canvas);
 		}
 	}
 }
