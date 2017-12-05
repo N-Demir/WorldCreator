@@ -73,7 +73,7 @@ public class Shape {
 			canvas.drawText(text, x, y, paint);
 		} else if(imageName != "") {
 			/*Context context =
-			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
+			//int imageID = getResources().getIdentifier(imageName, null, null);
 			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
 			d.setBounds(x, y, x + width, y + height);
 			d.draw(canvas);*/
