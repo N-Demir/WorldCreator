@@ -73,19 +73,20 @@ public class Shape {
 			canvas.drawRect(x,y,width,height,paint);
 		} else if(imageName != "") {
 			/*Context context =
-			//int imageID = getResources().getIdentifier(imageName, null, null);
+			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
 			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
+<<<<<<< HEAD
 //			d.setBounds(x, y, x + width, y + height);
 //			d.draw(canvas);
+=======
 			d.setBounds(x, y, x + width, y + height);
 			d.draw(canvas);*/
 			//TODO: TEST WITH GREY RECTANGLE
+>>>>>>> 0f75ca45cd170da9e91ca6e204d2f0a296178034
 		} else {
 			Paint paint = new Paint();
 //			paint.setColor(Color.LTGRAY);
 //			c.drawRect(x, y, width, height, paint);
-			paint.setColor(Color.LTGRAY);
-			//c.drawRect(x, y, width, height, paint);
 		}
 	}
 }
