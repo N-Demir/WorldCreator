@@ -64,6 +64,38 @@ public class Shape {
 	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
 	public void setPage(Page temp) { page = temp;}
 	
+	public void executeOnClick() {
+		Vector<Object>[] commands = script.getOnClickActions();
+		executeCommands(commands);
+	}
+	
+	public void executeOnEnter() {
+		Vector<Object>[] commands = script.getOnEnterActions();
+		executeCommands(commands);
+	}
+	
+	public void executeOnDrop() {
+		Vector<Object>[] commands = script.getOnDropActions();
+		executeCommands(commands);
+	}
+	
+	private void executeCommands(Vector<Object>[] commands) {
+		Vector<Object> goToTargets = commands[0];
+		for(Object page: goToTargets)  Game.curGame.changePage((Page) page);	
+		
+		Vector<Object> playTargets = commands[1];
+		for(Object mp: playTargets) ((MediaPlayer) mp).play();
+		
+		Vector<Object> hideTargets = commands[2];
+		for(Object shape: hideTargets) ((Shape) shape).setHidden(true);
+		
+		Vector<Object> showTargets = commands[3];
+		for(Object shape: showTargets) ((Shape) shape).setHidden(false);
+		
+		//can't redraw without canvas to pass as parameter
+		//Game.curGame.drawPage();
+	}
+	
 	public void draw(Canvas canvas) {
 		if(text != "") {
 			Paint paint = new Paint();
