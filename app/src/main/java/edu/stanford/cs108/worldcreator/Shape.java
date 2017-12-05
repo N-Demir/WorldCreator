@@ -1,3 +1,4 @@
+import android.graphics.Canvas;
 
 public class Shape {
 	private static final int defaultWidth = 20;
@@ -57,7 +58,7 @@ public class Shape {
 	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
 	public void setPage(Page temp) { page = temp;}
 	
-	public void draw() {
+	public void draw(Canvas canvas) {
 		if(text != "") {
 			//print text
 		} else if(imageName != "") {

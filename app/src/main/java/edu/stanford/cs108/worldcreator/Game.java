@@ -1,6 +1,8 @@
 import java.util.Vector;
 
 public class Game {
+	public static Game curGame;
+
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;

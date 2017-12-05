@@ -48,6 +48,8 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         drawSeparator(canvas);
+
+
     }
 
     private void drawSeparator(Canvas canvas) {

@@ -24,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
-            /* Database was just created, setup the tables */
+            /* Database has not been created, setup the tables */
             //TODO FILL OUT
         }
         //TODO:FINISH DATABASE STUFF
+        //TODO:LOAD GAME INTO CURGAME
 
         //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
