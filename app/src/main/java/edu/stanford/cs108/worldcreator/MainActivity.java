@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void gotoActivity(Intent intent) {
         //TODO:FIX BUGS HERE
-        Vector<Page> document = new Vector<Page>();
+        /*Vector<Page> document = new Vector<Page>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             document.add(cur);
         }
        Game newGame = new Game(document, null, gameName);
-       Game.curGame = newGame;
+       Game.curGame = newGame;*/
         startActivity(intent);
     }
 }

@@ -32,6 +32,6 @@ public class EditorGameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Game.curGame.drawPage(canvas); //TODO:disable inventory somehow?
+        Game.curGame.drawPage(canvas);
     }
 }

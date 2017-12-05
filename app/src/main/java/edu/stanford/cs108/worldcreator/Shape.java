@@ -8,10 +8,13 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 
 public class Shape {
 	private static final int defaultWidth = 20;
 	private static final int defaultHeight = 20;
+
+	static{}; //TODO: INITIALIZE PAINTS AND THINGS STATIC TO ALL SHAPE OBJECTS
 	
 	private boolean hidden;
 	private boolean moveable;
@@ -82,9 +85,12 @@ public class Shape {
 			canvas.drawBitmap(image.getBitmap(), x, y, null); //TODO: If shape is not visible and in editor then use opaque paint
 		} else {
 			/* Default is a grey rectangle*/
-			Paint paint = new Paint();
+			Paint paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
+
 			paint.setColor(Color.LTGRAY);
-			canvas.drawRect(x, y, width, height, paint);
+			canvas.drawRect(x, y, x + width, y + height, paint);
+			//canvas.drawRect(50.0f, 50.0f, 200.0f, 200.0f, paint);
+			//Log.d("DEBUG: ", "I GOT HEREEEE");
 		}
 	}
 }
