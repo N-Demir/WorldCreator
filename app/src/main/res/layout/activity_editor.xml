@@ -67,7 +67,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="5"
+        android:columnCount="7"
         android:rowCount="3">
 
         <TextView
@@ -168,6 +168,70 @@
             android:minHeight="0dp"
             android:layout_column="4"
             android:layout_row="1"/>
+
+        <TextView
+            android:text="Movable: "
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="5"
+            android:layout_row="0"
+            android:layout_gravity="center"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="6"
+            android:layout_row="0"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:text="true"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:text="false"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:text="Visible: "
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="5"
+            android:layout_row="1"
+            android:layout_gravity="center"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="6"
+            android:layout_row="1"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:text="true"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:text="false"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
 
 
     </GridLayout>
