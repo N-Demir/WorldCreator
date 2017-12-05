@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="edu.stanford.cs108.worldcreator.Player">
 
-    <edu.stanford.cs108.worldcreator.GameView
+    <edu.stanford.cs108.worldcreator.PlayerGameView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

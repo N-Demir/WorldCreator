@@ -10,7 +10,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class GameView extends View {
+public class PlayerGameView extends View {
     private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
     private static final float SEPARATOR_HEIGHT = 200.0f;
 
@@ -19,7 +19,7 @@ public class GameView extends View {
 
     private float width, height;
 
-    public GameView(Context context, AttributeSet attrs) {
+    public PlayerGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         //this.modeIsPlaying = modeIsPlaying;
 
@@ -47,9 +47,9 @@ public class GameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Game.curGame.drawPage(canvas);
         drawSeparator(canvas);
-
-
+        Game.curGame.drawInventory(canvas);
     }
 
     private void drawSeparator(Canvas canvas) {

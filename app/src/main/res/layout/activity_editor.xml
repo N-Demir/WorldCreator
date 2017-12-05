@@ -49,7 +49,7 @@
             android:minHeight="0dp"/>
     </LinearLayout>
 
-    <edu.stanford.cs108.worldcreator.GameView
+    <edu.stanford.cs108.worldcreator.EditorGameView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
