@@ -37,4 +37,8 @@ public class Game {
 		shape.setX(x);
 		shape.sety(y);
 	}
+	
+	public void onDraw() {
+		currentPage.draw();
+	}
 }
