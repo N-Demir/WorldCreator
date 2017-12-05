@@ -8,13 +8,32 @@ import java.util.Vector;
 public class Game {
 	public static Game curGame;
 
+	private static final String INITIAL_PAGE_NAME = "page1";
+
+	private String gameName;
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
-	private String gameName;
-	private int nextInventoryXPos = 50;
+
+	private int nextInventoryXPos = 50; //TODO: FIX THESE
 	private static final int inventoryYPos = 500;
-	
+
+	/**
+	 * Fresh constructor. Sets up brand new fresh game with provided gameName
+	 */
+	public Game(String gameName) {
+		this.gameName = gameName;
+		pages = new Vector<Page>();
+		currentPage = new Page(INITIAL_PAGE_NAME);
+		pages.add(currentPage);
+	}
+
+	/**
+	 * Reading in from database constructor
+	 * @param pageVec
+	 * @param initialInventory
+	 * @param gameName
+	 */
 	public Game(Vector<Page> pageVec, Vector<Shape> initialInventory, String gameName) {
 		pages = pageVec;
 		inventory = initialInventory;

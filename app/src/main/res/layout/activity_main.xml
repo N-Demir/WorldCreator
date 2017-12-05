@@ -27,7 +27,7 @@
 
             <EditText
                 android:textSize="15dp"
-                android:hint="GameName"
+                android:hint="Game name..."
                 android:id="@+id/gname"
                 android:width="150dp"
                 android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                 android:text="Create Game"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="createGame"
+                android:onClick="onCreateGame"
                 />
 
 
@@ -54,6 +54,7 @@
             </Spinner>
 
             <Button
+                android:id="@+id/removeButton"
                 android:text="Remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,12 +66,14 @@
 
 
         <Button
+            android:id="@+id/playerButton"
             android:text="Go to Player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onGotoPlayer"
             android:enabled="true"/>
         <Button
+            android:id="@+id/editorButton"
             android:text="Go to Editor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -27,34 +28,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /* Database setup stuff */
-//        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
-//        Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
-//                " AND name='games';", null);
-//        if (tablesCursor.getCount() == 0) {
-//            String gameTable = "CREATE TABLE games ("
-//                    + "name TEXT,"
-//                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
-//                    + ");";
-//            db.execSQL(gameTable);
-//            String pageTable = "CREATE TABLE pages ("
-//                    + "name TEXT, game TEXT,"
-//                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
-//                    + ");";
-//            db.execSQL(pageTable);
-//            // geometry 4 ints, name, movable, visible, image-name, text, associatedscript
-//            String shapesTable = "CREATE TABLE shapes ("
-//                    + "name TEXT, game TEXT,"
-//                    + "page TEXT, x INTEGER, y INTEGER,"
-//                    + "height INTEGER, width INTEGER, move INTEGER,"
-//                    + "visible INTEGER, image TEXT, script TEXT, label TEXT"
-//                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
-//                    + ");";
-//            db.execSQL(shapesTable);
-//        }
-        //TODO:FINISH DATABASE STUFF
+        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
+        Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
+                " AND name='games';", null);
+        if (tablesCursor.getCount() == 0) {
+            /* No database previously existed, create new one */
+            setupDBTables();
+        }
+
+        //TODO:if games table is empty, disable buttons and only allow a creation
+        setButtonsEnabled(false);
 
         adapt = new ArrayList<String>();
-        //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
 
         //TODO: This stuff is temporary for testing, need to replace with a database adapter
@@ -68,10 +53,65 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Creates 3 new tables in SQDatabase: Games, Pages, and Shapes
+     */
+    private void setupDBTables() {
+            String gameTable = "CREATE TABLE games ("
+                    + "name TEXT,"
+                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
+                    + ");";
+            db.execSQL(gameTable);
+            String pageTable = "CREATE TABLE pages ("
+                    + "name TEXT, game TEXT,"
+                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
+                    + ");";
+            db.execSQL(pageTable);
+            // geometry 4 ints, name, movable, visible, image-name, text, associatedscript
+            String shapesTable = "CREATE TABLE shapes ("
+                    + "name TEXT, game TEXT,"
+                    + "page TEXT, x INTEGER, y INTEGER,"
+                    + "height INTEGER, width INTEGER, move INTEGER,"
+                    + "visible INTEGER, image TEXT, script TEXT, label TEXT"
+                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
+                    + ");";
+            db.execSQL(shapesTable);
+    }
+
+    /**
+     * Sets the buttons that can be switched off if there are no games and user has to create
+     * a game first to be off or on.
+     * @param enabled
+     */
+    private void setButtonsEnabled(Boolean enabled) {
+        Button removeButton = (Button) findViewById(R.id.removeButton);
+        removeButton.setEnabled(enabled);
+        Button playerButton = (Button) findViewById(R.id.playerButton);
+        playerButton.setEnabled(enabled);
+        Button editorButton = (Button) findViewById(R.id.editorButton);
+        editorButton.setEnabled(enabled);
+    }
+
+    public void onCreateGame(View view){
+        //Get game name, create new game, set buttons to enabled, launch editor
+        EditText editText = (EditText) findViewById(R.id.gname);
+        String newGameName = editText.getText().toString();
+        if (newGameName.equals("")) return;
+        editText.setText(""); //NECESSARY?
+        Game.curGame = new Game(newGameName);
+
+        //TODO: ADD GAME TO DATABASE? YOUR CALL RUSS
+
+        setButtonsEnabled(/*Boolean enabled*/ true);
+
+        Intent intent = new Intent(this, Editor.class);
+        startActivity(intent);
+    }
 
     public void onGameRemove(View view) {
-        //TODO: DO STUFF
+        //TODO: DO Database stuff
     }
+
 
     /**
      * Button on click methods that load up intents and send them to a shared method gotoActivity
@@ -85,24 +125,6 @@ public class MainActivity extends AppCompatActivity {
     public void onGotoEditor(View view) {
         Intent intent = new Intent(this, Editor.class);
         gotoActivity(intent);
-    }
-
-    public void createGame(View view){
-        Vector<Page> document = new Vector<Page>();
-        EditText editText = (EditText) findViewById(R.id.gname);
-        String newGame = editText.getText().toString();
-        editText.setText("");
-        adapt.add(newGame);
-        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        ArrayAdapter<String> nadapt = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, adapt);
-        nadapt.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(nadapt);
-        Page page = new Page("page1");
-        document.add(page);
-        Game game = new Game(document,null,newGame);
-        Game.curGame = game;
-        // create new page one add that game and page one to
-        //
     }
 
     /**
