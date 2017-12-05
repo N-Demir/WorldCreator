@@ -72,11 +72,12 @@ public class Shape {
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
 		} else if(imageName != "") {
-			//Context context =
+			/*Context context =
 			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
 			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
 			d.setBounds(x, y, x + width, y + height);
-			d.draw(canvas);
+			d.draw(canvas);*/
+			//TODO: TEST WITH GREY RECTANGLE
 		} else {
 			Paint paint = new Paint();
 			paint.setColor(Color.LTGRAY);
