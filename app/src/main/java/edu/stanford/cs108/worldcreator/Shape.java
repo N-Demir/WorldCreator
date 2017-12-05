@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 
@@ -72,18 +73,18 @@ public class Shape {
 			canvas.drawText(text, x, y, paint);
 			canvas.drawRect(x,y,width,height,paint);
 		} else if(imageName != "") {
-			/*Context context =
-			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
-			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
-//			d.setBounds(x, y, x + width, y + height);
-//			d.draw(canvas);
-			d.setBounds(x, y, x + width, y + height);
-			d.draw(canvas);*/
-			//TODO: TEST WITH GREY RECTANGLE
+			//TODO: DOES THIS WORK
+			Context context = MainActivity.curContext;
+			int imageID = context.getResources().getIdentifier(imageName, "drawable",
+					context.getPackageName());
+			BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(imageID,
+					context.getTheme());
+			canvas.drawBitmap(image.getBitmap(), x, y, null); //TODO: If shape is not visible and in editor then use opaque paint
 		} else {
+			/* Default is a grey rectangle*/
 			Paint paint = new Paint();
-//			paint.setColor(Color.LTGRAY);
-//			c.drawRect(x, y, width, height, paint);
+			paint.setColor(Color.LTGRAY);
+			canvas.drawRect(x, y, width, height, paint);
 		}
 	}
 }

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         String newGameName = editText.getText().toString();
         if (newGameName.equals("")) return;
         editText.setText(""); //NECESSARY?
-        Game.curGame = new Game(newGameName);
+        Game.curGame = new Game(newGameName); /* Calls the fresh constructor */
 
         /* Adds game to the database */
         //TODO: IS THIS HOW WE DO IT?
