@@ -14,6 +14,7 @@ public class EditorGameView extends View {
 
     public EditorGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        MainActivity.curContext = context; //NECESSARY?
     }
 
     /**

@@ -31,8 +31,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MainActivity.curContext = getApplicationContext();
 
+
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
+
+        /*//DEBUGGING, CLEARS DB
+        String gamestr = "DROP TABLE IF EXISTS games;";
+        String pagestr = "DROP TABLE IF EXISTS pages;";
+        String shapestr = "DROP TABLE IF EXISTS shapes;";
+        db.execSQL(gamestr);
+        db.execSQL(pagestr);
+        db.execSQL(shapestr);*/
+
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
@@ -40,24 +50,12 @@ public class MainActivity extends AppCompatActivity {
             setupDBTables();
         }
 
-        //TODO:if games table is empty, disable buttons and only allow a creation
-        setButtonsEnabled(false);
+        /* If games table empty, disable buttons */
+        Cursor gamesCursor = db.rawQuery("SELECT * FROM games;", null); //SHOULD BE WORKING?
+        if (tablesCursor.getCount() == 0) setButtonsEnabled(false);
+        else setButtonsEnabled(true);
 
         updateGameSpinner();
-
-        /*ArrayList<String> adapt = new ArrayList<String>();
-        Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
-
-        //TODO: This stuff is temporary for testing, need to replace with a database adapter
-        //String[] fromArray = {"name"}; //Or whatever
-        //String[] toArray =
-        //SpinnerAdapter adapter = new SimpleCursorAdapter() //TODO: Base on database
-        String[] testArray = {};
-
-        SpinnerAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                testArray);
-        spinner.setAdapter(adapter);*/
-
     }
 
     /**
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     + "name TEXT, game TEXT,"
                     + "page TEXT, x INTEGER, y INTEGER,"
                     + "height INTEGER, width INTEGER, move INTEGER,"
-                    + "visible INTEGER, image TEXT, script TEXT, label TEXT"
+                    + "visible INTEGER, image TEXT, script TEXT, label TEXT,"
                     + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
                     + ");";
             db.execSQL(shapesTable);
@@ -118,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
         Game.curGame = new Game(newGameName);
 
         /* Adds game to the database */
-        String gameStr = "INSERT INTO games VALUES "+ //TODO: Need to add the pages too
+        //TODO: IS THIS HOW WE DO IT?
+        String gameStr = "INSERT INTO games VALUES "+
                 "('" + newGameName + "',NULL);";
         db.execSQL(gameStr);
         String pageStr = "INSERT INTO pages VALUES " +

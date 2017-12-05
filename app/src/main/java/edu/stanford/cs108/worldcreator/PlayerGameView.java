@@ -21,7 +21,7 @@ public class PlayerGameView extends View {
 
     public PlayerGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //this.modeIsPlaying = modeIsPlaying;
+        MainActivity.curContext = context; //NECESSARY?
 
         init();
     }
