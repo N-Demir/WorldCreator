@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -22,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
     /* So that other classes can access resources */
     public static Context curContext;
     SQLiteDatabase db;
-
-    //TODO:REMOVE
-    List<String> adapt;
-    SpinnerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +43,20 @@ public class MainActivity extends AppCompatActivity {
         //TODO:if games table is empty, disable buttons and only allow a creation
         setButtonsEnabled(false);
 
-        adapt = new ArrayList<String>();
+        updateGameSpinner();
+
+        /*ArrayList<String> adapt = new ArrayList<String>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
 
         //TODO: This stuff is temporary for testing, need to replace with a database adapter
         //String[] fromArray = {"name"}; //Or whatever
         //String[] toArray =
         //SpinnerAdapter adapter = new SimpleCursorAdapter() //TODO: Base on database
-        String[] testArray = {"BunnyWorld", "SherlockWorld"};
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        String[] testArray = {};
+
+        SpinnerAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
                 testArray);
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);*/
 
     }
 
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
                     + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
                     + ");";
             db.execSQL(shapesTable);
+    }
+
+    private void updateGameSpinner() {
+        String[] fromArray = {"name", "_id"};
+        int[] toArray = {android.R.id.text1, android.R.id.text2};
+        Cursor cursor = db.rawQuery("SELECT * FROM games",null);
+        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
+        CursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2,
+                cursor, fromArray, toArray, 0);
+        spinner.setAdapter(adapter);
     }
 
     /**
