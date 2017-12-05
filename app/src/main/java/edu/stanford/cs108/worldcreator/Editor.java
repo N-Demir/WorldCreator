@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 public class Editor extends AppCompatActivity {
     SQLiteDatabase db;
-    //Game curGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +16,6 @@ public class Editor extends AppCompatActivity {
         //Assume a database exists cause we've gotten here
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null); //TODO: BUGGY? BAD STYLE?
 
-
-
-
-        setTitle(gameN);
+        setTitle("Editing: " + Game.curGame.getGameName());
     }
 }

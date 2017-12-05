@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
+
+        //TODO: This stuff is temporary for testing, need to replace with a database adapter
         //String[] fromArray = {"name"}; //Or whatever
         //String[] toArray =
         //SpinnerAdapter adapter = new SimpleCursorAdapter() //TODO: Base on database
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     private void gotoActivity(Intent intent) {
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
-        //intent.putExtra("game_name", gameName);
 
         //TODO: Fill out curGame static field in game
 
