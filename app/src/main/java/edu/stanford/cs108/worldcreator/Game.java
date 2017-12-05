@@ -84,7 +84,6 @@ public class Game {
 		currentPage.draw(canvas);
 	}
 
-	public 
 	public void drawInventory(Canvas canvas) {
 		for(Shape shape: inventory) {
 			shape.draw(canvas);
