@@ -71,6 +71,7 @@ public class Shape {
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
 			canvas.drawRect(x,y,width,height,paint);
+			//boobs
 		} else if(imageName != "") {
 			/*Context context =
 			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
