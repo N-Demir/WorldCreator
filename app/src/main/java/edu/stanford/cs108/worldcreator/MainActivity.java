@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
-            /* Database has not been created, setup the tables */
-            //TODO FILL OUT
+            String gameTable = "CREATE TABLE games ("
+                    + "name TEXT,"
+                    + "_id "
         }
         //TODO:FINISH DATABASE STUFF
 
