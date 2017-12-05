@@ -45,6 +45,11 @@ public class Game {
 		inventory.remove(shape);
 		currentPage.addShape(shape);
 		moveShape(shape, x, y);
+		nextInventoryXPos = 0;
+		for(Shape s: inventory){
+			moveShape(s, nextInventoryXPos + 50, inventoryYPos);
+			nextInventoryXPos += 50 + s.getWidth();
+		}
 	}
 
 	public void moveShape(Shape shape, int x, int y) {
