@@ -15,12 +15,10 @@ public class Editor extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
 
         //Assume a database exists cause we've gotten here
-        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null); //TODO: BUGGY? BAD STYLE?
 
-        // Get game
-        Intent intent = getIntent();
-        String gameName = intent.getStringExtra("game_name");
-        //TODO FILL OUT curGame
+
+
 
         setTitle(gameName);
     }

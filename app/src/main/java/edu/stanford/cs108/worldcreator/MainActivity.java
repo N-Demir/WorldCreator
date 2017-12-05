@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             //TODO FILL OUT
         }
         //TODO:FINISH DATABASE STUFF
-        //TODO:LOAD GAME INTO CURGAME
+
 
         //TODO: IF GAMES > 0 ENABLE BUTTONS
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner); //ISSUES??
@@ -49,24 +49,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void onGotoPlayer(View view) {
         Intent intent = new Intent(this,Player.class);
-        //TODO: Pass in string of game?
+
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
-        intent.putExtra("game_name", gameName);
+        //intent.putExtra("game_name", gameName); //TODO: old code, should be removed
+
+        //TODO: Fill out curGame static field in Game
 
         startActivity(intent);
     }
 
     public void onGotoEditor(View view) {
-        gotoEditor();
-    }
-
-    private void gotoEditor() {
         Intent intent = new Intent(this, Editor.class);
-        //TODO: Pass in string of game?
+
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
-        intent.putExtra("game_name", gameName);
+        //intent.putExtra("game_name", gameName);
+
+        //TODO: Fill out curGame static field in game
 
         startActivity(intent);
     }
