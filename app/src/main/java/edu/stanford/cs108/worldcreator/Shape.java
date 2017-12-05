@@ -71,19 +71,15 @@ public class Shape {
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
 			canvas.drawRect(x,y,width,height,paint);
-			//boobs
 		} else if(imageName != "") {
 			/*Context context =
 			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
 			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
-<<<<<<< HEAD
 //			d.setBounds(x, y, x + width, y + height);
 //			d.draw(canvas);
-=======
 			d.setBounds(x, y, x + width, y + height);
 			d.draw(canvas);*/
 			//TODO: TEST WITH GREY RECTANGLE
->>>>>>> 0f75ca45cd170da9e91ca6e204d2f0a296178034
 		} else {
 			Paint paint = new Paint();
 //			paint.setColor(Color.LTGRAY);
