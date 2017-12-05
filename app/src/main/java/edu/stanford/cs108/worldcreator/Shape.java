@@ -71,16 +71,17 @@ public class Shape {
 			paint.setColor(Color.BLACK);
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
+			canvas.drawRect(x,y,width,height,paint);
 		} else if(imageName != "") {
 			//Context context =
 			//int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
 			//Drawable d = ResourcesCompat.getDrawable(getResources(), imageID, null);
-			d.setBounds(x, y, x + width, y + height);
-			d.draw(canvas);
+//			d.setBounds(x, y, x + width, y + height);
+//			d.draw(canvas);
 		} else {
 			Paint paint = new Paint();
-			paint.setColor(Color.LTGRAY);
-			c.drawRect(x, y, width, height, paint);
+//			paint.setColor(Color.LTGRAY);
+//			c.drawRect(x, y, width, height, paint);
 		}
 	}
 }
