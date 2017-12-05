@@ -1,21 +1,25 @@
 
 public class Shape {
-	public static final int defaultWidth = 20;
-	public static final int defaultHeight = 20;
+	private static final int defaultWidth = 20;
+	private static final int defaultHeight = 20;
 	
-	public boolean hidden;
-	public boolean moveable;
-	public int x;
-	public int y;
-	public int width;
-	public int height;
-	public String name;
-	public String text;
-	public Script script;
-	public String imageName;
+	private boolean hidden;
+	private boolean moveable;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	private String name;
+	private String text;
+	private Script script;
+	private String imageName;
+	private Page page;
+	private boolean inventoryItem;
 
-	public Shape(String shapeName, int xCord, int yCord) {
+	public Shape(String shapeName, int xCord, int yCord, Page location) {
 		script = new Script(this);
+		inventoryItem = false;
+		page = location;
 		name = shapeName;
 		x = xCord;
 		y = yCord;
@@ -37,6 +41,8 @@ public class Shape {
 	public String getText() { return text;}
 	public Script getScript() { return script;}
 	public String getImage() { return imageName;}
+	public boolean inInventory() { return inventoryItem;}
+	public Page getPage() { return page;}
 	
 	public void setHidden(boolean bool) { hidden = bool;}
 	public void setMoveable(boolean bool) { moveable = bool;}
@@ -48,4 +54,16 @@ public class Shape {
 	public void setText(String str) { text = str;}
 	public void setImageName(String str) { imageName = str;}
 	public void setScript(Script temp) { script = temp;}
+	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
+	public void setPage(Page temp) { page = temp;}
+	
+	public void draw() {
+		if(text != "") {
+			//print text
+		} else if(imageName != "") {
+			//draw image
+		} else {
+			//draw grey rect
+		}
+	}
 }
