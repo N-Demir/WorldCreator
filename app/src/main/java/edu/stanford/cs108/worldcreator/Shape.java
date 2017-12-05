@@ -62,11 +62,19 @@ public class Shape {
 	
 	public void draw(Canvas canvas) {
 		if(text != "") {
-			//print text
+			Paint paint = new Paint;
+			paint.setColor(Color.black);
+			paint.setTextSize(16);
+			canvas.drawText(text, x, y, paint);
 		} else if(imageName != "") {
-			//draw image
+			int imageID = getResources().getIdentifier(mDrawableName , imageName, getPackageName());
+			Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.imageName, null);
+			d.setBounds(x, y, x + width, y + height);
+			d.draw(canvas);
 		} else {
-			//draw grey rect
+			Paint paint = new Paint();
+			paint.setColor(Color.LTGRAY);
+			c.drawRect(x, y, width, height, paint);
 		}
 	}
 }
