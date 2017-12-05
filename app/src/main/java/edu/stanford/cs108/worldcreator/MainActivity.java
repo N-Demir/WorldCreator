@@ -35,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
 
-        /*//DEBUGGING, CLEARS DB
+        //DEBUGGING, CLEARS DB
         String gamestr = "DROP TABLE IF EXISTS games;";
         String pagestr = "DROP TABLE IF EXISTS pages;";
         String shapestr = "DROP TABLE IF EXISTS shapes;";
         db.execSQL(gamestr);
         db.execSQL(pagestr);
-        db.execSQL(shapestr);*/
+        db.execSQL(shapestr);
 
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void gotoActivity(Intent intent) {
         //TODO:FIX BUGS HERE
-        /*Vector<Page> document = new Vector<Page>();
+        Vector<Page> document = new Vector<Page>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
         String gameName = spinner.getSelectedItem().toString();
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             document.add(cur);
         }
        Game newGame = new Game(document, null, gameName);
-       Game.curGame = newGame;*/
+       Game.curGame = newGame;
         startActivity(intent);
     }
 }
