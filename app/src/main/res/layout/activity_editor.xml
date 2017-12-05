@@ -26,6 +26,13 @@
         </Spinner>
 
         <Button
+            android:text="New page"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+        <Button
             android:text="Delete"
             android:textSize="10dp"
             android:layout_width="wrap_content"
@@ -42,7 +49,7 @@
             />
         <Button
             android:text="Rename"
-            android:textSize="12dp"
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
