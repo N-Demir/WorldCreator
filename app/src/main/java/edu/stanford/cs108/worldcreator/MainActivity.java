@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -123,18 +124,35 @@ public class MainActivity extends AppCompatActivity {
         String pageStr = "INSERT INTO pages VALUES " +
                 "('" + Game.curGame.getCurPageName() + "','" + newGameName + "',NULL);";
         db.execSQL(pageStr);
-
         updateGameSpinner();
-
         setButtonsEnabled(/*Boolean enabled*/ true);
-
         Intent intent = new Intent(this, Editor.class);
         startActivity(intent);
     }
 
     public void onGameRemove(View view) {
-        //TODO: DO Database stuff
-        //TODO: If games table is empty, setButtonsEnabled(false);
+        Vector<String> pageNames = new Vector<String>();
+        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
+        Cursor c = (Cursor) spinner.getSelectedItem();
+        String gameName = c.getString(0);
+        EditText editText = (EditText) findViewById(R.id.gname);
+        editText.setText(gameName);
+        Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
+        while (pCursor.moveToNext()){
+            pageNames.add(pCursor.getString(0));
+        }
+        for (int i =0; i < pageNames.size(); i++){
+            String sDelete = "DELETE FROM shapes WHERE game='" + gameName + "' AND page='" + pageNames.get(i) + "'";
+            db.execSQL(sDelete);
+        }
+        String pDelete = "DELETE FROM pages WHERE game='" + gameName + "'";
+        db.execSQL(pDelete);
+        String gDelete = "DELETE FROM games WHERE name='" + gameName + "'";
+        db.execSQL(gDelete);
+        updateGameSpinner();
+        if(spinner.getCount() == 0){
+            setButtonsEnabled(false);
+        }
     }
 
 
@@ -145,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onGotoPlayer(View view) {
         Intent intent = new Intent(this,Player.class);
-        gotoActivity(intent);
+        gotoActivity(intent, view);
     }
     public void onGotoEditor(View view) {
         Intent intent = new Intent(this, Editor.class);
-        gotoActivity(intent);
+        gotoActivity(intent,view);
     }
 
     /**
@@ -157,47 +175,30 @@ public class MainActivity extends AppCompatActivity {
      * and load it into the curGame static field in Game class.
      * @param intent
      */
-    private void gotoActivity(Intent intent) {
+    private void gotoActivity(Intent intent, View view) {
         //TODO:FIX BUGS HERE
         Vector<Page> document = new Vector<Page>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        String gameName = spinner.getSelectedItem().toString();
+        Cursor c = (Cursor) spinner.getSelectedItem();
+
+        String gameName = c.getString(0);
+        Log.d("MESSAGE IS HERE: ", gameName);
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         while (pCursor.moveToNext()){
-            String pageName = pCursor.getString(0);
-            Page cur = new Page(pCursor.getString(0));
-            // check if queries are correct
-            Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pageName + "'", null);
+            Page cur = new Page(pCursor.getString(0));;
+            Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
-                String name = sCursor.getString(0);
-                int xCord = sCursor.getInt(3);
-                int height = sCursor.getInt(5);
-                int width = sCursor.getInt(6);
-                int yCord = sCursor.getInt(4);
-                int vis = sCursor.getInt(8);
-                boolean visiblity = false;
-                boolean mover = false;
-                if (vis == 1) visiblity = true;
-                int move = sCursor.getInt(7);
-                if (move == 1) mover = true;
-                String image = sCursor.getString(9);
-                String script = sCursor.getString(10);
-                Script nscript = new Script(script);
-                String label = sCursor.getString(11);
-                Shape s = new Shape(name, xCord, yCord);
-                s.setHeight(height);
-                s.setWidth(width);
-                s.setImageName(image);
-                s.setHidden(visiblity);
-                s.setMoveable(mover);
-                s.setText(label);
-                s.setScript(nscript);
+                // constructor goes name, x, y, height, width, move, visible, img, script, label,
+                Shape s = new Shape(sCursor.getString(0), sCursor.getInt(3), sCursor.getInt(4),
+                        sCursor.getInt(5), sCursor.getInt(6), sCursor.getInt(7),sCursor.getInt(8),
+                        sCursor.getString(9), sCursor.getString(11),sCursor.getString(10));
                 cur.addShape(s);
-            }
+                cur.addShape(s);
+           }
             document.add(cur);
         }
-       Game newGame = new Game(document, null, gameName);
-       Game.curGame = newGame;
+        Game.curGame = new Game(document, gameName);
+        Log.d("MESSAGE", Game.curGame.getGameName());
         startActivity(intent);
     }
 }

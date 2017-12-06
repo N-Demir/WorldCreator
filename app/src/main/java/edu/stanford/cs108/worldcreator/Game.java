@@ -2,6 +2,7 @@ package edu.stanford.cs108.worldcreator;
 
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import java.util.Vector;
 
@@ -35,14 +36,15 @@ public class Game {
 	/**
 	 * Reading in from database constructor
 	 * @param pageVec
-	 * @param initialInventory
+//	 * @param initialInventory
 	 * @param gameName
 	 */
-	public Game(Vector<Page> pageVec, Vector<Shape> initialInventory, String gameName) {
+	public Game(Vector<Page> pageVec, String gameName) {
 		pages = pageVec;
-		inventory = initialInventory;
+		inventory = new Vector<Shape>();
 		this.gameName = gameName;
 		currentPage = getPage("page1");
+		Log.d("MESSAGE", currentPage.getName());
 	}
 
 	public String getGameName() {return gameName;}
@@ -50,7 +52,11 @@ public class Game {
 	
 	public Page getPage(String name) {
 		for(Page page: pages) {
-			if(page.getName() == name) return page;
+			if(page.getName().equals(name)){
+				Log.d("MESSAGE", "found page");
+				return page;
+			}
+			Log.d("MESSAGE", "Page not found");
 		}
 		return null;
 	}

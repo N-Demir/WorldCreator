@@ -29,6 +29,23 @@ public class Shape {
 	private Page page;
 	private boolean inventoryItem;
 
+	public Shape (String sName, int xCord, int yCord, int h, int w,
+				  int move, int hide, String img,
+				  String txt, String scrpt){
+		name = sName;
+		x = xCord;
+		y = yCord;
+		height = h;
+		width = w;
+		if (move == 0) moveable = false;
+		else moveable = true;
+		if (hide == 0) hidden = false;
+		else hidden = true;
+		imageName = img;
+		text = txt;
+		script =  new Script(scrpt);
+	}
+
 	public Shape(String shapeName, int xCord, int yCord) {
 		inventoryItem = false;
 		name = shapeName;
