@@ -18,10 +18,10 @@ public class Shape {
 	
 	private boolean hidden;
 	private boolean moveable;
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	private float x;
+	private float y;
+	private float width;
+	private float height;
 	private String name;
 	private String text;
 	private Script script;
@@ -29,7 +29,7 @@ public class Shape {
 	private Page page;
 	private boolean inventoryItem;
 
-	public Shape (String sName, int xCord, int yCord, int h, int w,
+	public Shape (String sName, float xCord, float yCord, float h, float w,
 				  int move, int hide, String img,
 				  String txt, String scrpt){
 		name = sName;
@@ -46,7 +46,7 @@ public class Shape {
 		script =  new Script(scrpt);
 	}
 
-	public Shape(String shapeName, int xCord, int yCord) {
+	public Shape(String shapeName, float xCord, float yCord) {
 		inventoryItem = false;
 		name = shapeName;
 		x = xCord;
@@ -61,10 +61,10 @@ public class Shape {
 	
 	public boolean getHidden() { return hidden;}
 	public boolean getMoveable() { return moveable;}
-	public int getX() { return x;}
-	public int getY() { return y;}
-	public int getWidth() { return width;}
-	public int getHeight() { return height;}
+	public float getX() { return x;}
+	public float getY() { return y;}
+	public float getWidth() { return width;}
+	public float getHeight() { return height;}
 	public String getName() { return name;}
 	public String getText() { return text;}
 	public Script getScript() { return script;}
@@ -74,10 +74,10 @@ public class Shape {
 	
 	public void setHidden(boolean bool) { hidden = bool;}
 	public void setMoveable(boolean bool) { moveable = bool;}
-	public void setX(int val) { x = val;}
-	public void sety(int val) { y = val;}
-	public void setWidth(int val) { width = val;}
-	public void setHeight(int val) { height = val;}
+	public void setX(float val) { x = val;}
+	public void sety(float val) { y = val;}
+	public void setWidth(float val) { width = val;}
+	public void setHeight(float val) { height = val;}
 	public void setName(String str) { name = str;}
 	public void setText(String str) { text = str;}
 	public void setImageName(String str) { imageName = str;}

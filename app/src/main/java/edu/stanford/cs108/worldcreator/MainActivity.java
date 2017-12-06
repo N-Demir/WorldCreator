@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
             // geometry 4 ints, name, movable, visible, image-name, text, associatedscript
             String shapesTable = "CREATE TABLE shapes ("
                     + "name TEXT, game TEXT,"
-                    + "page TEXT, x INTEGER, y INTEGER,"
-                    + "height INTEGER, width INTEGER, move INTEGER,"
+                    + "page TEXT, x REAL, y REAL,"
+                    + "height REAL, width REAL, move INTEGER,"
                     + "visible INTEGER, image TEXT, script TEXT, label TEXT,"
                     + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
                     + ");";
@@ -189,8 +189,8 @@ public class MainActivity extends AppCompatActivity {
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
                 // constructor goes name, x, y, height, width, move, visible, img, script, label,
-                Shape s = new Shape(sCursor.getString(0), sCursor.getInt(3), sCursor.getInt(4),
-                        sCursor.getInt(5), sCursor.getInt(6), sCursor.getInt(7),sCursor.getInt(8),
+                Shape s = new Shape(sCursor.getString(0), sCursor.getFloat(3), sCursor.getFloat(4),
+                        sCursor.getFloat(5), sCursor.getFloat(6), sCursor.getInt(7),sCursor.getInt(8),
                         sCursor.getString(9), sCursor.getString(11),sCursor.getString(10));
                 cur.addShape(s);
                 cur.addShape(s);

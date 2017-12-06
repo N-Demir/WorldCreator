@@ -12,7 +12,7 @@ public class Game {
 
 	private static final String INITIAL_PAGE_NAME = "page1";
 
-	private int nextInventoryXPos = 50; //TODO: FIX THESE
+	private float nextInventoryXPos = 50; //TODO: FIX THESE
 	private static final int inventoryYPos = 500;
 
 	/* Private IVARS */
@@ -48,6 +48,7 @@ public class Game {
 	}
 
 	public String getGameName() {return gameName;}
+	public Vector<Page> getPages(){return pages;}
 	public String getCurPageName() {return currentPage.getName();}
 	
 	public Page getPage(String name) {
@@ -60,7 +61,11 @@ public class Game {
 		}
 		return null;
 	}
-	
+
+	public void addPage (Page p){
+		pages.add(p);
+	}
+
 //	public MediaPlayer getSound(String name) {
 //		int soundID = getResources().getIdentifier(name, null, null);
 //		MediaPlayer mp = MediaPlayer.create(getActivityContext(), soundID);
@@ -84,7 +89,7 @@ public class Game {
 		currentPage = page;
 	}
 	
-	public void addToInventory(Shape shape, int x, int y) {
+	public void addToInventory(Shape shape, float x, float y) {
 		inventory.add(shape);
 		shape.setInventoryStatus(true);
 		Page page = shape.getPage();
@@ -94,7 +99,7 @@ public class Game {
 		nextInventoryXPos += 50 + shape.getWidth();
 	}
 
-	public void removeFromInventory(Shape shape, int x, int y) {
+	public void removeFromInventory(Shape shape, float x, float y) {
 		inventory.remove(shape);
 		currentPage.addShape(shape);
 		moveShape(shape, x, y);
@@ -105,7 +110,7 @@ public class Game {
 		}
 	}
 
-	public void moveShape(Shape shape, int x, int y) {
+	public void moveShape(Shape shape, float x, float y) {
 		shape.setX(x);
 		shape.sety(y);
 	}

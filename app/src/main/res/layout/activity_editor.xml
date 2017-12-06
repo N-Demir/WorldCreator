@@ -12,17 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <TextView
-            android:text="Select page:"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
         <Spinner
             android:layout_weight="1"
             android:id="@+id/page_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
         </Spinner>
 
         <Button
@@ -31,14 +26,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
-            android:minWidth="0dp"/>
+            android:minWidth="0dp"
+            android:onClick="createPage"
+            />
         <Button
             android:text="Delete"
             android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
-            android:minWidth="0dp"/>
+            android:minWidth="0dp"
+            android:onClick="deletePage"
+            />
 
         <EditText
             android:layout_weight="0.6"
@@ -46,6 +45,7 @@
             android:hint="New page name... "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/npage"
             />
 
 
@@ -55,7 +55,8 @@
             android:textSize="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="0dp"/>
+            android:minHeight="0dp"
+            android:onClick="saveGame"/>
     </LinearLayout>
 
     <edu.stanford.cs108.worldcreator.EditorGameView
@@ -71,171 +72,196 @@
         android:rowCount="3">
 
         <TextView
-            android:text="Shape: "
             android:layout_column="0"
-            android:layout_row="0"/>
+            android:layout_row="0"
+            android:text="Shape: " />
+
         <Spinner
+            android:id="@+id/shape_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
-            android:layout_row="0">
-        </Spinner>
+            android:layout_row="0"></Spinner>
 
         <TextView
-            android:text="x:"
-            android:textSize="12dp"
             android:layout_column="0"
-            android:layout_row="1"
-            android:layout_gravity="center"/>
-        <EditText
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="0dp"/>
-
-        <TextView
-            android:text="y:"
-            android:textSize="12dp"
-            android:layout_column="0"
-            android:layout_row="2"
-            android:layout_gravity="center"/>
-        <EditText
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="2"
-            android:padding="0dp"/>
-
-        <EditText
-            android:hint="Shape name...     "
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="0"
-            android:padding="0dp"
-            android:layout_columnSpan="2"/>
-
-        <TextView
-            android:textSize="12dp"
-            android:text="width:"
             android:layout_gravity="center"
-            android:layout_column="2"
-            android:layout_row="1" />
+            android:layout_row="1"
+            android:text="x:"
+            android:textSize="12dp" />
+
         <EditText
-            android:textSize="12dp"
+            android:id="@+id/xCord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_row="1"
+            android:inputType="numberDecimal"
             android:padding="0dp"
-            android:layout_gravity="center"/>
+            android:textSize="12dp" />
 
         <TextView
-            android:text="height"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="2"/>
-        <EditText
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
+            android:layout_column="0"
+            android:layout_gravity="center"
             android:layout_row="2"
+            android:text="y:"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/yCord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="2"
+            android:inputType="numberDecimal"
             android:padding="0dp"
-            android:layout_gravity="center"/>
+            android:textSize="12dp" />
 
+        <EditText
+            android:id="@+id/shapeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_columnSpan="2"
+            android:layout_row="0"
+            android:hint="Shape name...     "
+            android:padding="0dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_column="2"
+            android:layout_gravity="center"
+            android:layout_row="1"
+            android:text="width:"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="center"
+            android:layout_row="1"
+            android:inputType="numberDecimal"
+            android:padding="0dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="2"
+            android:text="height"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="center"
+            android:layout_row="2"
+            android:inputType="numberDecimal"
+            android:padding="0dp"
+            android:textSize="12dp" />
 
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:layout_row="0"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="newShape"
             android:text="New"
-            android:textSize="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:layout_column="4"
-            android:layout_row="0"/>
+            android:textSize="10dp" />
+
         <Button
-            android:text="Delete"
-            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
             android:layout_column="4"
-            android:layout_row="1"/>
+            android:layout_row="1"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="deletePage"
+            android:text="Delete"
+            android:textSize="10dp" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="5"
+            android:layout_gravity="center"
+            android:layout_row="0"
             android:text="Movable: "
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="5"
-            android:layout_row="0"
-            android:layout_gravity="center"/>
+            android:textSize="12dp" />
+
         <RadioGroup
+            android:id="@+id/moveGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="6"
+            android:layout_gravity="center"
             android:layout_row="0"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:text="true"
+                android:id="@+id/moveable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleX="0.75"
                 android:scaleY="0.75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="true" />
 
             <RadioButton
-                android:text="false"
+                android:id="@+id/notMovable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleX="0.75"
                 android:scaleY="0.75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:text="false" />
 
         </RadioGroup>
 
         <TextView
-            android:text="Visible: "
-            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="5"
+            android:layout_gravity="center"
             android:layout_row="1"
-            android:layout_gravity="center"/>
+            android:text="Visible: "
+            android:textSize="12dp" />
+
         <RadioGroup
+            android:id="@+id/visibleGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="6"
+            android:layout_gravity="center"
             android:layout_row="1"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:orientation="horizontal">
 
             <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
                 android:text="true"
-                android:scaleX="0.75"
-                android:scaleY="0.75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:id="@+id/isVisible"
+                />
+
             <RadioButton
-                android:text="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleX="0.75"
                 android:scaleY="0.75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="false"
+                android:id="@+id/notVisible"
+                />
 
         </RadioGroup>
-
 
 
     </GridLayout>
-
 
 
 </LinearLayout>
