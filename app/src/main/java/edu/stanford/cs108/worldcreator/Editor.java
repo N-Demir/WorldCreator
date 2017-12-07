@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.util.Vector;
@@ -28,7 +29,6 @@ public class Editor extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("MESSAGE", "boobs");
                 String yew = spinner.getSelectedItem().toString();
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 updateShapeSpinner();
@@ -36,12 +36,40 @@ public class Editor extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.d("MESSAGE", "fuck");
+                // I think we just do nothing now
+            }
+        });
+        final Spinner shapeSpinner  = (Spinner) findViewById(R.id.shape_spinner);
+        shapeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String shapeName = shapeSpinner.getSelectedItem().toString();
+                Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShape(shapeName));
+                setFields(Game.curGame.getCurrentShape());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // I think we also do nothing here
             }
         });
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null); //TODO: BUGGY? BAD STYLE?
         updateSpinner();
         setTitle("Editing: " + Game.curGame.getGameName());
+    }
+
+    private void setFields(Shape shape){
+        ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
+        ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
+        ((EditText) findViewById(R.id.height)).setText(Float.toString(shape.getHeight()));
+        ((EditText) findViewById(R.id.width)).setText(Float.toString(shape.getWidth()));
+        ((EditText) findViewById(R.id.shapeName)).setText(shape.getName());
+        if (shape.getHidden()){
+            ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
+        } else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
+        if (shape.getMoveable()){
+            ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.moveable);
+        } else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
     }
 
     public void createPage(View view){

@@ -26,6 +26,13 @@ public class Page {
 		}
 		return 0; 
 	}
+
+	public Shape getShape(String shapeName){
+		for (Shape shape : shapes){
+			if (shape.getName().equals(shapeName)) return shape;
+		}
+		return null;
+	}
 	
 	public Vector<Shape> getShapes(){
 		return shapes;
