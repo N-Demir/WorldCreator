@@ -103,6 +103,17 @@ public class Shape {
 	public void setScript(Script temp) { script = temp;}
 	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
 	public void setPage(Page temp) { page = temp;}
+
+	public boolean isContained(float x, float y) {
+		return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
+	}
+	public void move(float xAmount, float yAmount) {
+		this.x += xAmount;
+		this.y += yAmount;
+	}
+	public void runScript_OnClick() {
+		//TODO NEEDS IMPLEMENTATION HERE AND SCRIPT CLASS
+	}
 	
 	public void draw(Canvas canvas) {
 		if(text != "") {

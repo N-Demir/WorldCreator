@@ -3,6 +3,7 @@ package edu.stanford.cs108.worldcreator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -11,6 +12,7 @@ import android.view.View;
 
 public class EditorGameView extends View {
     private float width, height;
+    private float oldX, oldY; //For dragging a shape implementation
 
     public EditorGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,4 +36,32 @@ public class EditorGameView extends View {
         super.onDraw(canvas);
         Game.curGame.drawPage(canvas);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        //TODO: Extension = touch resizing?
+        float x = e.getX();
+        float y = e.getY();
+
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
+                if (Game.curGame.getCurrentShape() != null) {
+                    oldX = x;
+                    oldY = y;
+                    Game.curGame.getCurrentShape().runScript_OnClick(); //TODO:Needs implementation
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (Game.curGame.getCurrentShape() == null) break;
+                Game.curGame.getCurrentShape().move(x - oldX, y - oldY);
+                break;
+            case MotionEvent.ACTION_UP:
+                //TODO:Do we need to do anything here?
+                break;
+        }
+
+        return true;
+    }
+    //TODO: CLEAR OLDX AND OLDY WHEN CURPAGE IS SWITCHED????
 }

@@ -37,9 +37,17 @@ public class Page {
 	public Vector<Shape> getShapes(){
 		return shapes;
 	}
-	
 	public void addShape(Shape s) {
 		shapes.add(s); 
+	}
+
+	public Shape getShapeAtCoords(float x, float y) {
+		// This has to be backwards so that we select the top shape
+		for (int i = shapes.size() - 1; i >= 0; i--) {
+			Shape shape = shapes.get(i);
+			if (shape.isContained(x, y)) return shape;
+		}
+		return null;
 	}
 	
 	public void draw(Canvas canvas) {
