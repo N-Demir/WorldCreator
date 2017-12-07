@@ -1,7 +1,5 @@
 package edu.stanford.cs108.worldcreator;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,7 +65,7 @@ public class Editor extends AppCompatActivity {
         if (shape.getHidden()){
             ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
         } else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
-        if (shape.getMoveable()){
+        if (shape.getMovable()){
             ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.moveable);
         } else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
     }
@@ -197,7 +195,7 @@ public class Editor extends AppCompatActivity {
         String shapeStr = "INSERT INTO shapes VALUES " +
                 "('" +shape.getName() + "','" + Game.curGame.getGameName() + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()
-                + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMoveable())
+                + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMovable())
                 + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptName() + "','" + shape.getText() + "',NULL);";
         db.execSQL(shapeStr);
     }

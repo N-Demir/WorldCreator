@@ -13,6 +13,6 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
         setTitle(Game.curGame.getGameName());
-
+        //TODO: Game.curGame.getCurrentPage().runOnEnters???? NECESSARY?
     }
 }

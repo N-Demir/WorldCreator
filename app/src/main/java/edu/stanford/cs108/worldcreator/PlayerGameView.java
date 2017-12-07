@@ -8,16 +8,18 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class PlayerGameView extends View {
     private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
-    private static final float SEPARATOR_HEIGHT = 200.0f;
+    public static final float SEPARATOR_HEIGHT = 200.0f;
 
     private Paint separatorPaint;
     private boolean modeIsPlaying;
 
-    private float width, height;
+    public static float width, height; //Kind of a hack so that inventory drawing works
+    private float oldX, oldY;
 
     public PlayerGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,4 +58,41 @@ public class PlayerGameView extends View {
         canvas.drawLine(0.0f, height - SEPARATOR_HEIGHT, width, height - SEPARATOR_HEIGHT, separatorPaint);
     }
 
+    public boolean onTouchEvent(MotionEvent e) {
+        //TODO: Extension = touch resizing?
+        float x = e.getX();
+        float y = e.getY();
+
+
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
+                if (Game.curGame.getCurrentShape() != null) {
+                    oldX = x;
+                    oldY = y;
+                    if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
+                        Game.curGame.removeFromInventory(Game.curGame.getCurrentShape());
+                    } else {
+                        Game.curGame.getCurrentShape().runScript_OnClick(); //TODO:Needs implementation
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (Game.curGame.getCurrentShape() == null ||
+                        !Game.curGame.getCurrentShape().getMovable()) break;
+                Game.curGame.getCurrentShape().move(x - oldX, y - oldY);
+                oldX = x;
+                oldY = y;
+                break;
+            case MotionEvent.ACTION_UP:
+                if (Game.curGame.getCurrentShape() == null) break;
+                //If we are dropping Shape in inventory, put in inventory and run on drop
+                if (y >= height - SEPARATOR_HEIGHT) {
+                    Game.curGame.addToInventory(Game.curGame.getCurrentShape());
+                }
+                break;
+        }
+
+        return true;
+    }
 }

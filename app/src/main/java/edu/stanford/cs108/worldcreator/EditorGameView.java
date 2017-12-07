@@ -49,7 +49,6 @@ public class EditorGameView extends View {
                 if (Game.curGame.getCurrentShape() != null) {
                     oldX = x;
                     oldY = y;
-                    Game.curGame.getCurrentShape().runScript_OnClick(); //TODO:Needs implementation
                 }
                 break;
             case MotionEvent.ACTION_MOVE:

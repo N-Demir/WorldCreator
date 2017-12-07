@@ -11,9 +11,7 @@ public class Game {
 	public static Game curGame;
 
 	private static final String INITIAL_PAGE_NAME = "page1";
-
-	private float nextInventoryXPos = 50; //TODO: FIX THESE
-	private static final int inventoryYPos = 500;
+	private static final float INVENTORY_SPACING = 50.0f; //x and y spacing
 
 	/* Private IVARS */
 	private String gameName;
@@ -83,47 +81,35 @@ public class Game {
 		return null;
 	}
 	
-	public Vector<Shape> getInvetory(){
+	public Vector<Shape> getInventory(){
 		return inventory;
 	}
-	
 	public void changePage(Page page) {
 		currentPage = page;
 	}
-	
-	public void addToInventory(Shape shape, float x, float y) {
+
+
+	public void addToInventory(Shape shape) {
 		inventory.add(shape);
-		shape.setInventoryStatus(true);
-		Page page = shape.getPage();
-		page.removeShape(shape);
-		shape.setPage(null);
-		moveShape(shape, nextInventoryXPos + 50, inventoryYPos);
-		nextInventoryXPos += 50 + shape.getWidth();
+		Game.curGame.getCurrentPage().removeShape(shape);
 	}
-
-	public void removeFromInventory(Shape shape, float x, float y) {
+	public void removeFromInventory(Shape shape) {
 		inventory.remove(shape);
-		currentPage.addShape(shape);
-		moveShape(shape, x, y);
-		nextInventoryXPos = 0;
-		for(Shape s: inventory){
-			moveShape(s, nextInventoryXPos + 50, inventoryYPos);
-			nextInventoryXPos += 50 + s.getWidth();
-		}
+		Game.curGame.getCurrentPage().addShape(shape);
 	}
 
-	public void moveShape(Shape shape, float x, float y) {
-		shape.setX(x);
-		shape.sety(y);
-	}
 
 	public void drawPage(Canvas canvas) {
 		currentPage.draw(canvas);
 	}
 
 	public void drawInventory(Canvas canvas) {
+		float curX = INVENTORY_SPACING;
 		for(Shape shape: inventory) {
+			shape.setX(curX);
+			shape.sety(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING/2.0f);
 			shape.draw(canvas);
+			curX += shape.getWidth() + INVENTORY_SPACING;
 		}
 	}
 	

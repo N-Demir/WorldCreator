@@ -1,14 +1,10 @@
 package edu.stanford.cs108.worldcreator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 
 public class Shape {
 	private static final int defaultWidth = 20;
@@ -17,7 +13,7 @@ public class Shape {
 	static{}; //TODO: INITIALIZE PAINTS AND THINGS STATIC TO ALL SHAPE OBJECTS
 	
 	private boolean hidden;
-	private boolean moveable;
+	private boolean movable;
 	private float x;
 	private float y;
 	private float width;
@@ -33,7 +29,7 @@ public class Shape {
 	public Shape(String sName){
 		name = sName;
 		hidden = false;
-		moveable = false;
+		movable = false;
 		x = 10;
 		y =10;
 		height = defaultHeight;
@@ -52,8 +48,8 @@ public class Shape {
 		y = yCord;
 		height = h;
 		width = w;
-		if (move == 0) moveable = false;
-		else moveable = true;
+		if (move == 0) movable = false;
+		else movable = true;
 		if (hide == 0) hidden = false;
 		else hidden = true;
 		imageName = img;
@@ -68,7 +64,7 @@ public class Shape {
 		x = xCord;
 		y = yCord;
 		hidden = false;
-		moveable = true;
+		movable = true;
 		text = "";
 		imageName = "";
 		width = defaultWidth;
@@ -78,7 +74,7 @@ public class Shape {
 	}
 	
 	public boolean getHidden() { return hidden;}
-	public boolean getMoveable() { return moveable;}
+	public boolean getMovable() { return movable;}
 	public float getX() { return x;}
 	public float getY() { return y;}
 	public float getWidth() { return width;}
@@ -92,7 +88,7 @@ public class Shape {
 	public Page getPage() { return page;}
 	
 	public void setHidden(boolean bool) { hidden = bool;}
-	public void setMoveable(boolean bool) { moveable = bool;}
+	public void setMovable(boolean bool) { movable = bool;}
 	public void setX(float val) { x = val;}
 	public void sety(float val) { y = val;}
 	public void setWidth(float val) { width = val;}
@@ -111,9 +107,14 @@ public class Shape {
 		this.x += xAmount;
 		this.y += yAmount;
 	}
+
+
 	public void runScript_OnClick() {
-		//TODO NEEDS IMPLEMENTATION HERE AND SCRIPT CLASS
+		//TODO: IS this just supposed to be implemented in the script class? Thats fine but need stuff written
 	}
+	public void runScript_onDrop() {}
+	public void runScript_onEnter() {} //TODO: necessary just for page 1 entering from game start
+
 	
 	public void draw(Canvas canvas) {
 		if(text != "") {
