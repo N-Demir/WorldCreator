@@ -123,7 +123,7 @@ public class Editor extends AppCompatActivity {
     private void updateDataBase(){
         for (Page page : Game.curGame.getPages()){
             addPage(page);
-            for (Shape shape : page.getShapes()) addShape(shape);
+            for (Shape shape : page.getShapes()) addShape(page, shape);
         }
         String gameStr = "INSERT INTO games VALUES ('" + Game.curGame.getGameName() + "',NULL);";
         db.execSQL(gameStr);
@@ -135,16 +135,12 @@ public class Editor extends AppCompatActivity {
         db.execSQL(pageStr);
     }
 
-    private  void addShape(Shape shape){
-        int shouldHide = 0;
-        int canMove = 0;
-        if (shape.getHidden()) shouldHide = 1;
-        if (shape.getMoveable()) canMove = 1;
+    private  void addShape(Page page, Shape shape){
         String shapeStr = "INSERT INTO shapes VALUES " +
                 "('" +shape.getName() + "','" + Game.curGame + "','"
-                + p.getName() + "','" + shape.getX() + "','" + shape.getY()
-                + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + canMove
-                + "','" + shouldHide+ "','" + shape.getImage() + "','" + shape.getScriptName() + "','" + shape.getText() + "',NULL);";
+                + page.getName() + "','" + shape.getX() + "','" + shape.getY()
+                + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMoveable())
+                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptName() + "','" + shape.getText() + "',NULL);";
         db.execSQL(shapeStr);
     }
 }
