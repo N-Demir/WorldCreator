@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TODO Make sure that this removes everything correctly from the data bse
     public void onGameRemove(View view) {
         Vector<String> pageNames = new Vector<String>();
         Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
@@ -150,9 +151,8 @@ public class MainActivity extends AppCompatActivity {
         String gDelete = "DELETE FROM games WHERE name='" + gameName + "'";
         db.execSQL(gDelete);
         updateGameSpinner();
-        if(spinner.getCount() == 0){
-            setButtonsEnabled(false);
-        }
+        if(spinner.getCount() == 0)setButtonsEnabled(false);
+
     }
 
 

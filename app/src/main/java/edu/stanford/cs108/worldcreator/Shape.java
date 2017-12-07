@@ -21,6 +21,7 @@ public class Shape {
 	private float x;
 	private float y;
 	private float width;
+	private String scriptName;
 	private float height;
 	private String name;
 	private String text;
@@ -28,6 +29,20 @@ public class Shape {
 	private String imageName;
 	private Page page;
 	private boolean inventoryItem;
+
+	public Shape(String sName){
+		name = sName;
+		hidden = false;
+		moveable = false;
+		x = 10;
+		y =10;
+		height = defaultHeight;
+		width = defaultWidth;
+		imageName = "";
+		text = "";
+		scriptName = "";
+		script = new Script("");
+	}
 
 	public Shape (String sName, float xCord, float yCord, float h, float w,
 				  int move, int hide, String img,
@@ -43,6 +58,7 @@ public class Shape {
 		else hidden = true;
 		imageName = img;
 		text = txt;
+		scriptName = scrpt;
 		script =  new Script(scrpt);
 	}
 
@@ -57,6 +73,8 @@ public class Shape {
 		imageName = "";
 		width = defaultWidth;
 		height = defaultHeight;
+		script = new Script("");
+		scriptName = "";
 	}
 	
 	public boolean getHidden() { return hidden;}
@@ -68,6 +86,7 @@ public class Shape {
 	public String getName() { return name;}
 	public String getText() { return text;}
 	public Script getScript() { return script;}
+	public String getScriptName(){return scriptName;}
 	public String getImage() { return imageName;}
 	public boolean inInventory() { return inventoryItem;}
 	public Page getPage() { return page;}

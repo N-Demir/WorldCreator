@@ -20,6 +20,7 @@ public class Game {
 	private Vector<Page> pages;
 	private Vector<Shape> inventory;
 	private Page currentPage;
+	private Shape currentShape;
 
 	/**
 	 * Fresh constructor. Sets up brand new fresh game with provided gameName
@@ -31,6 +32,9 @@ public class Game {
 		currentPage = new Page(INITIAL_PAGE_NAME);
 		//currentPage.addShape(new Shape("ball", 50, 50)); //DEBUGGING
 		pages.add(currentPage);
+
+		// TODO not sure this is the best way to construct a first object
+		currentShape = new Shape("default", (float)0, (float)0);
 	}
 
 	/**
@@ -45,11 +49,16 @@ public class Game {
 		this.gameName = gameName;
 		currentPage = getPage("page1");
 		Log.d("MESSAGE", currentPage.getName());
+		//TODO not sure this is the best way to construct a default first current objecy
+		currentShape = new Shape("default", (float)0, (float)0);
 	}
 
 	public String getGameName() {return gameName;}
+	public void setCurrentShape (Shape newShape){currentShape = newShape;}
+	public Shape getCurrentShape (){return currentShape;}
 	public Vector<Page> getPages(){return pages;}
 	public String getCurPageName() {return currentPage.getName();}
+	public Page getCurrentPage(){return currentPage;}
 	
 	public Page getPage(String name) {
 		for(Page page: pages) {
