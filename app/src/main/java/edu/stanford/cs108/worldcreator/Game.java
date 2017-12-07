@@ -66,8 +66,8 @@ public class Game {
 				Log.d("MESSAGE", "found page");
 				return page;
 			}
-			Log.d("MESSAGE", "Page not found");
 		}
+		Log.d("MESSAGE", "Page not found");
 		return null;
 	}
 

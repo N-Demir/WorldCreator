@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,6 +24,21 @@ public class Editor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        final Spinner spinner = (Spinner) findViewById(R.id.page_spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("MESSAGE", "boobs");
+                String yew = spinner.getSelectedItem().toString();
+                Game.curGame.changePage(Game.curGame.getPage(yew));
+                updateShapeSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.d("MESSAGE", "fuck");
+            }
+        });
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null); //TODO: BUGGY? BAD STYLE?
         updateSpinner();
         setTitle("Editing: " + Game.curGame.getGameName());
@@ -68,6 +84,9 @@ public class Editor extends AppCompatActivity {
 
     // TODO there is no way to get a script image or text label It also crashes on the script object creation
     public void newShape (View view){
+        Spinner pages = (Spinner) findViewById(R.id.page_spinner);
+        String currentPage = pages.getSelectedItem().toString();
+        Game.curGame.changePage(Game.curGame.getPage(currentPage));
         String xStr = ((EditText) findViewById(R.id.xCord)).getText().toString();
         String yStr = ((EditText) findViewById(R.id.yCord)).getText().toString();
         String widthStr = ((EditText) findViewById(R.id.width)).getText().toString();
@@ -114,14 +133,19 @@ public class Editor extends AppCompatActivity {
     private void clearDataBase(){
         String sDelete = "DELETE FROM shapes WHERE game='" + Game.curGame.getGameName() + "'";
         db.execSQL(sDelete);
+        Log.d("MESSAGE" , "COMP1");
         String pDelete = "DELETE FROM pages WHERE game='" + Game.curGame.getGameName() + "'";
         db.execSQL(pDelete);
+        Log.d("MESSAGE" , "COMP2");
         String gDelete = "DELETE FROM games WHERE name='" + Game.curGame.getGameName() + "'";
         db.execSQL(gDelete);
+        Log.d("MESSAGE" , "COMP3");
     }
 
     private void updateDataBase(){
+        Log.d("MESSAGE" , Game.curGame.getGameName());
         for (Page page : Game.curGame.getPages()){
+            Log.d("MESSAGE",page.getName());
             addPage(page);
             for (Shape shape : page.getShapes()) addShape(page, shape);
         }
@@ -136,6 +160,7 @@ public class Editor extends AppCompatActivity {
     }
 
     private  void addShape(Page page, Shape shape){
+        Log.d("MESSAGE", shape.getName());
         String shapeStr = "INSERT INTO shapes VALUES " +
                 "('" +shape.getName() + "','" + Game.curGame + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()
