@@ -107,7 +107,7 @@ public class Editor extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-    public void savePage(View view){
+    public void saveGame(View view){
         clearDataBase();
         updateDataBase();
     }
