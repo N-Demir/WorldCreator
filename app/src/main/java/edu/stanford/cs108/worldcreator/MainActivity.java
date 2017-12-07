@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL(gamestr);
         db.execSQL(pagestr);
         db.execSQL(shapestr);
-
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
@@ -133,15 +132,9 @@ public class MainActivity extends AppCompatActivity {
     // TODO Make sure that this removes everything correctly from the data bse
     public void onGameRemove(View view) {
         Vector<String> pageNames = new Vector<String>();
-        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        Cursor c = (Cursor) spinner.getSelectedItem();
-        String gameName = c.getString(0);
-        EditText editText = (EditText) findViewById(R.id.gname);
-        editText.setText(gameName);
+        String gameName= ((Cursor)((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
-        while (pCursor.moveToNext()){
-            pageNames.add(pCursor.getString(0));
-        }
+        while (pCursor.moveToNext()) pageNames.add(pCursor.getString(0));
         for (int i =0; i < pageNames.size(); i++){
             String sDelete = "DELETE FROM shapes WHERE game='" + gameName + "' AND page='" + pageNames.get(i) + "'";
             db.execSQL(sDelete);
@@ -151,8 +144,7 @@ public class MainActivity extends AppCompatActivity {
         String gDelete = "DELETE FROM games WHERE name='" + gameName + "'";
         db.execSQL(gDelete);
         updateGameSpinner();
-        if(spinner.getCount() == 0)setButtonsEnabled(false);
-
+        if(((Spinner) findViewById(R.id.game_spinner)).getCount() == 0) setButtonsEnabled(false);
     }
 
 
@@ -178,27 +170,23 @@ public class MainActivity extends AppCompatActivity {
     private void gotoActivity(Intent intent, View view) {
         //TODO:FIX BUGS HERE
         Vector<Page> document = new Vector<Page>();
-        Spinner spinner = (Spinner) findViewById(R.id.game_spinner);
-        Cursor c = (Cursor) spinner.getSelectedItem();
-
-        String gameName = c.getString(0);
-        Log.d("MESSAGE IS HERE: ", gameName);
+        String gameName = ((Cursor) ((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         while (pCursor.moveToNext()){
-            Page cur = new Page(pCursor.getString(0));;
+            Log.d("MESSAGE IS HERE: ", pCursor.getString(0));
+            Page cur = new Page(pCursor.getString(0));
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
+                Log.d("MESSAGE IS HERE: ", sCursor.getString(0));
                 // constructor goes name, x, y, height, width, move, visible, img, script, label,
                 Shape s = new Shape(sCursor.getString(0), sCursor.getFloat(3), sCursor.getFloat(4),
                         sCursor.getFloat(5), sCursor.getFloat(6), sCursor.getInt(7),sCursor.getInt(8),
                         sCursor.getString(9), sCursor.getString(11),sCursor.getString(10));
                 cur.addShape(s);
-                cur.addShape(s);
            }
             document.add(cur);
         }
         Game.curGame = new Game(document, gameName);
-        Log.d("MESSAGE", Game.curGame.getGameName());
         startActivity(intent);
     }
 }

@@ -47,8 +47,7 @@ public class Game {
 		pages = pageVec;
 		inventory = new Vector<Shape>();
 		this.gameName = gameName;
-		currentPage = getPage("page1");
-		Log.d("MESSAGE", currentPage.getName());
+		currentPage = pages.elementAt(0);
 		//TODO not sure this is the best way to construct a default first current objecy
 		currentShape = new Shape("default", (float)0, (float)0);
 	}
@@ -61,13 +60,7 @@ public class Game {
 	public Page getCurrentPage(){return currentPage;}
 	
 	public Page getPage(String name) {
-		for(Page page: pages) {
-			if(page.getName().equals(name)){
-				Log.d("MESSAGE", "found page");
-				return page;
-			}
-		}
-		Log.d("MESSAGE", "Page not found");
+		for(Page page: pages) if(page.getName().equals(name)) return page;
 		return null;
 	}
 
