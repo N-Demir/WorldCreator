@@ -17,7 +17,7 @@ import android.widget.RadioGroup;
 public class EditorGameView extends View {
     public static float width, height;
     private float oldX, oldY; //For dragging a shape implementation
-    private boolean canDrag;
+    private boolean canDrag; //TODO WAIT WHY
 
     public EditorGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
