@@ -91,8 +91,10 @@ public class Shape {
 	}
 	
 	public void executeOnDrop(Shape beingDropped) {
-		Vector<Vector<Object>> commands = script.getOnDropActions(beingDropped);
-		executeCommands(commands);
+        Log.d("MESSAGE", "executeOnDrop: " + beingDropped.getName());
+        Vector<Vector<Object>> commands = script.getOnDropActions(beingDropped);
+        if(commands == null) Log.d("MESSAGE", "executeOnDrop: COMMANDS IS NULL");
+        executeCommands(commands);
 	}
 
 	public boolean canDropOn(Shape beingDropped){
