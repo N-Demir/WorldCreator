@@ -86,7 +86,10 @@ public class PlayerGameView extends View {
                 oldX = x;
                 oldY = y;
                 //TODO: RIGHT HERE DO ONDROP THINGS
-                Game.curGame.isAShapeUnder(x, y, curShape)
+                Shape underShape = Game.curGame.getShapeUnder(x, y, curShape);
+                if (underShape != null) {
+                    underShape.executeOnDrop(curShape);
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 if (curShape == null) break;

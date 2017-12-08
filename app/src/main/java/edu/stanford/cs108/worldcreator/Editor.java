@@ -275,7 +275,7 @@ public class Editor extends AppCompatActivity {
                 "('" +shape.getName() + "','" + Game.curGame.getGameName() + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()
                 + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMovable())
-                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptName() + "','" + shape.getText() + "',NULL);";
+                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptText() + "','" + shape.getText() + "',NULL);";
         db.execSQL(shapeStr);
     }
 }
