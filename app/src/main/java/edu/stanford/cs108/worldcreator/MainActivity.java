@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
             Page cur = new Page(pCursor.getString(0));
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
-                // constructor goes name, x, y, height, width, move, visible, img, script, label,
+                // constructor goes name, x, y, height, width, move, visible, img, script, label, fontSize
                 Shape s = new Shape(sCursor.getString(0), sCursor.getFloat(3), sCursor.getFloat(4),
                         sCursor.getFloat(5), sCursor.getFloat(6), sCursor.getInt(7),sCursor.getInt(8),
-                        sCursor.getString(9), sCursor.getString(11),sCursor.getString(10));
+                        sCursor.getString(9), sCursor.getString(11), sCursor.getString(10), sCursor.getInt(12));
                 cur.addShape(s);
            }
             document.add(cur);

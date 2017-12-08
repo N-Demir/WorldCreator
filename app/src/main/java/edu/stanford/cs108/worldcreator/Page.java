@@ -52,9 +52,9 @@ public class Page {
 		return null;
 	}
 	
-	public void draw(Canvas canvas) {
+	public void draw(Canvas canvas, boolean editor) {
 		for(Shape shape: shapes) {
-			shape.draw(canvas);
+			shape.draw(canvas, editor);
 		}
 	}
 }

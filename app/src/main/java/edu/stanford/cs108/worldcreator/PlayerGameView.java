@@ -54,7 +54,7 @@ public class PlayerGameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Game.curGame.drawPage(canvas);
+        Game.curGame.drawPage(canvas, false);
         drawSeparator(canvas);
         Game.curGame.drawInventory(canvas);
     }

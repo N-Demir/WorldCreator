@@ -38,9 +38,8 @@ public class EditorGameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("MESSAGE", "onDraw: ");
         super.onDraw(canvas);
-        Game.curGame.drawPage(canvas);
+        Game.curGame.drawPage(canvas, true);
     }
 
     @Override

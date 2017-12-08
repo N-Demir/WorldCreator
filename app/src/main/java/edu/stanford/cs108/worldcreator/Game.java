@@ -139,16 +139,14 @@ public class Game {
 		return null;
 	}
 
-	public void drawPage(Canvas canvas) {
-		currentPage.draw(canvas);
-	}
+	public void drawPage(Canvas canvas, boolean editor) {currentPage.draw(canvas, editor);}
 
 	public void drawInventory(Canvas canvas) {
 		float curX = INVENTORY_SPACING;
 		for(Shape shape: inventory) {
 			shape.setX(curX); //TODO:DOES THIS STUFF WORK
 			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING / 2.0f);
-			shape.draw(canvas);
+			shape.draw(canvas, false);
 			curX += shape.getWidth() + INVENTORY_SPACING;
 		}
 	}
