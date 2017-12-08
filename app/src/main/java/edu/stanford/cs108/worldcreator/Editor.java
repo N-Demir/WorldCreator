@@ -160,9 +160,8 @@ public class Editor extends AppCompatActivity {
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
-        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName() );
         if (curShape == null) return;
-        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName() );
+        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
         if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) return;
         curShape.setName(shapeName);
