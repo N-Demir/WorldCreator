@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 
 /**
  * Created by ndemir on 12/4/2017.
@@ -15,10 +17,12 @@ import android.view.View;
 public class EditorGameView extends View {
     private float width, height;
     private float oldX, oldY; //For dragging a shape implementation
+    private boolean canDrag;
 
     public EditorGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         MainActivity.curContext = context; //NECESSARY?
+        canDrag = true;
     }
 
     /**
@@ -46,24 +50,29 @@ public class EditorGameView extends View {
         float y = e.getY();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
+                Shape temp = Game.curGame.getCurrentPage().getShapeAtCoords(x, y);
+                if(temp != null) Game.curGame.setCurrentShape(temp);
+                else canDrag = false;
                 if (Game.curGame.getCurrentShape() != null) {
                     oldX = x;
                     oldY = y;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (Game.curGame.getCurrentShape() == null) break;
+                if (Game.curGame.getCurrentShape() == null || !canDrag) break;
                 Game.curGame.getCurrentShape().move(x - oldX, y - oldY);
+
                 oldX = x;
                 oldY = y;
                 break;
             case MotionEvent.ACTION_UP:
+                canDrag = true;
                 //TODO:Do we need to do anything here?
                 break;
         }
 
         invalidate();
+        ((Editor)(Activity) getContext()).updateShapeSpinner();
         return true;
         //TODO:CALL UPDATE FIELDS IN PARENT ACTIVITY
     }
