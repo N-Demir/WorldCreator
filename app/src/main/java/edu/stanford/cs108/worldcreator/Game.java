@@ -33,6 +33,8 @@ public class Game {
 
 		// TODO not sure this is the best way to construct a first object
 		currentShape = new Shape("default", (float)0, (float)0);
+		currentPage.addShape(currentShape);
+
 	}
 
 	/**
