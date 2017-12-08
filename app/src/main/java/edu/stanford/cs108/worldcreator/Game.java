@@ -116,12 +116,12 @@ public class Game {
 		Shape underShape;
 		if (y >= PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT) {
 			//Inside inventory
-			inventory.remove(shape);
+			boolean doAdd = inventory.remove(shape);
 			for (int i = inventory.size() - 1; i >= 0; i--) {
 				underShape = inventory.get(i);
 				if (underShape.isContained(x, y)) return underShape;
 			}
-			inventory.add(shape);
+			if (doAdd) inventory.add(shape);
 		} else {
 			//Inside regular page
 			currentPage.removeShape(shape);
