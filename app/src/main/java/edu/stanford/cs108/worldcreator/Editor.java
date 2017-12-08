@@ -159,7 +159,7 @@ public class Editor extends AppCompatActivity {
         Shape curShape = Game.curGame.getCurrentShape();
         if (curShape == null) return;
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) != null) return;
+        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) return;
         curShape.setName(shapeName);
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
