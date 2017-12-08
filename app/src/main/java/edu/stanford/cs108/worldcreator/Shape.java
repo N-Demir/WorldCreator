@@ -163,7 +163,6 @@ public class Shape {
 			paint.setTextSize(30);
 			canvas.drawText(text, x, y, paint);
 		} else if(!imageName.isEmpty()) {
-			//TODO: DOES THIS WORK
             Context context = MainActivity.curContext;
 			int imageID = context.getResources().getIdentifier(imageName, "drawable",
 					context.getPackageName());
@@ -171,13 +170,9 @@ public class Shape {
 					context.getTheme());
 			canvas.drawBitmap(image.getBitmap(), null, new RectF(x, y, x + width, y + height), null); //TODO: If shape is not visible and in editor then use opaque paint
 		} else {
-			/* Default is a grey rectangle*/
 			Paint paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
-
 			paint.setColor(Color.LTGRAY);
 			canvas.drawRect(x, y, x + width, y + height, paint);
-			//canvas.drawRect(50.0f, 50.0f, 200.0f, 200.0f, paint);
-			//Log.d("DEBUG: ", "I GOT HEREEEE");
 		}
 	}
 }
