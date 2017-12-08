@@ -74,7 +74,7 @@ public class PlayerGameView extends View {
                     if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
                         Game.curGame.removeFromInventory(curShape);
                     } else {
-                        curShape.runScript_OnClick(); //TODO: FIX THIS
+                        curShape.executeOnClick(); //TODO: FIX THIS
                     }
                 }
                 break;
