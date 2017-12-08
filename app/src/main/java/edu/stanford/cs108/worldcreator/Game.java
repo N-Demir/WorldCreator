@@ -87,13 +87,19 @@ public class Game {
 	public Vector<Shape> getInventory(){
 		return inventory;
 	}
+
 	public void changePage(Page page) {
 		currentPage = page;
-		//Game.curGame.setCurrentShape(null);
+		for(Shape shape: page.getShapes()){
+			shape.executeOnEnter();
+		}
 	}
+
+	public void changePageEditor(Page page) {currentPage = page;}
 
 
 	public void addToInventory(Shape shape) {
+		Log.d("MESSAGE", "addtoI");
 		inventory.add(shape);
 		Game.curGame.getCurrentPage().removeShape(shape);
 	}

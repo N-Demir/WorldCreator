@@ -97,6 +97,7 @@ public class Shape {
 	}
 	
 	public void executeOnEnter() {
+        Log.d("MESSAGE", "executeOnEnter");
 		Vector<Vector<Object>> commands = script.getOnEnterActions();
 		executeCommands(commands);
 	}
