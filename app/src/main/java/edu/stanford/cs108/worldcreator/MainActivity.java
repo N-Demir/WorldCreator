@@ -187,16 +187,15 @@ public class MainActivity extends AppCompatActivity {
      */
     private void gotoActivity(Intent intent, View view) {
         //TODO:FIX BUGS HERE
+
         Vector<Page> document = new Vector<Page>();
         String gameName = ((Cursor) ((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
         Game.curGame = new Game(gameName); //TODO:FIGURE OUT HOW TO DO THIS
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         while (pCursor.moveToNext()){
-            Log.d("MESSAGE IS HERE: ", pCursor.getString(0));
             Page cur = new Page(pCursor.getString(0));
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
-                Log.d("MESSAGE IS HERE: ", sCursor.getString(0));
                 // constructor goes name, x, y, height, width, move, visible, img, script, label,
                 Shape s = new Shape(sCursor.getString(0), sCursor.getFloat(3), sCursor.getFloat(4),
                         sCursor.getFloat(5), sCursor.getFloat(6), sCursor.getInt(7),sCursor.getInt(8),
@@ -209,6 +208,12 @@ public class MainActivity extends AppCompatActivity {
         for(Page page: Game.curGame.getPages()){
             for(Shape shape: page.getShapes()){
                 shape.setScriptText(shape.getScriptText());
+            }
+        }
+        for(Page p : Game.curGame.getPages()){
+            Log.d("YEW", p.getName());
+            for(Shape shape : p.getShapes()){
+                Log.d("YEW", shape.getName());
             }
         }
         startActivity(intent);

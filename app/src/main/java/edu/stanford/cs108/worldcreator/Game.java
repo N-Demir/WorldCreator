@@ -89,6 +89,7 @@ public class Game {
 	}
 	public void changePage(Page page) {
 		currentPage = page;
+		//Game.curGame.setCurrentShape(null);
 	}
 
 
@@ -97,6 +98,7 @@ public class Game {
 		Game.curGame.getCurrentPage().removeShape(shape);
 	}
 	public void removeFromInventory(Shape shape) {
+        Log.d("MESSAGE", "removefromI");
 		inventory.remove(shape);
 		Game.curGame.getCurrentPage().addShape(shape);
 	}
