@@ -89,7 +89,7 @@ public class PlayerGameView extends View {
                 if (curShape == null) break;
                 //If we are dropping Shape in inventory, put in inventory and run on drop
                 float shapesMiddle = curShape.getY() + curShape.getHeight()/2.0f;
-                if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.addToInventory(curShape);
+                if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.removeFromInventory(curShape);
                 else if (curShape.getY() + curShape.getHeight() >= height - SEPARATOR_HEIGHT)
                     curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
                 break;
