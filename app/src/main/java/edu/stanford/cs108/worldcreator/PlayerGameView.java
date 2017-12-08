@@ -66,9 +66,10 @@ public class PlayerGameView extends View {
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
-                curShape = Game.curGame.getCurrentShape();
+                curShape = Game.curGame.getCurrentPage().getShapeAtCoords(x, y);
                 if (curShape != null) {
+                    if (curShape.getHidden()) return true;
+                    Game.curGame.setCurrentShape(curShape);
                     oldX = x;
                     oldY = y;
                     if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
