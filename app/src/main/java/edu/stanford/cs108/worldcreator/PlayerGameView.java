@@ -85,14 +85,22 @@ public class PlayerGameView extends View {
                 curShape.move(x - oldX, y - oldY);
                 oldX = x;
                 oldY = y;
-                //TODO: RIGHT HERE DO ONDROP THINGS
+                
+                //Test for onDrop
                 Shape underShape = Game.curGame.getShapeUnder(x, y, curShape);
-                if (underShape != null) {
-                    underShape.executeOnDrop(curShape);
+                if (underShape != null && underShape.canDropOn(curShape)) {
+                    //TODO:DRAW RECT AROUND UNDERSHAPE
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (curShape == null) break;
+
+                //Test for onDrop
+                underShape = Game.curGame.getShapeUnder(x, y, curShape); //Weird switch statements
+                if (underShape != null && underShape.canDropOn(curShape)) {
+                    underShape.executeOnDrop(curShape);
+                }
+
                 //If we are dropping Shape in inventory, put in inventory and run on drop
                 float shapesMiddle = curShape.getY() + curShape.getHeight()/2.0f;
                 if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.addToInventory(curShape);
