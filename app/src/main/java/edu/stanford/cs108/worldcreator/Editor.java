@@ -192,7 +192,7 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.imageName)).setText(shape.getImage());
         ((EditText) findViewById(R.id.displayText)).setText(shape.getText());
         ((EditText) findViewById(R.id.scriptText)).setText(shape.getScript().getScriptString());
-
+        //update script text
         if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
         else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
         if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);

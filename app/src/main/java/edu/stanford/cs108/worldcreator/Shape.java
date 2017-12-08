@@ -80,6 +80,7 @@ public class Shape {
 	}
 	
 	public void executeOnClick() {
+        Log.d("MESSAGE", "executeOnClick: ");
         Vector<Vector<Object>> commands = script.getOnClickActions();
 		executeCommands(commands);
 	}
@@ -99,11 +100,7 @@ public class Shape {
     }
 	
 	private void executeCommands(Vector<Vector<Object>> commands) {
-		Vector<Object> goToTargets = commands.elementAt(0);
-		for(Object page: goToTargets){
-            if(page != null) Game.curGame.changePage((Page) page);
-        }
-		
+		Log.d("MESSAGE", "executeCommands: ");
 		Vector<Object> playTargets = commands.elementAt(1);
 		for(Object mp: playTargets) {
             if(mp != null) ((MediaPlayer) mp).start();
@@ -111,12 +108,20 @@ public class Shape {
 		
 		Vector<Object> hideTargets = commands.elementAt(2);
 		for(Object shape: hideTargets){
+			Log.d("MESSAGE", "executeCommands: HIDE: " + ((Shape)shape).getName());
             if(shape != null) ((Shape) shape).setHidden(true);
         }
 		
 		Vector<Object> showTargets = commands.elementAt(3);
 		for(Object shape: showTargets){
+			Log.d("MESSAGE", "executeCommands: SHOW: " + ((Shape)shape).getName());
             if(shape != null)((Shape) shape).setHidden(false);
+		}
+
+		Vector<Object> goToTargets = commands.elementAt(0);
+		for(Object page: goToTargets){
+			Log.d("MESSAGE", "executeCommands: GOTO: " + ((Page)page).getName());
+			if(page != null) Game.curGame.changePage((Page) page);
 		}
 	}
 	
