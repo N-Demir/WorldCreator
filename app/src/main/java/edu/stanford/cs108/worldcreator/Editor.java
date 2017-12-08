@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -123,7 +124,10 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
         if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) return;
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
-        if (Game.curGame.getPage(newName) != null) return; //TODO:TOAST!!!!
+        if (Game.curGame.getPage(newName) != null) {
+            //Toast.makeText(getCallingActivity(), "Hey", Toast.LENGTH_LONG);
+            return; //TODO:TOAST!!!!
+        }
         Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }

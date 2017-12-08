@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         while (pCursor.moveToNext()){
             Log.d("MESSAGE" , "yew2");
             Page cur = new Page(pCursor.getString(0), pCursor.getString(1));
+            Log.d("NIKITASLOG:", "PCursor2: " + pCursor.getString(1));
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
                 // constructor goes name, x, y, height, width, move, visible, img, script, label, fontSize

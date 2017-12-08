@@ -20,6 +20,7 @@ public class Page {
 	public Page(String name, String imageName) {
 		this.pName = name;
 		backgroundImage = imageName;
+		Log.d("NIKITASLOG:", "BackgroundImgName: " + backgroundImage);
 		shapes = new Vector<Shape>();
 	}
 
