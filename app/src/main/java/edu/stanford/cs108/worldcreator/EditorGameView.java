@@ -1,5 +1,6 @@
 package edu.stanford.cs108.worldcreator;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;

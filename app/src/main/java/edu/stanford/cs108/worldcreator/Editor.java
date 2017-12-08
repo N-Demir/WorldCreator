@@ -75,6 +75,8 @@ public class Editor extends AppCompatActivity {
             newGame = "page" + count;
             count++;
         }
+        if (Game.curGame.getPage(newGame) == null) return; //TODO: TOAST!!!!
+
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
@@ -85,8 +87,8 @@ public class Editor extends AppCompatActivity {
     //TODO There is a bug when you try to delete the first item in the list when there are other items Could be the array adapter stuff\
     //TODO Determine if root page vant be deleted
     public void onDeletePage(View view){
-        String pageName  = ((Spinner) findViewById(R.id.page_spinner)).getSelectedItem().toString();
-        if (Game.curGame.getPages().size() == 1) return;
+        String pageName = Game.curGame.getCurPageName();
+        if (pageName.equals(Game.INITIAL_PAGE_NAME)) return;
         for (Page p : Game.curGame.getPages()){
             if (pageName.equals(p.getName())){
                 Game.curGame.getPages().remove(p);
@@ -99,7 +101,9 @@ public class Editor extends AppCompatActivity {
     }
 
     public void onRenamePage(View view) {
-        Game.curGame.getCurrentPage().setName(((EditText)findViewById(R.id.pageName)).getText().toString());
+        String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
+        if (Game.curGame.getPage(newName) == null) return; //TODO:TOAST!!!!
+        Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }
 
@@ -126,6 +130,8 @@ public class Editor extends AppCompatActivity {
             shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
             shapeCount++;
         }
+        if (Game.curGame.getShape(shapeName) == null) return; //TOAST!!!!!
+
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
         setShapeFields(); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
@@ -138,11 +144,15 @@ public class Editor extends AppCompatActivity {
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
+        if (curShape == null) return;
+        String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
+        if (Game.curGame.getShape(shapeName) == null) return;
+        curShape.setName(shapeName);
+        //TODO:Duplicates
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
         curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
-        curShape.setName(((EditText)findViewById(R.id.shapeName)).getText().toString());
         curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
         curShape.setScript(new Script(((EditText)findViewById(R.id.scriptText)).getText().toString()));
