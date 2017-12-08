@@ -3,6 +3,7 @@ package edu.stanford.cs108.worldcreator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -42,7 +43,7 @@ public class EditorGameView extends View {
         //TODO: Extension = touch resizing?
         float x = e.getX();
         float y = e.getY();
-
+        Log.d("MESSAGE", "TOUCH EVENT");
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
@@ -62,6 +63,7 @@ public class EditorGameView extends View {
                 break;
         }
 
+        invalidate();
         return true;
     }
     //TODO: CLEAR OLDX AND OLDY WHEN CURPAGE IS SWITCHED????
