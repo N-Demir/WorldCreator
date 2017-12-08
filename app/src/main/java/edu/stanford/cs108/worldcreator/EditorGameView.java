@@ -47,6 +47,7 @@ public class EditorGameView extends View {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
+                if(Game.curGame.getCurrentShape() != null) Log.d("MESSAGE", "clicked on " + Game.curGame.getCurrentShape().getName());
                 if (Game.curGame.getCurrentShape() != null) {
                     oldX = x;
                     oldY = y;

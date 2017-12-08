@@ -2,6 +2,7 @@ package edu.stanford.cs108.worldcreator;
 
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import java.util.*;
 
@@ -43,8 +44,10 @@ public class Page {
 
 	public Shape getShapeAtCoords(float x, float y) {
 		// This has to be backwards so that we select the top shape
+
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			Shape shape = shapes.get(i);
+			Log.d("MESSAGE", "getShapeAtCoords: "+ shape.getName() +" " + shape.isContained(x, y));
 			if (shape.isContained(x, y)) return shape;
 		}
 		return null;

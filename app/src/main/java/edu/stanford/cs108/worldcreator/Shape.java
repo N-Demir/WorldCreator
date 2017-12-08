@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 
@@ -34,7 +36,7 @@ public class Shape {
 		hidden = false;
 		movable = false;
 		x = 10;
-		y =10;
+		y = 10;
 		height = defaultHeight;
 		width = defaultWidth;
 		imageName = "";
@@ -167,7 +169,7 @@ public class Shape {
 					context.getPackageName());
 			BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(imageID,
 					context.getTheme());
-			canvas.drawBitmap(image.getBitmap(), x, y, null); //TODO: If shape is not visible and in editor then use opaque paint
+			canvas.drawBitmap(image.getBitmap(), null, new RectF(x, y, x + width, y + height), null); //TODO: If shape is not visible and in editor then use opaque paint
 		} else {
 			/* Default is a grey rectangle*/
 			Paint paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
