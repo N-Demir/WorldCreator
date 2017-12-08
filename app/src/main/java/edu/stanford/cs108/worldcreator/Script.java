@@ -11,9 +11,11 @@ public class Script{
 	public Vector<Vector<Object>> onClick;
 	public Vector<Vector<Object>> onDrop;
 	public Vector<Vector<Object>> onEnter;
+	public String scriptString;
 	
 	
 	public Script(String input) {
+		scriptString = input;
 		onClick = new Vector<Vector<Object>>();
 		onEnter = new Vector<Vector<Object>>();
 		onDrop = new Vector<Vector<Object>>();
@@ -21,7 +23,6 @@ public class Script{
 			onClick.add(i, new Vector<Object>());
 			onDrop.add(i, new Vector<Object>());
 			onEnter.add(i, new Vector<Object>());
-//			onEnter[i] = new Vector<Object>();
 		}
 		Log.d("MESSAGE", input);
 		String[] strs = input.split(";");
@@ -56,6 +57,7 @@ public class Script{
 	public Vector<Vector<Object>> getOnClickActions() { return onClick;}
 	public Vector<Vector<Object>> getOnDropActions() { return onDrop;}
 	public Vector<Vector<Object>> getOnEnterActions() { return onClick;}
+	public String getScriptString(){ return scriptString;}
 	
 	public void addToOnClick(String command, String target) {
 		switch(command) {
