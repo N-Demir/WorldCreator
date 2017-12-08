@@ -107,7 +107,7 @@ public class Game {
 		float curX = INVENTORY_SPACING;
 		for(Shape shape: inventory) {
 			shape.setX(curX);
-			shape.sety(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING/2.0f);
+			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT);
 			shape.draw(canvas);
 			curX += shape.getWidth() + INVENTORY_SPACING;
 		}

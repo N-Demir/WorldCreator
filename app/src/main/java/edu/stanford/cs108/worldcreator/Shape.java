@@ -90,7 +90,7 @@ public class Shape {
 	public void setHidden(boolean bool) { hidden = bool;}
 	public void setMovable(boolean bool) { movable = bool;}
 	public void setX(float val) { x = val;}
-	public void sety(float val) { y = val;}
+	public void setY(float val) { y = val;}
 	public void setWidth(float val) { width = val;}
 	public void setHeight(float val) { height = val;}
 	public void setName(String str) { name = str;}
@@ -117,6 +117,7 @@ public class Shape {
 
 	
 	public void draw(Canvas canvas) {
+		if (hidden) return; //TODO: Account for being in editor
 		if(text != "") {
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);

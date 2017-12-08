@@ -62,34 +62,35 @@ public class PlayerGameView extends View {
         //TODO: Extension = touch resizing?
         float x = e.getX();
         float y = e.getY();
-
+        Shape curShape = Game.curGame.getCurrentShape();
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
-                if (Game.curGame.getCurrentShape() != null) {
+                curShape = Game.curGame.getCurrentShape();
+                if (curShape != null) {
                     oldX = x;
                     oldY = y;
                     if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
-                        Game.curGame.removeFromInventory(Game.curGame.getCurrentShape());
+                        Game.curGame.removeFromInventory(curShape);
                     } else {
-                        Game.curGame.getCurrentShape().runScript_OnClick(); //TODO:Needs implementation
+                        curShape.runScript_OnClick(); //TODO: FIX THIS
                     }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (Game.curGame.getCurrentShape() == null ||
-                        !Game.curGame.getCurrentShape().getMovable()) break;
-                Game.curGame.getCurrentShape().move(x - oldX, y - oldY);
+                if (curShape == null ||
+                        !curShape.getMovable()) break;
+                curShape.move(x - oldX, y - oldY);
                 oldX = x;
                 oldY = y;
                 break;
             case MotionEvent.ACTION_UP:
-                if (Game.curGame.getCurrentShape() == null) break;
+                if (curShape == null) break;
                 //If we are dropping Shape in inventory, put in inventory and run on drop
-                if (y >= height - SEPARATOR_HEIGHT) {
-                    Game.curGame.addToInventory(Game.curGame.getCurrentShape());
-                }
+                float shapesMiddle = curShape.getY() + curShape.getHeight()/2.0f;
+                if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.addToInventory(curShape);
+                else curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
                 break;
         }
 
