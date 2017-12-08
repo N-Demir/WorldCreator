@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO:FIX BUGS HERE
         Vector<Page> document = new Vector<Page>();
         String gameName = ((Cursor) ((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
+        Game.curGame = new Game(gameName); //TODO:FIGURE OUT HOW TO DO THIS
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         while (pCursor.moveToNext()){
             Log.d("MESSAGE IS HERE: ", pCursor.getString(0));
@@ -184,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
             document.add(cur);
         }
         Game.curGame = new Game(document, gameName);
+        for(Page page: Game.curGame.getPages()){
+            for(Shape shape: page.getShapes()){
+                shape.setScriptText(shape.getScriptText());
+            }
+        }
         startActivity(intent);
     }
 }
