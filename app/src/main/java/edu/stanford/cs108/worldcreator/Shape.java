@@ -86,10 +86,14 @@ public class Shape {
 		executeCommands(commands);
 	}
 	
-	public void executeOnDrop() {
-		Vector<Vector<Object>> commands = script.getOnDropActions();
+	public void executeOnDrop(Shape beingDropped) {
+		Vector<Vector<Object>> commands = script.getOnDropActions(beingDropped);
 		executeCommands(commands);
 	}
+
+	public boolean canDrop(Shape beingDropped){
+        return script.droppable(beingDropped);
+    }
 	
 	private void executeCommands(Vector<Vector<Object>> commands) {
 		Vector<Object> goToTargets = commands.elementAt(0);
