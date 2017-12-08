@@ -21,6 +21,8 @@ public class PlayerGameView extends View {
     private Paint separatorPaint;
 
     public static boolean drawOutline;
+    public static String selectedShapeName;
+
     public static float width, height; //Kind of a hack so that inventory drawing works
     private float oldX, oldY;
 
@@ -36,7 +38,6 @@ public class PlayerGameView extends View {
         separatorPaint.setColor(SEPARATOR_COLOR);
         separatorPaint.setStyle(SEPARATOR_STYLE);
         separatorPaint.setStrokeWidth(SEPARATOR_STROKE_WIDTH);
-
     }
 
     /**
@@ -94,6 +95,7 @@ public class PlayerGameView extends View {
                 if (underShape != null && underShape.canDropOn(curShape)) {
                     //TODO:DRAW RECT AROUND UNDERSHAPE
                     drawOutline = true;
+                    selectedShapeName = underShape.getName();
                 } else {
                     drawOutline = false;
                 }

@@ -177,7 +177,7 @@ public class Shape {
 	
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
-		if (PlayerGameView.drawOutline) {
+		if (PlayerGameView.drawOutline && PlayerGameView.selectedShapeName.equals(name)) {
 			canvas.drawRect(x, y, x + width, y + height, outlineSelectedPaint);
 		}
 		if(!text.isEmpty()) {
