@@ -102,7 +102,7 @@ public class Game {
 	}
 
 	public Shape getShapeAtCoords(float x, float y) {
-		Shape shape = currentPage.getShapeAtCoords(x, y);
+		Shape shape = currentPage.getShapeAtCoords(x, y); //TODO:Remove redundencies? or keep Modularity?
 		if (shape != null) return shape;
 		for (int i = inventory.size() - 1; i >= 0; i--) {
 			shape = inventory.get(i);
@@ -111,8 +111,25 @@ public class Game {
 		return null;
 	}
 
-	public boolean isAShapeUnder(float x, float y, Shape shape) {
-        return true;
+	public Shape getShapeUnder(float x, float y, Shape shape) {
+		//TRICK: Remove shape from appropriate collection and search
+		Shape underShape;
+		if (y >= PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT) {
+			//Inside inventory
+			inventory.remove(shape);
+			for (int i = inventory.size() - 1; i >= 0; i--) {
+				underShape = inventory.get(i);
+				if (underShape.isContained(x, y)) return underShape;
+			}
+			inventory.add(shape);
+		} else {
+			//Inside regular page
+			currentPage.removeShape(shape);
+			underShape = currentPage.getShapeAtCoords(x, y);
+			currentPage.addShape(shape);
+			if (underShape != null) return underShape;
+		}
+		return null;
 	}
 
 	public void drawPage(Canvas canvas) {
