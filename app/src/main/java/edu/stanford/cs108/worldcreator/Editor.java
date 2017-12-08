@@ -57,22 +57,8 @@ public class Editor extends AppCompatActivity {
 
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
         updatePageSpinner();
-        setDefaultShapeFields(); //TODO:UNNECESSARY?
+        //setDefaultShapeFields(); //TODO:UNNECESSARY?
         setTitle("Editing: " + Game.curGame.getGameName());
-    }
-
-    private void setDefaultShapeFields() {
-        ((EditText) findViewById(R.id.xCord)).setText("");
-        ((EditText) findViewById(R.id.yCord)).setText("");
-        ((EditText) findViewById(R.id.width)).setText("");
-        ((EditText) findViewById(R.id.height)).setText("");
-        ((EditText) findViewById(R.id.shapeName)).setText("");
-        ((EditText) findViewById(R.id.imageName)).setText("");
-        ((EditText) findViewById(R.id.displayText)).setText("");
-        ((EditText) findViewById(R.id.scriptText)).setText("");
-
-        ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
-        ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
     }
 
     private void setShapeFields(){
@@ -141,7 +127,7 @@ public class Editor extends AppCompatActivity {
     }
 
     // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
-    public void onNewShape (View view){
+    public void onCreateShape (View view){
         //TODO IS this necessarY?
         /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
         String currentPage = pages.getSelectedItem().toString();
@@ -159,6 +145,8 @@ public class Editor extends AppCompatActivity {
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
+
+    public void onDeleteShape(View view) {} //TODO:IMPLEMENTTTTTT
 
     public void onUpdateShape(View view) {
         Log.d("MESSAGE", "onUpdateShape: " + ((EditText)findViewById(R.id.imageName)).getText().toString());
@@ -189,11 +177,6 @@ public class Editor extends AppCompatActivity {
         onUpdateShape(null); //TODO:Is this an issue?
     }*/
 
-    private float toFloat(String input){
-        if (input.isEmpty()) return Float.parseFloat(input);
-        return 0;
-    }
-
     private int toInt(boolean input){
         if (input) return 1;
         return 0;
@@ -206,6 +189,20 @@ public class Editor extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shapeNames);
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
+    }
+
+    private void setDefaultShapeFields() {
+        ((EditText) findViewById(R.id.xCord)).setText("");
+        ((EditText) findViewById(R.id.yCord)).setText("");
+        ((EditText) findViewById(R.id.width)).setText("");
+        ((EditText) findViewById(R.id.height)).setText("");
+        ((EditText) findViewById(R.id.shapeName)).setText("");
+        ((EditText) findViewById(R.id.imageName)).setText("");
+        ((EditText) findViewById(R.id.displayText)).setText("");
+        ((EditText) findViewById(R.id.scriptText)).setText("");
+
+        ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
+        ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
     }
 
     ///////////////////////////DATABASE RELATED STUFF/////////////////////////

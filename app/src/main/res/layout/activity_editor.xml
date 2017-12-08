@@ -178,7 +178,7 @@
             android:layout_row="0"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:onClick="onNewShape"
+            android:onClick="onCreateShape"
             android:text="New"
             android:textSize="10dp" />
 
