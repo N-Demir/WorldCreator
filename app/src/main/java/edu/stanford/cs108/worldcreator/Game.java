@@ -111,6 +111,10 @@ public class Game {
 		return null;
 	}
 
+	public boolean isAShapeUnder(float x, float y, Shape shape) {
+
+	}
+
 	public void drawPage(Canvas canvas) {
 		currentPage.draw(canvas);
 	}

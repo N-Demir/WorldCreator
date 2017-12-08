@@ -23,7 +23,7 @@ public class Shape {
 	private float x;
 	private float y;
 	private float width;
-	private String scriptName;
+	private String scriptText;
 	private float height;
 	private String name;
 	private String text;
@@ -42,7 +42,7 @@ public class Shape {
 		width = defaultWidth;
 		imageName = "";
 		text = "";
-		scriptName = "";
+		scriptText = "";
 		script = new Script("");
 	}
 
@@ -60,7 +60,7 @@ public class Shape {
 		else hidden = true;
 		imageName = img;
 		text = txt;
-		scriptName = script;
+		scriptText = script;
 		this.script =  new Script(script);
 	}
 
@@ -76,7 +76,7 @@ public class Shape {
 		width = defaultWidth;
 		height = defaultHeight;
 		script = new Script("");
-		scriptName = "";
+		scriptText = "";
 	}
 	
 	public void executeOnClick() {
@@ -129,7 +129,7 @@ public class Shape {
 	public String getName() { return name;}
 	public String getText() { return text;}
 	public Script getScript() { return script;}
-	public String getScriptName(){return scriptName;}
+	public String getScriptText(){return scriptText;}
 	public String getImage() { return imageName;}
 	public boolean inInventory() { return inventoryItem;}
 	public Page getPage() { return page;}
@@ -146,6 +146,10 @@ public class Shape {
 	public void setScript(Script temp) { script = temp;}
 	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
 	public void setPage(Page temp) { page = temp;}
+	public void setScriptText(String text) {
+		scriptText = text;
+		script = new Script(scriptText);
+	}
 
 	public boolean isContained(float x, float y) {
 		return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
