@@ -62,7 +62,7 @@ public class EditorGameView extends View {
                 break;
         }
 
+        
         return true;
     }
-    //TODO: CLEAR OLDX AND OLDY WHEN CURPAGE IS SWITCHED????
 }
