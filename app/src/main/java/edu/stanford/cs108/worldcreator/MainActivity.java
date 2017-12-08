@@ -46,15 +46,12 @@ public class MainActivity extends AppCompatActivity {
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
-            /* No database previously existed, create new one */
             setupDBTables();
         }
-
         /* If games table empty, disable buttons */
         Cursor gamesCursor = db.rawQuery("SELECT * FROM games;", null); //SHOULD BE WORKING?
         if (gamesCursor.getCount() == 0) setButtonsEnabled(false);
         else setButtonsEnabled(true);
-
         updateGameSpinner();
     }
 
