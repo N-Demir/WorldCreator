@@ -16,8 +16,11 @@ public class Shape {
 	private static final int defaultWidth = 20;
 	private static final int defaultHeight = 20;
 
-	static{}; //TODO: INITIALIZE PAINTS AND THINGS STATIC TO ALL SHAPE OBJECTS
-	
+	static{
+
+	} //TODO: INITIALIZE PAINTS AND THINGS STATIC TO ALL SHAPE OBJECTS
+
+
 	private boolean hidden;
 	private boolean movable;
 	private float x;

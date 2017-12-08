@@ -13,11 +13,18 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class PlayerGameView extends View {
-    private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
     public static final float SEPARATOR_HEIGHT = 200.0f;
 
+    private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
+    private static final int SEPARATOR_COLOR = Color.BLACK;
+    private static final Paint.Style SEPARATOR_STYLE = Paint.Style.STROKE;
+
+    private static final float OUTLINE_SELECTED_WIDTH = 10.0f;
+    private static final int OUTLINE_SELECTED_COLOR = Color.GREEN;
+    private static final Paint.Style OUTLINE_SELECTED_STYLE = Paint.Style.STROKE;
+
     private Paint separatorPaint;
-    private boolean modeIsPlaying;
+    private Paint outlineSelectedPaint;
 
     public static float width, height; //Kind of a hack so that inventory drawing works
     private float oldX, oldY;
@@ -31,9 +38,14 @@ public class PlayerGameView extends View {
 
     private void init() {
         separatorPaint = new Paint();
-        separatorPaint.setColor(Color.BLACK);
-        separatorPaint.setStyle(Paint.Style.STROKE);
+        separatorPaint.setColor(SEPARATOR_COLOR);
+        separatorPaint.setStyle(SEPARATOR_STYLE);
         separatorPaint.setStrokeWidth(SEPARATOR_STROKE_WIDTH);
+        outlineSelectedPaint = new Paint();
+        outlineSelectedPaint.setColor(OUTLINE_SELECTED_COLOR);
+        outlineSelectedPaint.setStyle(OUTLINE_SELECTED_STYLE);
+        outlineSelectedPaint.setStrokeWidth(OUTLINE_SELECTED_WIDTH);
+
     }
 
     /**
@@ -90,14 +102,15 @@ public class PlayerGameView extends View {
                 Shape underShape = Game.curGame.getShapeUnder(x, y, curShape);
                 if (underShape != null && underShape.canDropOn(curShape)) {
                     //TODO:DRAW RECT AROUND UNDERSHAPE
+                    underShape.drawOutline(true);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (curShape == null) break;
-
                 //Test for onDrop
                 underShape = Game.curGame.getShapeUnder(x, y, curShape); //Weird switch statements
                 if (underShape != null && underShape.canDropOn(curShape)) {
+                    underShape.drawOutline(false);
                     underShape.executeOnDrop(curShape);
                 }
 
