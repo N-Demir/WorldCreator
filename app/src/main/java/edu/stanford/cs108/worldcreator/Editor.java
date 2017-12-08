@@ -74,6 +74,8 @@ public class Editor extends AppCompatActivity {
 
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
+
+        findViewById(R.id.EditorView).invalidate();
     }
 
     private void setShapeFields(Shape shape){
@@ -149,7 +151,7 @@ public class Editor extends AppCompatActivity {
         String heightStr = ((EditText) findViewById(R.id.height)).getText().toString();
         String shapeName  = ((EditText) findViewById(R.id.shapeName)).getText().toString();
         ((EditText) findViewById(R.id.shapeName)).setText("");
-        boolean movable = ((RadioButton) findViewById(R.id.moveable)).isChecked();
+        boolean movable = ((RadioButton) findViewById(R.id.movable)).isChecked();
         boolean visible = ((RadioButton) findViewById(R.id.isVisible)).isChecked();
         int prevNum = shapeCount- 1;
         if (checkEmpty(shapeName) || shapeName.equals("shape" + prevNum)){
