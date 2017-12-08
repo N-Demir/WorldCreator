@@ -19,6 +19,7 @@ public class Page {
 	public String getName() {
 		return pName; 
 	}
+	public void setName(String newName) {pName = newName;}
 	
 	public int removeShape(Shape s) {
 		if (shapes.contains(s)) {

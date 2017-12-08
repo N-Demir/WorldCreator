@@ -61,28 +61,6 @@ public class Editor extends AppCompatActivity {
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
-    public void onUpdateShape(View view) {
-        Log.d("MESSAGE", "onUpdateShape: " + ((EditText)findViewById(R.id.imageName)).getText().toString());
-        //read in all shape EditTexts and update curShape with their values
-        Shape curShape = Game.curGame.getCurrentShape();
-        curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
-        curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
-        curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
-        curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
-        curShape.setName(((EditText)findViewById(R.id.shapeName)).getText().toString());
-        curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
-        curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
-        curShape.setScript(new Script(((EditText)findViewById(R.id.scriptText)).getText().toString()));
-
-        curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
-        curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
-
-
-        updateShapeSpinner();
-
-        findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
-    }
-
     private void setDefaultShapeFields() {
         ((EditText) findViewById(R.id.xCord)).setText("");
         ((EditText) findViewById(R.id.yCord)).setText("");
@@ -116,7 +94,7 @@ public class Editor extends AppCompatActivity {
 
  //TODO Allows me to create the same page twice and it inherits its  shape Objects
     public void onCreatePage(View view){
-        EditText editText = (EditText) findViewById(R.id.npage);
+        EditText editText = (EditText) findViewById(R.id.pageName);
         String newGame = editText.getText().toString();
 
         int prevPage = count - 1; //TODO: THIS NEEDS TO BE CHANGED
@@ -129,16 +107,6 @@ public class Editor extends AppCompatActivity {
         updatePageSpinner();
         editText.setText(newGame);
         findViewById(R.id.EditorView).invalidate();
-    }
-
-    // TODO Figure out how to set the selected spinner item
-    private void updatePageSpinner(){
-        Vector<String> pageNames = new Vector<String>();
-        for (Page cur : Game.curGame.getPages()) pageNames.add(cur.getName());
-        Spinner spinner = (Spinner) findViewById(R.id.page_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pageNames);
-        spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getPosition(Game.curGame.getCurPageName()));
     }
 
     //TODO There is a bug when you try to delete the first item in the list when there are other items Could be the array adapter stuff\
@@ -157,12 +125,28 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
     }
 
-    // TODO there is no way to get a script image or text label It also crashes on the script object creation
+    public void onRenamePage(View view) {
+        Game.curGame.getCurrentPage().setName(((EditText)findViewById(R.id.pageName)).getText().toString());
+        updatePageSpinner();
+    }
+
+    // TODO Figure out how to set the selected spinner item
+    private void updatePageSpinner(){
+        Vector<String> pageNames = new Vector<String>();
+        for (Page cur : Game.curGame.getPages()) pageNames.add(cur.getName());
+        Spinner spinner = (Spinner) findViewById(R.id.page_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pageNames);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getPosition(Game.curGame.getCurPageName()));
+    }
+
+    // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
     public void onNewShape (View view){
         //TODO IS this necessarY?
         /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
         String currentPage = pages.getSelectedItem().toString();
         Game.curGame.changePage(Game.curGame.getPage(currentPage));*/
+
         int prevNum = shapeCount- 1;
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
         if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
@@ -171,10 +155,32 @@ public class Editor extends AppCompatActivity {
         }
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
-        onUpdateShape(null);
+        onUpdateShape(null); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
+
+    public void onUpdateShape(View view) {
+        Log.d("MESSAGE", "onUpdateShape: " + ((EditText)findViewById(R.id.imageName)).getText().toString());
+        //read in all shape EditTexts and update curShape with their values
+        Shape curShape = Game.curGame.getCurrentShape();
+        curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
+        curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
+        curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
+        curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
+        curShape.setName(((EditText)findViewById(R.id.shapeName)).getText().toString());
+        curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
+        curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
+        curShape.setScript(new Script(((EditText)findViewById(R.id.scriptText)).getText().toString()));
+
+        curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
+        curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
+        
+        updateShapeSpinner();
+
+        findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
+    }
+
 
     /*private void createShape(String name, String xStr, String yStr, String height, String width, boolean visible, boolean toMove){
         Shape newShape = new Shape(name, toFloat(xStr), toFloat(yStr), toFloat(height), toFloat(width), toInt(toMove), toInt(visible), "","","");
