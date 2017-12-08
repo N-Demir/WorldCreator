@@ -134,7 +134,7 @@ public class Editor extends AppCompatActivity {
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
-        setShapeFields(); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
+        updateShapeSpinner();
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
