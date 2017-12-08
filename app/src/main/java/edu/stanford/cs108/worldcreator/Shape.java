@@ -139,14 +139,6 @@ public class Shape {
 		this.x += xAmount;
 		this.y += yAmount;
 	}
-
-
-	public void runScript_OnClick() {
-		//TODO: IS this just supposed to be implemented in the script class? Thats fine but need stuff written
-	}
-	public void runScript_onDrop() {}
-	public void runScript_onEnter() {} //TODO: necessary just for page 1 entering from game start
-
 	
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
