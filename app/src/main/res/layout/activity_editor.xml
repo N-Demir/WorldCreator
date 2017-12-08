@@ -266,39 +266,34 @@
             android:padding="5dp"
             android:textSize="12dp"
             android:hint="display-text..."/>
-
-        <Spinner
-            android:id="@+id/spinner_scriptTrigger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="3"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal">
-        </Spinner>
-
-        <Spinner
-            android:id="@+id/spinner_scriptAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="3"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal">
-        </Spinner>
-
-        <Spinner
-            android:id="@+id/spinner_scriptRes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="4"
-            android:layout_row="3"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal">
-        </Spinner>
-
-
     </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter shape script:"
+            android:textSize="12dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:textSize="10dp"
+            android:padding="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:textSize="10dp"
+            android:text="Update script"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>
