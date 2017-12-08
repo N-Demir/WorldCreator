@@ -114,9 +114,10 @@ public class Game {
 	public Shape getShapeUnder(float x, float y, Shape shape) {
 		//TRICK: Remove shape from appropriate collection and search
 		Shape underShape;
+		boolean doAdd;
 		if (y >= PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT) {
 			//Inside inventory
-			boolean doAdd = inventory.remove(shape);
+			doAdd = inventory.remove(shape);
 			for (int i = inventory.size() - 1; i >= 0; i--) {
 				underShape = inventory.get(i);
 				if (underShape.isContained(x, y)) return underShape;
@@ -124,9 +125,9 @@ public class Game {
 			if (doAdd) inventory.add(shape);
 		} else {
 			//Inside regular page
-			currentPage.removeShape(shape);
+			doAdd = currentPage.getShapes().remove(shape);
 			underShape = currentPage.getShapeAtCoords(x, y);
-			currentPage.addShape(shape);
+			if (doAdd) currentPage.addShape(shape);
 			if (underShape != null) return underShape;
 		}
 		return null;
