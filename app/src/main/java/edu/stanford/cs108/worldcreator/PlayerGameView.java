@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -69,6 +70,7 @@ public class PlayerGameView extends View {
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
                 curShape = Game.curGame.getCurrentShape();
                 if (curShape != null) {
+                    Log.d("MESSAGE", "found object");
                     oldX = x;
                     oldY = y;
                     if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
@@ -93,7 +95,7 @@ public class PlayerGameView extends View {
                 else curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
                 break;
         }
-
+        invalidate();
         return true;
     }
 }
