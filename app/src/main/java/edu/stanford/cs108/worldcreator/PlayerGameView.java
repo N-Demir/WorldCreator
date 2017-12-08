@@ -67,7 +67,7 @@ public class PlayerGameView extends View {
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                curShape = Game.curGame.getCurrentPage().getShapeAtCoords(x, y);
+                curShape = Game.curGame.getShapeAtCoords(x, y);
                 if (curShape != null) {
                     if (curShape.getHidden()) return true;
                     Game.curGame.setCurrentShape(curShape);
@@ -85,6 +85,7 @@ public class PlayerGameView extends View {
                 curShape.move(x - oldX, y - oldY);
                 oldX = x;
                 oldY = y;
+                //TODO: RIGHT HERE DO ONDROP THINGS
                 break;
             case MotionEvent.ACTION_UP:
                 if (curShape == null) break;

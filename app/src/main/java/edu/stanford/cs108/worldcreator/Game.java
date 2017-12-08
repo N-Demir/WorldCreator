@@ -101,7 +101,7 @@ public class Game {
 		Game.curGame.getCurrentPage().addShape(shape);
 	}
 
-	public Shape getShapeAtCoordinates(float x, float y) {
+	public Shape getShapeAtCoords(float x, float y) {
 		Shape shape = currentPage.getShapeAtCoords(x, y);
 		if (shape != null) return shape;
 		for (int i = inventory.size() - 1; i >= 0; i--) {
