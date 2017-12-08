@@ -51,7 +51,7 @@ public class EditorGameView extends View {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Shape temp = Game.curGame.getCurrentPage().getShapeAtCoords(x, y);
-                if(temp != null) Game.curGame.setCurrentShape(temp);
+                if (temp != null) Game.curGame.setCurrentShape(temp);
                 else canDrag = false;
                 if (Game.curGame.getCurrentShape() != null) {
                     oldX = x;
@@ -72,8 +72,7 @@ public class EditorGameView extends View {
         }
 
         invalidate();
-        ((Editor)(Activity) getContext()).updateShapeSpinner();
+        ((Editor) (Activity) getContext()).updateShapeSpinner();
         return true;
-        //TODO:CALL UPDATE FIELDS IN PARENT ACTIVITY
     }
 }

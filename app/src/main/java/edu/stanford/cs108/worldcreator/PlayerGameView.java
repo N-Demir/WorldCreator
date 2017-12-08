@@ -79,8 +79,7 @@ public class PlayerGameView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (curShape == null ||
-                        !curShape.getMovable()) break;
+                if (curShape == null || !curShape.getMovable() || curShape.getHidden()) break;
                 curShape.move(x - oldX, y - oldY);
                 oldX = x;
                 oldY = y;
