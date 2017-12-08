@@ -13,11 +13,19 @@ import android.util.Log;
 import java.util.Vector;
 
 public class Shape {
+	private static final float OUTLINE_SELECTED_WIDTH = 10.0f;
+	private static final int OUTLINE_SELECTED_COLOR = Color.GREEN;
+	private static final Paint.Style OUTLINE_SELECTED_STYLE = Paint.Style.STROKE;
+	private static final Paint outlineSelectedPaint;
+
 	private static final int defaultWidth = 20;
 	private static final int defaultHeight = 20;
 
 	static{
-
+		outlineSelectedPaint = new Paint();
+		outlineSelectedPaint.setColor(OUTLINE_SELECTED_COLOR);
+		outlineSelectedPaint.setStyle(OUTLINE_SELECTED_STYLE);
+		outlineSelectedPaint.setStrokeWidth(OUTLINE_SELECTED_WIDTH);
 	} //TODO: INITIALIZE PAINTS AND THINGS STATIC TO ALL SHAPE OBJECTS
 
 
@@ -169,6 +177,9 @@ public class Shape {
 	
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
+		if (PlayerGameView.drawOutline) {
+			canvas.drawRect(x, y, x + width, y + height, outlineSelectedPaint);
+		}
 		if(!text.isEmpty()) {
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
