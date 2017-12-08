@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+
+import java.util.Vector;
 
 public class Shape {
 	private static final int defaultWidth = 20;
@@ -73,36 +76,33 @@ public class Shape {
 		scriptName = "";
 	}
 	
-		public void executeOnClick() {
-		Vector<Object>[] commands = script.getOnClickActions();
+	public void executeOnClick() {
+			Vector<Vector<Object>> commands = script.getOnClickActions();
 		executeCommands(commands);
 	}
 	
 	public void executeOnEnter() {
-		Vector<Object>[] commands = script.getOnEnterActions();
+		Vector<Vector<Object>> commands = script.getOnEnterActions();
 		executeCommands(commands);
 	}
 	
 	public void executeOnDrop() {
-		Vector<Object>[] commands = script.getOnDropActions();
+		Vector<Vector<Object>> commands = script.getOnDropActions();
 		executeCommands(commands);
 	}
 	
-	private void executeCommands(Vector<Object>[] commands) {
-		Vector<Object> goToTargets = commands[0];
+	private void executeCommands(Vector<Vector<Object>> commands) {
+		Vector<Object> goToTargets = commands.elementAt(0);
 		for(Object page: goToTargets)  Game.curGame.changePage((Page) page);	
 		
-		Vector<Object> playTargets = commands[1];
-		for(Object mp: playTargets) ((MediaPlayer) mp).play();
+		Vector<Object> playTargets = commands.elementAt(1);
+		for(Object mp: playTargets) ((MediaPlayer) mp).start();
 		
-		Vector<Object> hideTargets = commands[2];
+		Vector<Object> hideTargets = commands.elementAt(2);
 		for(Object shape: hideTargets) ((Shape) shape).setHidden(true);
 		
-		Vector<Object> showTargets = commands[3];
+		Vector<Object> showTargets = commands.elementAt(3);
 		for(Object shape: showTargets) ((Shape) shape).setHidden(false);
-		
-		//can't redraw without canvas to pass as parameter
-		//Game.curGame.drawPage();
 	}
 	
 	public boolean getHidden() { return hidden;}
@@ -147,38 +147,6 @@ public class Shape {
 	public void runScript_onDrop() {}
 	public void runScript_onEnter() {} //TODO: necessary just for page 1 entering from game start
 
-	
-	public void executeOnClick() {
-		Vector<Object>[] commands = script.getOnClickActions();
-		executeCommands(commands);
-	}
-	
-	public void executeOnEnter() {
-		Vector<Object>[] commands = script.getOnEnterActions();
-		executeCommands(commands);
-	}
-	
-	public void executeOnDrop() {
-		Vector<Object>[] commands = script.getOnDropActions();
-		executeCommands(commands);
-	}
-	
-	private void executeCommands(Vector<Object>[] commands) {
-		Vector<Object> goToTargets = commands[0];
-		for(Object page: goToTargets)  Game.curGame.changePage((Page) page);	
-		
-		Vector<Object> playTargets = commands[1];
-		for(Object mp: playTargets) ((MediaPlayer) mp).play();
-		
-		Vector<Object> hideTargets = commands[2];
-		for(Object shape: hideTargets) ((Shape) shape).setHidden(true);
-		
-		Vector<Object> showTargets = commands[3];
-		for(Object shape: showTargets) ((Shape) shape).setHidden(false);
-		
-		//can't redraw without canvas to pass as parameter
-		//Game.curGame.drawPage();
-	}
 	
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
