@@ -101,6 +101,7 @@ public class Editor extends AppCompatActivity {
     }
 
     public void onRenamePage(View view) {
+        if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) return;
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
         if (Game.curGame.getPage(newName) != null) return; //TODO:TOAST!!!!
         Game.curGame.getCurrentPage().setName(newName);
@@ -146,7 +147,6 @@ public class Editor extends AppCompatActivity {
         Shape curShape = Game.curGame.getCurrentShape();
         if (curShape == null) return;
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) != null) return;
         curShape.setName(shapeName);
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
