@@ -49,7 +49,7 @@ public class Game {
 		this.gameName = gameName;
 		currentPage = pages.elementAt(0);
 		//TODO not sure this is the best way to construct a default first current objecy
-		currentShape =  new Shape ("default", 0, 0, 200.0f, 200.0f, 1, 1, "carrot", "", "");
+		//currentShape =  new Shape ("default", 0, 0, 200.0f, 200.0f, 1, 1, "carrot", "", "");
 	}
 
 	public String getGameName() {return gameName;}

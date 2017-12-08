@@ -141,7 +141,7 @@ public class Editor extends AppCompatActivity {
         }
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
-        onUpdateShape(null); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
+        //onUpdateShape(null); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
@@ -188,6 +188,7 @@ public class Editor extends AppCompatActivity {
         for (Shape cur : Game.curGame.getCurrentPage().getShapes()) shapeNames.add(cur.getName());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shapeNames);
         spinner.setAdapter(adapter);
+        if(shapeNames.size() == 0) return;
         spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
     }
 
