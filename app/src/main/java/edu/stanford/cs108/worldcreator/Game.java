@@ -70,7 +70,7 @@ public class Game {
 
 	public MediaPlayer getSound(String name) {
 		Context context = MainActivity.curContext;
-		int soundID = context.getResources().getIdentifier(name, null, null);
+		int soundID = context.getResources().getIdentifier(name, "raw", context.getPackageName());
 		MediaPlayer mp = MediaPlayer.create(context, soundID);
 		return mp;
 	}
