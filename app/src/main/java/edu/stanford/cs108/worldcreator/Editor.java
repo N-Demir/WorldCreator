@@ -75,7 +75,7 @@ public class Editor extends AppCompatActivity {
             newGame = "page" + count;
             count++;
         }
-        if (Game.curGame.getPage(newGame) == null) return; //TODO: TOAST!!!!
+        if (Game.curGame.getPage(newGame) != null) return; //TODO: TOAST!!!!
 
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
@@ -102,7 +102,7 @@ public class Editor extends AppCompatActivity {
 
     public void onRenamePage(View view) {
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
-        if (Game.curGame.getPage(newName) == null) return; //TODO:TOAST!!!!
+        if (Game.curGame.getPage(newName) != null) return; //TODO:TOAST!!!!
         Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }
@@ -130,7 +130,7 @@ public class Editor extends AppCompatActivity {
             shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
             shapeCount++;
         }
-        if (Game.curGame.getShape(shapeName) == null) return; //TOAST!!!!!
+        if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST!!!!!
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
@@ -146,9 +146,8 @@ public class Editor extends AppCompatActivity {
         Shape curShape = Game.curGame.getCurrentShape();
         if (curShape == null) return;
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) == null) return;
+        if (Game.curGame.getShape(shapeName) != null) return;
         curShape.setName(shapeName);
-        //TODO:Duplicates
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
