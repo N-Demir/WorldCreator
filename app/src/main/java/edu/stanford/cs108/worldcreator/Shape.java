@@ -35,7 +35,7 @@ public class Shape {
 	public Shape(String sName){
 		name = sName;
 		hidden = false;
-		movable = false;
+		movable = true;
 		x = 10;
 		y = 10;
 		height = defaultHeight;
