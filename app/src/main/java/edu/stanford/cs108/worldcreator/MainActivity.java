@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
 
-        //DEBUGGING, CLEARS DB
-        String gamestr = "DROP TABLE IF EXISTS games;";
-        String pagestr = "DROP TABLE IF EXISTS pages;";
-        String shapestr = "DROP TABLE IF EXISTS shapes;";
-        db.execSQL(gamestr);
-        db.execSQL(pagestr);
-        db.execSQL(shapestr);
+//        //DEBUGGING, CLEARS DB
+//        String gamestr = "DROP TABLE IF EXISTS games;";
+//        String pagestr = "DROP TABLE IF EXISTS pages;";
+//        String shapestr = "DROP TABLE IF EXISTS shapes;";
+//        db.execSQL(gamestr);
+//        db.execSQL(pagestr);
+//        db.execSQL(shapestr);
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
