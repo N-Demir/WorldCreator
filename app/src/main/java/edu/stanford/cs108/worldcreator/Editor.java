@@ -151,13 +151,17 @@ public class Editor extends AppCompatActivity {
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
         }
+        updateShapeSpinner();
+        findViewById(R.id.EditorView).invalidate();
 
     } //TODO:IMPLEMENTTTTTT
 
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
+        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName() );
         if (curShape == null) return;
+        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName() );
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
         if (Game.curGame.getShape(shapeName) != null) return;
         curShape.setName(shapeName);
