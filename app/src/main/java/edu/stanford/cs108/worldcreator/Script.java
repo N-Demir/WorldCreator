@@ -14,6 +14,7 @@ public class Script{
 	private Map<Shape, Vector<Vector<Object>>> onDrop;
 	private Vector<Vector<Object>> onEnter;
 	private String scriptString;
+    public static Vector<String> media;
 	
 	
 	public Script(String input) {
@@ -117,6 +118,7 @@ public class Script{
 			onDrop.get(key).elementAt(0).add(page);
 			break;
 		case "play":
+		    if (!media.contains(target)) return;
 			MediaPlayer mp = Game.curGame.getSound(target);
 			if(mp == null) return; //toast
 			onDrop.get(key).elementAt(1).add(mp);
