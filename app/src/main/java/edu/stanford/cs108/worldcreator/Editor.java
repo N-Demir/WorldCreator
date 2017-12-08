@@ -170,7 +170,6 @@ public class Editor extends AppCompatActivity {
         if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
         else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
 
-        updateShapeSpinner();
         findViewById(R.id.EditorView).invalidate();
     }
 
