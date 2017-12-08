@@ -18,11 +18,12 @@ import java.util.Set;
 import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
-    private static final int defaultFontSize = 30;
+    private static final int TOAST_LENGTHS = Toast.LENGTH_SHORT;
+    private static final int DEFAULT_FONT_SIZE = 30;
     SQLiteDatabase db;
     private int count = 2; //TODO: But what about database storage
     private int shapeCount =1;
-    private int fontSize = defaultFontSize;
+    private int fontSize = DEFAULT_FONT_SIZE;
     public static Vector<String> imageNames;
 
     @Override
@@ -101,11 +102,13 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
     }
 
-    //TODO There is a bug when you try to delete the first item in the list when there are other items Could be the array adapter stuff\
-    //TODO Determine if root page vant be deleted
     public void onDeletePage(View view){
         String pageName = Game.curGame.getCurPageName();
-        if (pageName.equals(Game.INITIAL_PAGE_NAME)) return;
+        if (pageName.equals(Game.INITIAL_PAGE_NAME)) {
+            Toast.makeText(getApplicationContext(), "Can't delete starting page " + Game.INITIAL_PAGE_NAME,
+                    TOAST_LENGTHS).show();
+            return;
+        }
         for (Page p : Game.curGame.getPages()){
             if (pageName.equals(p.getName())){
                 Game.curGame.getPages().remove(p);
@@ -120,19 +123,25 @@ public class Editor extends AppCompatActivity {
     public void onUpdatePage(View view) {
         String backgroundImageName = ((EditText)findViewById(R.id.backgroundImage)).getText().toString();
         if (imageNames.contains(backgroundImageName)) Game.curGame.getCurrentPage().setBackgroundImage(backgroundImageName);
-        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa");
+        else if (!backgroundImageName.isEmpty()) Toast.makeText(getApplicationContext(),
+                "Couldn't find background image with name: " + backgroundImageName, TOAST_LENGTHS).show();
+        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa"); //TODO WhaT??
         findViewById(R.id.EditorView).invalidate();
-        if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) return;
+        if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
+            Toast.makeText(getApplicationContext(), "Can't rename starting page "
+                    + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
+            return;
+        }
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
         if (Game.curGame.getPage(newName) != null) {
-            //Toast.makeText(getCallingActivity(), "Hey", Toast.LENGTH_LONG);
-            return; //TODO:TOAST!!!!
+            Toast.makeText(getApplicationContext(), "Page name " + newName
+                    + " already in use", TOAST_LENGTHS).show();
+            return;
         }
         Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }
 
-    // TODO Figure out how to set the selected spinner item
     private void updatePageSpinner(){
         Vector<String> pageNames = new Vector<String>();
         for (Page cur : Game.curGame.getPages()) pageNames.add(cur.getName());
@@ -142,11 +151,10 @@ public class Editor extends AppCompatActivity {
         spinner.setSelection(adapter.getPosition(Game.curGame.getCurPageName()));
     }
 
-    // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
     public void onCreateShape(View view) {
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
         String checker = shapeName.toLowerCase();
-        if (shapeName.isEmpty() || Game.curGame.getShape(checker) != null) {
+        if (shapeName.isEmpty() || Game.curGame.getShape(checker) != null) { //TODO: DOES THIS WORK RIGHT WITH LOWERCASE?
             Set<String> allShapeNames = new HashSet<String>();
             for (Page p : Game.curGame.getPages())
                 for (Shape shape : p.getShapes())
@@ -156,14 +164,12 @@ public class Editor extends AppCompatActivity {
                 shapeName = "shape" + i;
                 if (!allShapeNames.contains(shapeName)) break;
             }
-        } //TODO: IS FUNCTIONALITY RIGHT? TOAST?? :D
+        }
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
         updateShapeSpinner();
         Log.d("MESSAGE", "onCreateShape: FONTSIZE: " + fontSize);
-        //Figure out what default shape name to give it, base that on number of shapes?
-        //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
 
     public void onDeleteShape(View view) {
@@ -179,16 +185,25 @@ public class Editor extends AppCompatActivity {
         }
         updateShapeSpinner();
         findViewById(R.id.EditorView).invalidate();
-
-    } //TODO:IMPLEMENTTTTTT
+    }
 
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
-        if (curShape == null) return;
+        if (curShape == null) {
+            Toast.makeText(getApplicationContext(), "No selected shape", TOAST_LENGTHS).show();
+            return;
+        }
         Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName()) || shapeName.isEmpty()) return; //TODO Toast for could not update
+        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) { //TODO:LOWERCASE
+            Toast.makeText(getApplicationContext(), "Shape with name " + shapeName + " already exists",
+                    TOAST_LENGTHS).show();
+            return;
+        } else if (shapeName.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Can't update" + " shape with empty name", TOAST_LENGTHS).show();
+            return;
+        }
         curShape.setName(shapeName);
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
@@ -196,11 +211,14 @@ public class Editor extends AppCompatActivity {
         curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
         String string = (String)((EditText) findViewById(R.id.imageName)).getText().toString();
         if (imageNames.contains(string)) curShape.setImageName(string);
-        else curShape.setImageName(""); //TODO TOAST
+        else {
+            curShape.setImageName("");
+            Toast.makeText(getApplicationContext(), "Couldn't find " + string + " image", TOAST_LENGTHS).show();
+        }
         Log.d("MESSAGE", "onUpdateShape: FONTSIZE: " + fontSize);
         curShape.setFontSize(fontSize);
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
-        curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString());
+        curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString()); //TODO: Error checking toasts in here
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
         
@@ -261,7 +279,7 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.imageName)).setText("");
         ((EditText) findViewById(R.id.displayText)).setText("");
         ((EditText) findViewById(R.id.scriptText)).setText("");
-        fontSize = defaultFontSize;
+        fontSize = DEFAULT_FONT_SIZE;
 
         ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
         ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
