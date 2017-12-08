@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import java.lang.reflect.Field;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -31,7 +33,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MainActivity.curContext = getApplicationContext();
-
+        Vector<String> canDraw = new Vector<String>();
+        Vector<String> canPlay = new Vector<String>();
+        Field[] drawables = edu.stanford.cs108.worldcreator.R.drawable.class.getFields();
+        for (Field f : drawables) {
+            try {
+                canDraw.add(f.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Editor.imageNames = canDraw;
+        Field[] playable = edu.stanford.cs108.worldcreator.R.raw.class.getFields();
+        for (Field f : playable){
+            try {
+                canPlay.add(f.getName());
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Script.media = canPlay;
 
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);

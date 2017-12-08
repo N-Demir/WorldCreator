@@ -18,6 +18,7 @@ public class Editor extends AppCompatActivity {
     SQLiteDatabase db;
     private int count = 2; //TODO: But what about database storage
     private int shapeCount =1;
+    public static Vector<String> imageNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +170,9 @@ public class Editor extends AppCompatActivity {
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
         curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
-        curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
+        String string = (String)((EditText) findViewById(R.id.imageName)).getText().toString();
+        if (imageNames.contains(string)) curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
+        else curShape.setImageName(""); //TODO TOAST
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
         curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString());
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
