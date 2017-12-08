@@ -46,7 +46,7 @@ public class Editor extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String shapeName = shapeSpinner.getSelectedItem().toString();
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShape(shapeName));
-                setShapeFields(Game.curGame.getCurrentShape());
+                setShapeFields();
             }
 
             @Override
@@ -57,6 +57,7 @@ public class Editor extends AppCompatActivity {
 
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
         updatePageSpinner();
+        setDefaultShapeFields(); //TODO:UNNECESSARY?
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
@@ -75,10 +76,27 @@ public class Editor extends AppCompatActivity {
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
 
+        updateShapeSpinner();
+
         findViewById(R.id.EditView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
     }
 
-    private void setShapeFields(Shape shape){
+    private void setDefaultShapeFields() {
+        ((EditText) findViewById(R.id.xCord)).setText("");
+        ((EditText) findViewById(R.id.yCord)).setText("");
+        ((EditText) findViewById(R.id.width)).setText("");
+        ((EditText) findViewById(R.id.height)).setText("");
+        ((EditText) findViewById(R.id.shapeName)).setText("");
+        ((EditText) findViewById(R.id.imageName)).setText("");
+        ((EditText) findViewById(R.id.displayText)).setText("");
+        ((EditText) findViewById(R.id.scriptText)).setText("");
+
+        ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
+        ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
+    }
+
+    private void setShapeFields(){
+        Shape shape = Game.curGame.getCurrentShape();
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
         ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
         ((EditText) findViewById(R.id.width)).setText(Float.toString(shape.getWidth()));
@@ -95,10 +113,11 @@ public class Editor extends AppCompatActivity {
     }
 
  //TODO Allows me to create the same page twice and it inherits its  shape Objects
-    public void createPage(View view){
+    public void onCreatePage(View view){
         EditText editText = (EditText) findViewById(R.id.npage);
         String newGame = editText.getText().toString();
-        int prevPage = count - 1;
+
+        int prevPage = count - 1; //TODO: THIS NEEDS TO BE CHANGED
         if (newGame.equals("") || newGame.equals("page" + prevPage)){
             newGame = "page" + count;
             count++;
@@ -106,7 +125,8 @@ public class Editor extends AppCompatActivity {
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
-        editText.setText("");
+        editText.setText(newGame);
+        findViewById(R.id.EditView).invalidate();
     }
 
     // TODO Figure out how to set the selected spinner item
@@ -130,46 +150,39 @@ public class Editor extends AppCompatActivity {
                 break;
             }
         }
-        Game.curGame.changePage(Game.curGame.getPages().elementAt(0));
+        Game.curGame.changePage(Game.curGame.getPages().elementAt(Game.curGame.getPages().size() - 1));
         updatePageSpinner();
-    }
-
-    private boolean checkEmpty(String input){
-        return input.equals("");
+        findViewById(R.id.EditView).invalidate();
     }
 
     // TODO there is no way to get a script image or text label It also crashes on the script object creation
     public void onNewShape (View view){
         //TODO IS this necessarY?
-        Spinner pages = (Spinner) findViewById(R.id.page_spinner);
+        /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
         String currentPage = pages.getSelectedItem().toString();
-        Game.curGame.changePage(Game.curGame.getPage(currentPage));
-
-        String xStr = ((EditText) findViewById(R.id.xCord)).getText().toString();
-        String yStr = ((EditText) findViewById(R.id.yCord)).getText().toString();
-        String widthStr = ((EditText) findViewById(R.id.width)).getText().toString();
-        String heightStr = ((EditText) findViewById(R.id.height)).getText().toString();
-        String shapeName  = ((EditText) findViewById(R.id.shapeName)).getText().toString();
-        ((EditText) findViewById(R.id.shapeName)).setText("");
-        boolean movable = ((RadioButton) findViewById(R.id.movable)).isChecked();
-        boolean visible = ((RadioButton) findViewById(R.id.isVisible)).isChecked();
+        Game.curGame.changePage(Game.curGame.getPage(currentPage));*/
         int prevNum = shapeCount- 1;
-        if (checkEmpty(shapeName) || shapeName.equals("shape" + prevNum)){
-            shapeName = "shape" +  shapeCount;
+        String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
+        if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
+            shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
             shapeCount++;
         }
-        createShape (shapeName, xStr, yStr, heightStr, widthStr, visible, movable);
+        Game.curGame.setCurrentShape(new Shape(shapeName));
+        Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
+        onUpdateShape(null);
+        //Figure out what default shape name to give it, base that on number of shapes?
+        //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
 
-    private void createShape(String name, String xStr, String yStr, String height, String width, boolean visible, boolean toMove){
+    /*private void createShape(String name, String xStr, String yStr, String height, String width, boolean visible, boolean toMove){
         Shape newShape = new Shape(name, toFloat(xStr), toFloat(yStr), toFloat(height), toFloat(width), toInt(toMove), toInt(visible), "","","");
         Game.curGame.getCurrentPage().addShape(newShape);
         Game.curGame.setCurrentShape(newShape);
-        updateShapeSpinner();
-    }
+        onUpdateShape(null); //TODO:Is this an issue?
+    }*/
 
     private float toFloat(String input){
-        if (!checkEmpty(input)) return Float.parseFloat(input);
+        if (input.isEmpty()) return Float.parseFloat(input);
         return 0;
     }
 
