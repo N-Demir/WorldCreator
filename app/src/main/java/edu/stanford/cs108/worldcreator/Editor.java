@@ -38,6 +38,7 @@ public class Editor extends AppCompatActivity {
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
                 updateShapeSpinner();
+                findViewById(R.id.EditorView).invalidate();
             }
 
             @Override
@@ -92,7 +93,7 @@ public class Editor extends AppCompatActivity {
                 if (!myNames.contains(newGame)) break;
             }
         }
-        Game.curGame.changePage(new Page(newGame));
+        Game.curGame.changePage(new Page(newGame, ""));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
         editText.setText(newGame);
@@ -115,7 +116,11 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
     }
 
-    public void onRenamePage(View view) {
+    public void onUpdatePage(View view) {
+        String backgroundImageName = ((EditText)findViewById(R.id.backgroundImage)).getText().toString();
+        if (imageNames.contains(backgroundImageName)) Game.curGame.getCurrentPage().setBackgroundImage(backgroundImageName);
+        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa");
+        findViewById(R.id.EditorView).invalidate();
         if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) return;
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
         if (Game.curGame.getPage(newName) != null) return; //TODO:TOAST!!!!
@@ -201,7 +206,6 @@ public class Editor extends AppCompatActivity {
     }
 
     public void setShapeFields(){
-        Log.d("MESSAGE", "setShapeFields: RESETING FIELDS");
         Shape shape = Game.curGame.getCurrentShape();
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
         ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
@@ -288,7 +292,7 @@ public class Editor extends AppCompatActivity {
     private void addPage(Page page){
         Log.d("MESSAGER", page.getName());
         String pageStr = "INSERT INTO pages VALUES " +
-                "('" + page.getName() + "','" + Game.curGame.getGameName() + "',NULL);";
+                "('" + page.getName() + "','" + page.getBackgroundImage() + "','" + Game.curGame.getGameName() + "',NULL);";
         db.execSQL(pageStr);
     }
 

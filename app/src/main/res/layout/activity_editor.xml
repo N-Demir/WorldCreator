@@ -13,26 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:onClick="onIncreaseFont"
-            android:text="A"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:onClick="onDecreaseFont"
-            android:text="a"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
-
         <Spinner
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:id="@+id/page_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +41,7 @@
             />
 
         <EditText
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:textSize="12dp"
             android:hint="Page name... "
             android:layout_width="wrap_content"
@@ -73,14 +55,21 @@
             android:minHeight="0dp"
             android:minWidth="0dp"
             android:textSize="10dp"
-            android:text="rename"
-            android:onClick="onRenamePage"/>
+            android:text="update"
+            android:onClick="onUpdatePage"/>
 
-
+        <EditText
+            android:layout_weight="0.5"
+            android:textSize="12dp"
+            android:hint="Background img... "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backgroundImage"
+            />
 
         <Button
             android:text="Save Game"
-            android:textSize="15dp"
+            android:textSize="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
@@ -317,6 +306,23 @@
             android:textSize="10dp"
             android:padding="0dp"
             android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="onIncreaseFont"
+            android:text="A"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="onDecreaseFont"
+            android:text="a"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -28,7 +28,7 @@ public class Game {
 		this.gameName = gameName;
 		pages = new Vector<Page>();
 		inventory = new Vector<Shape>();
-		currentPage = new Page(INITIAL_PAGE_NAME);
+		currentPage = new Page(INITIAL_PAGE_NAME, "");
 		//currentPage.addShape(new Shape("ball", 50, 50)); //DEBUGGING
 		pages.add(currentPage);
 
