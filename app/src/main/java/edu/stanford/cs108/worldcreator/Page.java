@@ -54,7 +54,9 @@ public class Page {
 	}
 	
 	public void draw(Canvas canvas) {
+		Log.d("MESSAGE", "draw: drawing current page");
 		for(Shape shape: shapes) {
+			Log.d("MESSAGE", "PAGE FOUND A SHAPE");
 			shape.draw(canvas);
 		}
 	}

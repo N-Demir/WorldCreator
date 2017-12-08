@@ -37,7 +37,7 @@ public class Script{
 		if (!st.hasMoreTokens()) return;
 		st.nextToken();
 		String action = st.nextToken();
-		if(action == "drop"){
+		if(action.equals("drop")){
 			String shape = st.nextToken();
 			Shape toBeDropped = Game.curGame.getShape(shape);
 			onDrop.put(toBeDropped, new Vector<Vector<Object>>());
@@ -52,7 +52,8 @@ public class Script{
 			String command = st.nextToken();
 			String target = st.nextToken();
 			switch(action) {
-			case "click": 
+			case "click":
+				Log.d("MESSAGE", "handleTokens: MADE IT INTO SWITCH");
 				addToOnClick(command, target);
 				break;
 			case "enter":

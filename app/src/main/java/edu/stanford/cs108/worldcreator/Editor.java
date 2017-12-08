@@ -61,6 +61,7 @@ public class Editor extends AppCompatActivity {
     }
 
     public void onUpdateShape(View view) {
+        Log.d("MESSAGE", "onUpdateShape: " + ((EditText)findViewById(R.id.imageName)).getText().toString());
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
@@ -75,7 +76,7 @@ public class Editor extends AppCompatActivity {
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
 
-        findViewById(R.id.EditView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
+        findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
     }
 
     private void setShapeFields(Shape shape){

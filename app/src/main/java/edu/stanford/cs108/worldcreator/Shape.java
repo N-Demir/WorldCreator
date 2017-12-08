@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import java.util.Vector;
 
@@ -156,15 +157,17 @@ public class Shape {
 	
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
-		if(text != "") {
+		if(!text.isEmpty()) {
+			Log.d("MESSAGE", "here:" + text);
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
 			paint.setTextSize(16);
 			canvas.drawText(text, x, y, paint);
 			canvas.drawRect(x,y,width,height,paint);
-		} else if(imageName != "") {
+		} else if(!imageName.isEmpty()) {
 			//TODO: DOES THIS WORK
-			Context context = MainActivity.curContext;
+            Log.d("MESSAGE", "draw: drawing image: " + imageName);
+            Context context = MainActivity.curContext;
 			int imageID = context.getResources().getIdentifier(imageName, "drawable",
 					context.getPackageName());
 			BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(imageID,

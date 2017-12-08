@@ -57,8 +57,7 @@ public class Game {
 	public Shape getCurrentShape (){return currentShape;}
 	public Vector<Page> getPages(){return pages;}
 	public String getCurPageName() {return currentPage.getName();}
-	public Page getCurrentPage(){
-		Log.d("MESSAGE", "getCurrentPage: " + currentPage.getName()); return currentPage;}
+	public Page getCurrentPage(){ return currentPage;}
 	
 	public Page getPage(String name) {
 		for(Page page: pages) if(page.getName().equals(name)) return page;
@@ -79,7 +78,7 @@ public class Game {
 	public Shape getShape(String name) {
 		for(Page page: pages) {
 			for(Shape shape: page.getShapes()) {
-				if(shape.getName() == name) return shape;
+				if(shape.getName().equals(name)) return shape;
 			}
 		}
 		return null;

@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <edu.stanford.cs108.worldcreator.EditorGameView
-        android:id="@+id/EditView"
+        android:id="@+id/EditorView"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
