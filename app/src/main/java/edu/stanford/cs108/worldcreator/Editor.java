@@ -61,22 +61,7 @@ public class Editor extends AppCompatActivity {
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
-    private void setShapeFields(){
-        Shape shape = Game.curGame.getCurrentShape();
-        ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
-        ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
-        ((EditText) findViewById(R.id.width)).setText(Float.toString(shape.getWidth()));
-        ((EditText) findViewById(R.id.height)).setText(Float.toString(shape.getHeight()));
-        ((EditText) findViewById(R.id.shapeName)).setText(shape.getName());
-        ((EditText) findViewById(R.id.imageName)).setText(shape.getImage());
-        ((EditText) findViewById(R.id.displayText)).setText(shape.getText());
-        ((EditText) findViewById(R.id.scriptText)).setText(shape.getScript().getScriptString());
 
-        if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
-        else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
-        if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
-        else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
-    }
 
  //TODO Allows me to create the same page twice and it inherits its  shape Objects
     public void onCreatePage(View view){
@@ -127,7 +112,7 @@ public class Editor extends AppCompatActivity {
     }
 
     // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
-    public void onCreateShape (View view){
+    public void onCreateShape(View view) {
         //TODO IS this necessarY?
         /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
         String currentPage = pages.getSelectedItem().toString();
@@ -141,7 +126,7 @@ public class Editor extends AppCompatActivity {
         }
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
-        onUpdateShape(null); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
+        setShapeFields(); //TODO WILL THIS CRASH IF FIELDS AREN"T FILLED OUT? AKA FIRST SHAPE CREATED
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
@@ -167,6 +152,26 @@ public class Editor extends AppCompatActivity {
         updateShapeSpinner();
 
         findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
+    }
+
+    private void setShapeFields(){
+        Shape shape = Game.curGame.getCurrentShape();
+        ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
+        ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
+        ((EditText) findViewById(R.id.width)).setText(Float.toString(shape.getWidth()));
+        ((EditText) findViewById(R.id.height)).setText(Float.toString(shape.getHeight()));
+        ((EditText) findViewById(R.id.shapeName)).setText(shape.getName());
+        ((EditText) findViewById(R.id.imageName)).setText(shape.getImage());
+        ((EditText) findViewById(R.id.displayText)).setText(shape.getText());
+        ((EditText) findViewById(R.id.scriptText)).setText(shape.getScript().getScriptString());
+
+        if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
+        else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
+        if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
+        else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
+
+        updateShapeSpinner();
+        findViewById(R.id.EditorView).invalidate();
     }
 
 
