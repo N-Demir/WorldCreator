@@ -35,7 +35,6 @@ public class Game {
 		// TODO not sure this is the best way to construct a first object
 		currentShape = new Shape("default", (float)0, (float)0);
 		currentShape.setImageName("carrot");
-		//currentShape.setText("YEW BOOBS YEW!!!!");
 		currentPage.addShape(currentShape);
 	}
 
@@ -51,7 +50,7 @@ public class Game {
 		this.gameName = gameName;
 		currentPage = pages.elementAt(0);
 		//TODO not sure this is the best way to construct a default first current objecy
-		currentShape = new Shape("default", (float)0, (float)0);
+		currentShape =  new Shape ("default", 0, 0, 200.0f, 200.0f, 1, 1, "carrot", "", "");
 	}
 
 	public String getGameName() {return gameName;}
@@ -59,7 +58,8 @@ public class Game {
 	public Shape getCurrentShape (){return currentShape;}
 	public Vector<Page> getPages(){return pages;}
 	public String getCurPageName() {return currentPage.getName();}
-	public Page getCurrentPage(){return currentPage;}
+	public Page getCurrentPage(){
+		Log.d("MESSAGE", "getCurrentPage: " + currentPage.getName()); return currentPage;}
 	
 	public Page getPage(String name) {
 		for(Page page: pages) if(page.getName().equals(name)) return page;
