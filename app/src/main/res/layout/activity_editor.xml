@@ -49,15 +49,6 @@
             android:id="@+id/pageName"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:textSize="10dp"
-            android:text="update"
-            android:onClick="onUpdatePage"/>
-
         <EditText
             android:layout_weight="0.5"
             android:textSize="12dp"
@@ -68,8 +59,17 @@
             />
 
         <Button
-            android:text="Save Game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:textSize="10dp"
+            android:text="update"
+            android:onClick="onUpdatePage"/>
+
+        <Button
+            android:text="Save Game"
+            android:textSize="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
@@ -86,7 +86,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="7"
+        android:columnCount="9"
         android:rowCount="4">
 
         <Spinner
@@ -216,6 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_column="6"
             android:layout_row="0"
+            android:layout_columnSpan="3"
             android:orientation="horizontal">
 
             <RadioButton
@@ -251,6 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_column="6"
             android:layout_row="1"
+            android:layout_columnSpan="3"
             android:orientation="horizontal">
 
             <RadioButton
@@ -286,6 +288,29 @@
             android:padding="5dp"
             android:textSize="12dp"
             android:hint="display text..."/>
+        <Button
+            android:layout_column="7"
+            android:layout_row="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="onIncreaseFont"
+            android:textSize="10dp"
+            android:text="A"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:layout_column="8"
+            android:layout_row="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:onClick="onDecreaseFont"
+            android:textSize="10dp"
+            android:text="a"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
     </GridLayout>
 
     <LinearLayout
@@ -306,29 +331,13 @@
             android:textSize="10dp"
             android:padding="0dp"
             android:layout_weight="1" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:onClick="onIncreaseFont"
-            android:text="A"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:onClick="onDecreaseFont"
-            android:text="a"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:textSize="13dp"
+            android:textSize="12dp"
             android:text="Update Shape"
             android:onClick="onUpdateShape"/>
 
