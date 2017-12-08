@@ -16,18 +16,19 @@ import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
     SQLiteDatabase db;
-    private int count = 2;
+    private int count = 2; //TODO: But what about database storage
     private int shapeCount =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-        final Spinner spinner = (Spinner) findViewById(R.id.page_spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        final Spinner pageSpinner = (Spinner) findViewById(R.id.page_spinner);
+        pageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String yew = spinner.getSelectedItem().toString();
+                String yew = pageSpinner.getSelectedItem().toString();
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
                 updateShapeSpinner();
@@ -38,13 +39,14 @@ public class Editor extends AppCompatActivity {
                 // I think we just do nothing now
             }
         });
+
         final Spinner shapeSpinner  = (Spinner) findViewById(R.id.shape_spinner);
         shapeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String shapeName = shapeSpinner.getSelectedItem().toString();
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShape(shapeName));
-                setFields(Game.curGame.getCurrentShape());
+                setShapeFields(Game.curGame.getCurrentShape());
             }
 
             @Override
@@ -52,16 +54,18 @@ public class Editor extends AppCompatActivity {
                 // I think we also do nothing here
             }
         });
-        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null); //TODO: BUGGY? BAD STYLE?
-        updateSpinner();
+
+        db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
+        updatePageSpinner();
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
-    private void setFields(Shape shape){
+    private void setShapeFields(Shape shape){
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
         ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
         ((EditText) findViewById(R.id.height)).setText(Float.toString(shape.getHeight()));
         ((EditText) findViewById(R.id.width)).setText(Float.toString(shape.getWidth()));
+        //((EditText) findViewById(R.id.shapeName))
         if (shape.getHidden()){
             ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
         } else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
@@ -80,12 +84,12 @@ public class Editor extends AppCompatActivity {
         }
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
-        updateSpinner();
+        updatePageSpinner();
         editText.setText("");
     }
 
     // TODO Figure out how to set the selected spinner item
-    private void updateSpinner(){
+    private void updatePageSpinner(){
         Vector<String> pageNames = new Vector<String>();
         for (Page cur : Game.curGame.getPages()) pageNames.add(cur.getName());
         Spinner spinner = (Spinner) findViewById(R.id.page_spinner);
@@ -106,7 +110,7 @@ public class Editor extends AppCompatActivity {
             }
         }
         Game.curGame.changePage(Game.curGame.getPages().elementAt(0));
-        updateSpinner();
+        updatePageSpinner();
     }
 
     private boolean checkEmpty(String input){

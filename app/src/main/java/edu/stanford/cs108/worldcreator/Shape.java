@@ -45,7 +45,7 @@ public class Shape {
 
 	public Shape (String sName, float xCord, float yCord, float h, float w,
 				  int move, int hide, String img,
-				  String txt, String scrpt){
+				  String txt, String script){
 		name = sName;
 		x = xCord;
 		y = yCord;
@@ -57,8 +57,8 @@ public class Shape {
 		else hidden = true;
 		imageName = img;
 		text = txt;
-		scriptName = scrpt;
-		script =  new Script(scrpt);
+		scriptName = script;
+		this.script =  new Script(script);
 	}
 
 	public Shape(String shapeName, float xCord, float yCord) {
