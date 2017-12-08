@@ -160,9 +160,8 @@ public class Shape {
 		if(!text.isEmpty()) {
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
-			paint.setTextSize(16);
+			paint.setTextSize(30);
 			canvas.drawText(text, x, y, paint);
-			canvas.drawRect(x,y,width,height,paint);
 		} else if(!imageName.isEmpty()) {
 			//TODO: DOES THIS WORK
             Context context = MainActivity.curContext;
