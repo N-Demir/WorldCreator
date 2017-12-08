@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
@@ -125,14 +127,50 @@ public class Editor extends AppCompatActivity {
         /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
         String currentPage = pages.getSelectedItem().toString();
         Game.curGame.changePage(Game.curGame.getPage(currentPage));*/
+        /*String shapeName = "";
+        boolean shouldBreak = false;
+        for (Page p : Game.curGame.getPages()){
+            for (int i = 1; i <= p.getShapes().size(); i++){
+                int count = i + 1;
+                if(!p.getShapes().contains("shape" + count)){
+                    shapeName  = "shape" + count;
+                    shouldBreak = true;
+                    break;
+                }
+            }
+            if (shouldBreak == true) break;
+        }*/
 
-        int prevNum = shapeCount- 1;
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
-        if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
-            shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
-            shapeCount++;
-        }
-        if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST!!!!!
+        if (shapeName.isEmpty()) {
+            Set<String> allShapeNames = new HashSet<String>();
+            for (Page p: Game.curGame.getPages())
+                for (Shape shape: p.getShapes())
+                    allShapeNames.add(shape.getName());
+
+            for (int i = 1; i <= allShapeNames.size() + 1; i++) {
+                shapeName = "shape" + i;
+                if (!allShapeNames.contains(shapeName)) break;
+            }
+        } else if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST
+
+
+
+//        for (Game.curGame.getPages())
+//        for (int i = 1; i < Game.curGame.getCurrentPage().getShapes().size(); i++){
+//            int count = i + 1;
+//            if (!Game.curGame.getCurrentPage().getShapes().contains("shape"+count)){
+//                shapeName = "shape" + count;
+//                break;
+//            }
+//        }
+//        int prevNum = shapeCount- 1;
+//        String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
+//        if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
+//            shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
+//            shapeCount++;
+//        }
+        //if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST!!!!!
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
