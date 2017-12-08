@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 "('" + newGameName + "',NULL);";
         db.execSQL(gameStr);
         String pageStr = "INSERT INTO pages VALUES " +
-                "('" + Game.curGame.getCurPageName() + "',' ','" + newGameName + "',NULL);";
+                "('" + Game.curGame.getCurPageName() + "','','" + newGameName + "',NULL);";
         db.execSQL(pageStr);
         updateGameSpinner();
         setButtonsEnabled(/*Boolean enabled*/ true);
