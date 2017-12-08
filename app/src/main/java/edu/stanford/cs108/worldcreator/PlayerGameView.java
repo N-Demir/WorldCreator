@@ -13,12 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class PlayerGameView extends View {
-    private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
     public static final float SEPARATOR_HEIGHT = 200.0f;
 
+    private static final float SEPARATOR_STROKE_WIDTH = 5.0f; //TODO FIGURE OUT
+    private static final int SEPARATOR_COLOR = Color.BLACK;
+    private static final Paint.Style SEPARATOR_STYLE = Paint.Style.STROKE;
     private Paint separatorPaint;
-    private boolean modeIsPlaying;
 
+    public static boolean drawOutline;
     public static float width, height; //Kind of a hack so that inventory drawing works
     private float oldX, oldY;
 
@@ -31,9 +33,10 @@ public class PlayerGameView extends View {
 
     private void init() {
         separatorPaint = new Paint();
-        separatorPaint.setColor(Color.BLACK);
-        separatorPaint.setStyle(Paint.Style.STROKE);
+        separatorPaint.setColor(SEPARATOR_COLOR);
+        separatorPaint.setStyle(SEPARATOR_STYLE);
         separatorPaint.setStrokeWidth(SEPARATOR_STROKE_WIDTH);
+
     }
 
     /**
@@ -90,14 +93,17 @@ public class PlayerGameView extends View {
                 Shape underShape = Game.curGame.getShapeUnder(x, y, curShape);
                 if (underShape != null && underShape.canDropOn(curShape)) {
                     //TODO:DRAW RECT AROUND UNDERSHAPE
+                    drawOutline = true;
+                } else {
+                    drawOutline = false;
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (curShape == null) break;
-
                 //Test for onDrop
                 underShape = Game.curGame.getShapeUnder(x, y, curShape); //Weird switch statements
                 if (underShape != null && underShape.canDropOn(curShape)) {
+                    drawOutline = false;
                     underShape.executeOnDrop(curShape);
                 }
 
