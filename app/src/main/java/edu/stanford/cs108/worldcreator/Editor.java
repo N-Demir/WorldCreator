@@ -73,12 +73,27 @@ public class Editor extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.pageName);
         String newGame = editText.getText().toString();
 
+        /*
         int prevPage = count - 1; //TODO: THIS NEEDS TO BE CHANGED
         if (newGame.equals("") || newGame.equals("page" + prevPage)){
             newGame = "page" + count;
             count++;
         }
-        if (Game.curGame.getPage(newGame) != null) return; //TODO: TOAST!!!!
+        if (Game.curGame.getPage(newGame) != null) return; //TODO: TOAST!!!!*/
+        String pageName = (((EditText)findViewById(R.id.pageName)).getText().toString());
+        if (pageName.isEmpty() || Game.curGame.getPage(pageName) != null) {
+            for (int i = 1; i <= Game.curGame.getPages().size() + 1; i++) {
+                pageName = "page" + i;
+                boolean fuck = true;
+                for (int j = 0; j < Game.curGame.getPages().size(); j++) {
+                    if (!Game.curGame.getPages().elementAt(j).getName().equals(pageName)) {
+                        fuck = false;
+                        break;
+                    }
+                }
+                if (!fuck) break;
+            }
+        }
 
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
@@ -123,54 +138,18 @@ public class Editor extends AppCompatActivity {
 
     // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
     public void onCreateShape(View view) {
-        //TODO IS this necessarY?
-        /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
-        String currentPage = pages.getSelectedItem().toString();
-        Game.curGame.changePage(Game.curGame.getPage(currentPage));*/
-        /*String shapeName = "";
-        boolean shouldBreak = false;
-        for (Page p : Game.curGame.getPages()){
-            for (int i = 1; i <= p.getShapes().size(); i++){
-                int count = i + 1;
-                if(!p.getShapes().contains("shape" + count)){
-                    shapeName  = "shape" + count;
-                    shouldBreak = true;
-                    break;
-                }
-            }
-            if (shouldBreak == true) break;
-        }*/
-
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
-        if (shapeName.isEmpty()) {
+        if (shapeName.isEmpty() || Game.curGame.getShape(shapeName) != null) {
             Set<String> allShapeNames = new HashSet<String>();
-            for (Page p: Game.curGame.getPages())
-                for (Shape shape: p.getShapes())
+            for (Page p : Game.curGame.getPages())
+                for (Shape shape : p.getShapes())
                     allShapeNames.add(shape.getName());
 
             for (int i = 1; i <= allShapeNames.size() + 1; i++) {
                 shapeName = "shape" + i;
                 if (!allShapeNames.contains(shapeName)) break;
             }
-        } else if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST
-
-
-
-//        for (Game.curGame.getPages())
-//        for (int i = 1; i < Game.curGame.getCurrentPage().getShapes().size(); i++){
-//            int count = i + 1;
-//            if (!Game.curGame.getCurrentPage().getShapes().contains("shape"+count)){
-//                shapeName = "shape" + count;
-//                break;
-//            }
-//        }
-//        int prevNum = shapeCount- 1;
-//        String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
-//        if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
-//            shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
-//            shapeCount++;
-//        }
-        //if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST!!!!!
+        } //TODO: IS FUNCTIONALITY RIGHT? TOAST?? :D
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
