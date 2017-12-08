@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
         /* Database setup stuff */
         db = openOrCreateDatabase("WorldCreatorDB", MODE_PRIVATE, null);
 
-//        //DEBUGGING, CLEARS DB
-//        String gamestr = "DROP TABLE IF EXISTS games;";
-//        String pagestr = "DROP TABLE IF EXISTS pages;";
-//        String shapestr = "DROP TABLE IF EXISTS shapes;";
-//        db.execSQL(gamestr);
-//        db.execSQL(pagestr);
-//        db.execSQL(shapestr);
+        //DEBUGGING, CLEARS DB
+        String gamestr = "DROP TABLE IF EXISTS games;";
+        String pagestr = "DROP TABLE IF EXISTS pages;";
+        String shapestr = "DROP TABLE IF EXISTS shapes;";
+        db.execSQL(gamestr);
+        db.execSQL(pagestr);
+        db.execSQL(shapestr);
         Cursor tablesCursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='games';", null);
         if (tablesCursor.getCount() == 0) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     + ");";
             db.execSQL(gameTable);
             String pageTable = "CREATE TABLE pages ("
-                    + "name TEXT, game TEXT,"
+                    + "name TEXT, image TEXT, game TEXT,"
                     + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
                     + ");";
             db.execSQL(pageTable);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     + "name TEXT, game TEXT,"
                     + "page TEXT, x REAL, y REAL,"
                     + "height REAL, width REAL, move INTEGER,"
-                    + "visible INTEGER, image TEXT, script TEXT, label TEXT,"
+                    + "visible INTEGER, image TEXT, script TEXT, label TEXT, textSize INTEGER,"
                     + "_id INTEGER PRIMARY KEY AUTOINCREMENT"
                     + ");";
             db.execSQL(shapesTable);
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 "('" + newGameName + "',NULL);";
         db.execSQL(gameStr);
         String pageStr = "INSERT INTO pages VALUES " +
-                "('" + Game.curGame.getCurPageName() + "','" + newGameName + "',NULL);";
+                "('" + Game.curGame.getCurPageName() + "',' ','" + newGameName + "',NULL);";
         db.execSQL(pageStr);
         updateGameSpinner();
         setButtonsEnabled(/*Boolean enabled*/ true);
@@ -191,16 +191,20 @@ public class MainActivity extends AppCompatActivity {
 
         Vector<Page> document = new Vector<Page>();
         String gameName = ((Cursor) ((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
-        Game.curGame = new Game(gameName); //TODO:FIGURE OUT HOW TO DO THIS
+         //TODO:FIGURE OUT HOW TO DO THIS
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
+        if (pCursor.getCount() == 0) return; //Todo
+        Game.curGame = new Game(gameName);
+        Log.d("MESSAGE" , "yew");
         while (pCursor.moveToNext()){
-            Page cur = new Page(pCursor.getString(0));
+            Log.d("MESSAGE" , "yew2");
+            Page cur = new Page(pCursor.getString(0), pCursor.getString(1));
             Cursor sCursor = db.rawQuery("SELECT * FROM shapes WHERE game='" + gameName + "' AND page='" + pCursor.getString(0) + "'", null);
             while (sCursor.moveToNext()){
-                // constructor goes name, x, y, height, width, move, visible, img, script, label,
+                // constructor goes name, x, y, height, width, move, visible, img, script, label, fontSize
                 Shape s = new Shape(sCursor.getString(0), sCursor.getFloat(3), sCursor.getFloat(4),
                         sCursor.getFloat(5), sCursor.getFloat(6), sCursor.getInt(7),sCursor.getInt(8),
-                        sCursor.getString(9), sCursor.getString(11),sCursor.getString(10));
+                        sCursor.getString(9), sCursor.getString(11), sCursor.getString(10), sCursor.getInt(12));
                 cur.addShape(s);
            }
             document.add(cur);
@@ -211,12 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 shape.setScriptText(shape.getScriptText());
             }
         }
-        for(Page p : Game.curGame.getPages()){
-            Log.d("YEW", p.getName());
-            for(Shape shape : p.getShapes()){
-                Log.d("YEW", shape.getName());
-            }
-        }
+
         startActivity(intent);
     }
 }

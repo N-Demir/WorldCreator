@@ -54,7 +54,7 @@ public class PlayerGameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Game.curGame.drawPage(canvas);
+        Game.curGame.drawPage(canvas, false);
         drawSeparator(canvas);
         Game.curGame.drawInventory(canvas);
     }
@@ -76,6 +76,8 @@ public class PlayerGameView extends View {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 curShape = Game.curGame.getShapeAtCoords(x, y);
+                if(curShape != null) Log.d("MESSAGE", "onTouchEvent: curShape:" + curShape.getName());
+                else Log.d("MESSAGE", "onTouchEvent: curShape is null");
                 if (curShape != null) {
                     if (curShape.getHidden()) return true;
                     Game.curGame.setCurrentShape(curShape);
@@ -86,6 +88,8 @@ public class PlayerGameView extends View {
                     } else {
                         curShape.executeOnClick(); //TODO: FIX THIS
                     }
+                } else{
+                    Game.curGame.setCurrentShape(null);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
