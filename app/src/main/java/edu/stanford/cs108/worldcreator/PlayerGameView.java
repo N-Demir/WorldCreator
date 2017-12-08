@@ -83,9 +83,10 @@ public class PlayerGameView extends View {
                     oldY = y;
                     if (y >= height - SEPARATOR_HEIGHT /*so inside inventory*/) {
                         Game.curGame.removeFromInventory(curShape);
-                    } else {
-                        curShape.executeOnClick(); //TODO: FIX THIS
                     }
+                    curShape.executeOnClick(); //TODO:BUGGY?
+                } else {
+                    Game.curGame.setCurrentShape(null);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -118,6 +119,8 @@ public class PlayerGameView extends View {
                 if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.addToInventory(curShape);
                 else if (curShape.getY() + curShape.getHeight() >= height - SEPARATOR_HEIGHT)
                     curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
+                break;
+            default:
                 break;
         }
         invalidate();
