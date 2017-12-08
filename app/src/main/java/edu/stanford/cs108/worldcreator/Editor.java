@@ -247,14 +247,6 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
     }
 
-
-    /*private void createShape(String name, String xStr, String yStr, String height, String width, boolean visible, boolean toMove){
-        Shape newShape = new Shape(name, toFloat(xStr), toFloat(yStr), toFloat(height), toFloat(width), toInt(toMove), toInt(visible), "","","");
-        Game.curGame.getCurrentPage().addShape(newShape);
-        Game.curGame.setCurrentShape(newShape);
-        onUpdateShape(null); //TODO:Is this an issue?
-    }*/
-
     private int toInt(boolean input){
         if (input) return 1;
         return 0;
