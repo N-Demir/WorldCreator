@@ -65,6 +65,6 @@ public class EditorGameView extends View {
 
         invalidate();
         return true;
+        //TODO:CALL UPDATE FIELDS IN PARENT ACTIVITY
     }
-    //TODO: CLEAR OLDX AND OLDY WHEN CURPAGE IS SWITCHED????
 }
