@@ -155,7 +155,7 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
     }
 
-    private void setShapeFields(){
+    public void setShapeFields(){
         Log.d("MESSAGE", "setShapeFields: RESETING FIELDS");
         Shape shape = Game.curGame.getCurrentShape();
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
@@ -188,17 +188,17 @@ public class Editor extends AppCompatActivity {
         return 0;
     }
 
-    private void updateShapeSpinner(){
+    public void updateShapeSpinner(){
         Spinner spinner = (Spinner) findViewById(R.id.shape_spinner);
         Vector<String> shapeNames = new Vector<String>();
         for (Shape cur : Game.curGame.getCurrentPage().getShapes()) shapeNames.add(cur.getName());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shapeNames);
         spinner.setAdapter(adapter);
-        if(shapeNames.size() == 0) return;
-        //spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
+        if(shapeNames.size() == 0 || Game.curGame.getCurrentShape() == null) return;
+        spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
     }
 
-    private void setDefaultShapeFields() {
+    public void setDefaultShapeFields() {
         ((EditText) findViewById(R.id.xCord)).setText("");
         ((EditText) findViewById(R.id.yCord)).setText("");
         ((EditText) findViewById(R.id.width)).setText("");
