@@ -42,7 +42,7 @@
         <EditText
             android:layout_weight="0.6"
             android:textSize="12dp"
-            android:hint="New page name... "
+            android:hint="Page name... "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/npage"
@@ -290,8 +290,8 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:textSize="10dp"
-            android:text="Update script"/>
+            android:textSize="13dp"
+            android:text="Update Shape"/>
 
     </LinearLayout>
 
