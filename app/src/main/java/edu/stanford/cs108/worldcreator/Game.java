@@ -28,7 +28,7 @@ public class Game {
 		this.gameName = gameName;
 		pages = new Vector<Page>();
 		inventory = new Vector<Shape>();
-		currentPage = new Page(INITIAL_PAGE_NAME, "");
+		currentPage = new Page(INITIAL_PAGE_NAME);
 		//currentPage.addShape(new Shape("ball", 50, 50)); //DEBUGGING
 		pages.add(currentPage);
 
@@ -48,6 +48,8 @@ public class Game {
 		inventory = new Vector<Shape>();
 		this.gameName = gameName;
 		currentPage = pages.elementAt(0);
+		//TODO not sure this is the best way to construct a default first current objecy
+		//currentShape =  new Shape ("default", 0, 0, 200.0f, 200.0f, 1, 1, "carrot", "", "");
 	}
 
 	public String getGameName() {return gameName;}
@@ -85,19 +87,13 @@ public class Game {
 	public Vector<Shape> getInventory(){
 		return inventory;
 	}
-
 	public void changePage(Page page) {
 		currentPage = page;
-		for(Shape shape: page.getShapes()){
-			shape.executeOnEnter();
-		}
+		//Game.curGame.setCurrentShape(null);
 	}
-
-	public void changePageEditor(Page page) {currentPage = page;}
 
 
 	public void addToInventory(Shape shape) {
-		Log.d("MESSAGE", "addtoI");
 		inventory.add(shape);
 		Game.curGame.getCurrentPage().removeShape(shape);
 	}
@@ -139,14 +135,16 @@ public class Game {
 		return null;
 	}
 
-	public void drawPage(Canvas canvas, boolean editor) {currentPage.draw(canvas, editor);}
+	public void drawPage(Canvas canvas) {
+		currentPage.draw(canvas);
+	}
 
 	public void drawInventory(Canvas canvas) {
 		float curX = INVENTORY_SPACING;
 		for(Shape shape: inventory) {
 			shape.setX(curX); //TODO:DOES THIS STUFF WORK
 			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING / 2.0f);
-			shape.draw(canvas, false);
+			shape.draw(canvas);
 			curX += shape.getWidth() + INVENTORY_SPACING;
 		}
 	}

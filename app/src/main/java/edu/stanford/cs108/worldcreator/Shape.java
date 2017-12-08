@@ -20,7 +20,6 @@ public class Shape {
 
 	private static final int defaultWidth = 20;
 	private static final int defaultHeight = 20;
-	private static final int defaultFontSize = 30;
 
 	static{
 		outlineSelectedPaint = new Paint();
@@ -43,7 +42,6 @@ public class Shape {
 	private String imageName;
 	private Page page;
 	private boolean inventoryItem;
-	private int fontSize;
 
 	public Shape(String sName){
 		name = sName;
@@ -56,13 +54,12 @@ public class Shape {
 		imageName = "";
 		text = "";
 		scriptText = "";
-		fontSize = defaultFontSize;
 		script = new Script("");
 	}
 
 	public Shape (String sName, float xCord, float yCord, float h, float w,
 				  int move, int hide, String img,
-				  String txt, String script, int fSize){
+				  String txt, String script){
 		name = sName;
 		x = xCord;
 		y = yCord;
@@ -75,7 +72,6 @@ public class Shape {
 		imageName = img;
 		text = txt;
 		scriptText = script;
-		fontSize = fSize;
 		this.script =  new Script(script);
 	}
 
@@ -101,7 +97,6 @@ public class Shape {
 	}
 	
 	public void executeOnEnter() {
-        Log.d("MESSAGE", "executeOnEnter");
 		Vector<Vector<Object>> commands = script.getOnEnterActions();
 		executeCommands(commands);
 	}
@@ -156,9 +151,7 @@ public class Shape {
 	public String getImage() { return imageName;}
 	public boolean inInventory() { return inventoryItem;}
 	public Page getPage() { return page;}
-	public int getFontSize() { return fontSize;}
-
-	public void setFontSize(int size){ fontSize = size;}
+	
 	public void setHidden(boolean bool) { hidden = bool;}
 	public void setMovable(boolean bool) { movable = bool;}
 	public void setX(float val) { x = val;}
@@ -184,18 +177,15 @@ public class Shape {
 		this.y += yAmount;
 	}
 	
-	public void draw(Canvas canvas, boolean editor) {
-		if (hidden && !editor) return;
+	public void draw(Canvas canvas) {
+		if (hidden) return; //TODO: Account for being in editor
 		if (PlayerGameView.drawOutline && PlayerGameView.selectedShapeName.equals(name)) {
 			canvas.drawRect(x, y, x + width, y + height, outlineSelectedPaint);
 		}
-		Paint paint = null;
 		if(!text.isEmpty()) {
-			Log.d("MESSAGE", "draw: FONTSIZE: " + fontSize);
-			paint = new Paint();
+			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
-			paint.setTextSize(fontSize);
-			if(editor && hidden) paint.setAlpha(64);
+			paint.setTextSize(30);
 			canvas.drawText(text, x, y, paint);
 		} else if(!imageName.isEmpty()) {
             Context context = MainActivity.curContext;
@@ -203,15 +193,10 @@ public class Shape {
 					context.getPackageName());
 			BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(imageID,
 					context.getTheme());
-			if(editor && hidden) {
-				paint = new Paint();
-				paint.setAlpha(64);
-			}
-			canvas.drawBitmap(image.getBitmap(), null, new RectF(x, y, x + width, y + height), paint);
+			canvas.drawBitmap(image.getBitmap(), null, new RectF(x, y, x + width, y + height), null); //TODO: If shape is not visible and in editor then use opaque paint
 		} else {
-			paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
+			Paint paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
 			paint.setColor(Color.LTGRAY);
-			if(editor && hidden) paint.setAlpha(64);
 			canvas.drawRect(x, y, x + width, y + height, paint);
 		}
 	}

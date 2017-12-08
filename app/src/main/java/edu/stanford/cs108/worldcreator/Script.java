@@ -77,7 +77,7 @@ public class Script{
 	
 	public Vector<Vector<Object>> getOnClickActions() { return onClick;}
 	public Vector<Vector<Object>> getOnDropActions(Shape beingDropped) { return onDrop.get(beingDropped);}
-	public Vector<Vector<Object>> getOnEnterActions() { return onEnter;}
+	public Vector<Vector<Object>> getOnEnterActions() { return onClick;}
 	public String getScriptString(){ return scriptString;}
 	public boolean droppable(Shape toBeDropped){
 		return onDrop.containsKey(toBeDropped);

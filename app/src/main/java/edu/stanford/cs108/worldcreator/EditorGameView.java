@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
  */
 
 public class EditorGameView extends View {
-    public static float width, height;
+    private float width, height;
     private float oldX, oldY; //For dragging a shape implementation
     private boolean canDrag;
 
@@ -38,8 +38,9 @@ public class EditorGameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("MESSAGE", "onDraw: ");
         super.onDraw(canvas);
-        Game.curGame.drawPage(canvas, true);
+        Game.curGame.drawPage(canvas);
     }
 
     @Override

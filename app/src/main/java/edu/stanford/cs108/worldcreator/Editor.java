@@ -12,16 +12,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
-    private static final int defaultFontSize = 30;
     SQLiteDatabase db;
     private int count = 2; //TODO: But what about database storage
     private int shapeCount =1;
-    private int fontSize = defaultFontSize;
     public static Vector<String> imageNames;
 
     @Override
@@ -38,7 +34,6 @@ public class Editor extends AppCompatActivity {
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
                 updateShapeSpinner();
-                findViewById(R.id.EditorView).invalidate();
             }
 
             @Override
@@ -69,31 +64,21 @@ public class Editor extends AppCompatActivity {
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
-    public void onIncreaseFont(View view){
-        fontSize += 2;
-    }
-
-    public void onDecreaseFont(View view){
-        if(fontSize > 2) fontSize -= 2;
-    }
 
 
- //TODO implement create
+ //TODO Allows me to create the same page twice and it inherits its  shape Objects
     public void onCreatePage(View view){
         EditText editText = (EditText) findViewById(R.id.pageName);
         String newGame = editText.getText().toString();
-        String checker = newGame.toLowerCase();
-        if (newGame.isEmpty() || Game.curGame.getPage(checker) != null) {
-            Vector<String> myNames = new Vector<String>();
-            for (Page page : Game.curGame.getPages()) {
-                myNames.add(page.getName().toLowerCase());
-            }
-            for (int i = 1; i <= myNames.size() + 1; i++){
-                newGame = "page" + i;
-                if (!myNames.contains(newGame)) break;
-            }
+
+        int prevPage = count - 1; //TODO: THIS NEEDS TO BE CHANGED
+        if (newGame.equals("") || newGame.equals("page" + prevPage)){
+            newGame = "page" + count;
+            count++;
         }
-        Game.curGame.changePage(new Page(newGame, ""));
+        if (Game.curGame.getPage(newGame) != null) return; //TODO: TOAST!!!!
+
+        Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
         editText.setText(newGame);
@@ -116,11 +101,7 @@ public class Editor extends AppCompatActivity {
         findViewById(R.id.EditorView).invalidate();
     }
 
-    public void onUpdatePage(View view) {
-        String backgroundImageName = ((EditText)findViewById(R.id.backgroundImage)).getText().toString();
-        if (imageNames.contains(backgroundImageName)) Game.curGame.getCurrentPage().setBackgroundImage(backgroundImageName);
-        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa");
-        findViewById(R.id.EditorView).invalidate();
+    public void onRenamePage(View view) {
         if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) return;
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
         if (Game.curGame.getPage(newName) != null) return; //TODO:TOAST!!!!
@@ -140,24 +121,22 @@ public class Editor extends AppCompatActivity {
 
     // TODO It also crashes on the script object creation //Nikita: does this still happen Russ?
     public void onCreateShape(View view) {
-        String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
-        String checker = shapeName.toLowerCase();
-        if (shapeName.isEmpty() || Game.curGame.getShape(checker) != null) {
-            Set<String> allShapeNames = new HashSet<String>();
-            for (Page p : Game.curGame.getPages())
-                for (Shape shape : p.getShapes())
-                    allShapeNames.add(shape.getName());
+        //TODO IS this necessarY?
+        /*Spinner pages = (Spinner) findViewById(R.id.page_spinner);
+        String currentPage = pages.getSelectedItem().toString();
+        Game.curGame.changePage(Game.curGame.getPage(currentPage));*/
 
-            for (int i = 1; i <= allShapeNames.size() + 1; i++) {
-                shapeName = "shape" + i;
-                if (!allShapeNames.contains(shapeName)) break;
-            }
-        } //TODO: IS FUNCTIONALITY RIGHT? TOAST?? :D
+        int prevNum = shapeCount- 1;
+        String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
+        if (shapeName.isEmpty() || shapeName.equals("shape" + prevNum)){
+            shapeName = "shape" +  shapeCount; //TODO:BETTER WAY TO DO THIS USING THE VECTOR OF SHAPES
+            shapeCount++;
+        }
+        if (Game.curGame.getShape(shapeName) != null) return; //TODO:TOAST!!!!!
 
         Game.curGame.setCurrentShape(new Shape(shapeName));
         Game.curGame.getCurrentPage().addShape(Game.curGame.getCurrentShape());
         updateShapeSpinner();
-        Log.d("MESSAGE", "onCreateShape: FONTSIZE: " + fontSize);
         //Figure out what default shape name to give it, base that on number of shapes?
         //update that field with it, create new shape, add it to page shapes, call onUpdate to set its fields
     }
@@ -184,7 +163,7 @@ public class Editor extends AppCompatActivity {
         if (curShape == null) return;
         Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName()) || shapeName.isEmpty()) return; //TODO Toast for could not update
+        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) return;
         curShape.setName(shapeName);
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
@@ -193,8 +172,6 @@ public class Editor extends AppCompatActivity {
         String string = (String)((EditText) findViewById(R.id.imageName)).getText().toString();
         if (imageNames.contains(string)) curShape.setImageName(string);
         else curShape.setImageName(""); //TODO TOAST
-        Log.d("MESSAGE", "onUpdateShape: FONTSIZE: " + fontSize);
-        curShape.setFontSize(fontSize);
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
         curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString());
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
@@ -206,6 +183,7 @@ public class Editor extends AppCompatActivity {
     }
 
     public void setShapeFields(){
+        Log.d("MESSAGE", "setShapeFields: RESETING FIELDS");
         Shape shape = Game.curGame.getCurrentShape();
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
         ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
@@ -215,7 +193,6 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.imageName)).setText(shape.getImage());
         ((EditText) findViewById(R.id.displayText)).setText(shape.getText());
         ((EditText) findViewById(R.id.scriptText)).setText(shape.getScriptText());
-        fontSize = shape.getFontSize();
 
         if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
         else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
@@ -257,7 +234,6 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.imageName)).setText("");
         ((EditText) findViewById(R.id.displayText)).setText("");
         ((EditText) findViewById(R.id.scriptText)).setText("");
-        fontSize = defaultFontSize;
 
         ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
         ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
@@ -292,7 +268,7 @@ public class Editor extends AppCompatActivity {
     private void addPage(Page page){
         Log.d("MESSAGER", page.getName());
         String pageStr = "INSERT INTO pages VALUES " +
-                "('" + page.getName() + "','" + page.getBackgroundImage() + "','" + Game.curGame.getGameName() + "',NULL);";
+                "('" + page.getName() + "','" + Game.curGame.getGameName() + "',NULL);";
         db.execSQL(pageStr);
     }
 
@@ -302,8 +278,7 @@ public class Editor extends AppCompatActivity {
                 "('" +shape.getName() + "','" + Game.curGame.getGameName() + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()
                 + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMovable())
-                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptText() + "','" +
-                shape.getText() + "','" + shape.getFontSize() +"',NULL);";
+                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptText() + "','" + shape.getText() + "',NULL);";
         db.execSQL(shapeStr);
     }
 }
