@@ -68,33 +68,20 @@ public class Editor extends AppCompatActivity {
 
 
 
- //TODO Allows me to create the same page twice and it inherits its  shape Objects
+ //TODO implement create
     public void onCreatePage(View view){
         EditText editText = (EditText) findViewById(R.id.pageName);
         String newGame = editText.getText().toString();
-
-        /*
-        int prevPage = count - 1; //TODO: THIS NEEDS TO BE CHANGED
-        if (newGame.equals("") || newGame.equals("page" + prevPage)){
-            newGame = "page" + count;
-            count++;
-        }
-        if (Game.curGame.getPage(newGame) != null) return; //TODO: TOAST!!!!*/
-        String pageName = (((EditText)findViewById(R.id.pageName)).getText().toString());
-        if (pageName.isEmpty() || Game.curGame.getPage(pageName) != null) {
-            for (int i = 1; i <= Game.curGame.getPages().size() + 1; i++) {
-                pageName = "page" + i;
-                boolean fuck = true;
-                for (int j = 0; j < Game.curGame.getPages().size(); j++) {
-                    if (!Game.curGame.getPages().elementAt(j).getName().equals(pageName)) {
-                        fuck = false;
-                        break;
-                    }
-                }
-                if (!fuck) break;
+        if (newGame.isEmpty() || Game.curGame.getPage(newGame) != null) {
+            Vector<String> myNames = new Vector<String>();
+            for (Page page : Game.curGame.getPages()) {
+                myNames.add(page.getName());
+            }
+            for (int i = 1; i <= myNames.size() + 1; i++){
+                newGame = "page" + i;
+                if (!myNames.contains(newGame)) break;
             }
         }
-
         Game.curGame.changePage(new Page(newGame));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
