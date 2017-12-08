@@ -54,6 +54,8 @@ public class EditorGameView extends View {
             case MotionEvent.ACTION_MOVE:
                 if (Game.curGame.getCurrentShape() == null) break;
                 Game.curGame.getCurrentShape().move(x - oldX, y - oldY);
+                oldX = x;
+                oldY = y;
                 break;
             case MotionEvent.ACTION_UP:
                 //TODO:Do we need to do anything here?
