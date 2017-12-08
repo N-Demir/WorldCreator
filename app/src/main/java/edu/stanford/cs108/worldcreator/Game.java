@@ -1,5 +1,6 @@
 package edu.stanford.cs108.worldcreator;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -69,11 +70,12 @@ public class Game {
 		pages.add(p);
 	}
 
-//	public MediaPlayer getSound(String name) {
-//		int soundID = getResources().getIdentifier(name, null, null);
-//		MediaPlayer mp = MediaPlayer.create(getActivityContext(), soundID);
-//		return mp;
-//	}
+	public MediaPlayer getSound(String name) {
+		Context context = MainActivity.curContext;
+		int soundID = context.getResources().getIdentifier(name, null, null);
+		MediaPlayer mp = MediaPlayer.create(context, soundID);
+		return mp;
+	}
 	
 	public Shape getShape(String name) {
 		for(Page page: pages) {

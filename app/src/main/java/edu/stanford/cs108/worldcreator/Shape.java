@@ -77,7 +77,7 @@ public class Shape {
 	}
 	
 	public void executeOnClick() {
-			Vector<Vector<Object>> commands = script.getOnClickActions();
+        Vector<Vector<Object>> commands = script.getOnClickActions();
 		executeCommands(commands);
 	}
 	
@@ -97,16 +97,24 @@ public class Shape {
 	
 	private void executeCommands(Vector<Vector<Object>> commands) {
 		Vector<Object> goToTargets = commands.elementAt(0);
-		for(Object page: goToTargets)  Game.curGame.changePage((Page) page);	
+		for(Object page: goToTargets){
+            if(page != null) Game.curGame.changePage((Page) page);
+        }
 		
 		Vector<Object> playTargets = commands.elementAt(1);
-		for(Object mp: playTargets) ((MediaPlayer) mp).start();
+		for(Object mp: playTargets) {
+            if(mp != null) ((MediaPlayer) mp).start();
+        }
 		
 		Vector<Object> hideTargets = commands.elementAt(2);
-		for(Object shape: hideTargets) ((Shape) shape).setHidden(true);
+		for(Object shape: hideTargets){
+            if(shape != null) ((Shape) shape).setHidden(true);
+        }
 		
 		Vector<Object> showTargets = commands.elementAt(3);
-		for(Object shape: showTargets) ((Shape) shape).setHidden(false);
+		for(Object shape: showTargets){
+            if(shape != null)((Shape) shape).setHidden(false);
+		}
 	}
 	
 	public boolean getHidden() { return hidden;}
