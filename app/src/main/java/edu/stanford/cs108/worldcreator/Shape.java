@@ -94,7 +94,7 @@ public class Shape {
 		executeCommands(commands);
 	}
 
-	public boolean canDrop(Shape beingDropped){
+	public boolean canDropOn(Shape beingDropped){
         return script.droppable(beingDropped);
     }
 	
