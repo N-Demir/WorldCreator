@@ -147,15 +147,18 @@ public class Editor extends AppCompatActivity {
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(null);
             setDefaultShapeFields();
-        }
-        else {
+        } else {
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
         }
+<<<<<<< HEAD
         updateShapeSpinner();
         findViewById(R.id.EditorView).invalidate();
 
     } //TODO:IMPLEMENTTTTTT
+=======
+    }
+>>>>>>> Nikita's-workspace
 
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values

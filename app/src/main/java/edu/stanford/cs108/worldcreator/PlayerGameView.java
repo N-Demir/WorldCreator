@@ -79,8 +79,7 @@ public class PlayerGameView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (curShape == null ||
-                        !curShape.getMovable()) break;
+                if (curShape == null || !curShape.getMovable() || curShape.getHidden()) break;
                 curShape.move(x - oldX, y - oldY);
                 oldX = x;
                 oldY = y;
@@ -90,7 +89,8 @@ public class PlayerGameView extends View {
                 //If we are dropping Shape in inventory, put in inventory and run on drop
                 float shapesMiddle = curShape.getY() + curShape.getHeight()/2.0f;
                 if (shapesMiddle >= height - SEPARATOR_HEIGHT) Game.curGame.addToInventory(curShape);
-                else curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
+                else if (curShape.getY() + curShape.getHeight() >= height - SEPARATOR_HEIGHT)
+                    curShape.setY(height - SEPARATOR_HEIGHT - curShape.getHeight());
                 break;
         }
 

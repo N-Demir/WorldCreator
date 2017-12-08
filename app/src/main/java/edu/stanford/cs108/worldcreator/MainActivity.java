@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* If games table empty, disable buttons */
         Cursor gamesCursor = db.rawQuery("SELECT * FROM games;", null); //SHOULD BE WORKING?
-        if (tablesCursor.getCount() == 0) setButtonsEnabled(false);
+        if (gamesCursor.getCount() == 0) setButtonsEnabled(false);
         else setButtonsEnabled(true);
 
         updateGameSpinner();

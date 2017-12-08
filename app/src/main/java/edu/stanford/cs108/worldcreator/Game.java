@@ -101,6 +101,15 @@ public class Game {
 		Game.curGame.getCurrentPage().addShape(shape);
 	}
 
+	public Shape getShapeAtCoordinates(float x, float y) {
+		Shape shape = currentPage.getShapeAtCoords(x, y);
+		if (shape != null) return shape;
+		for (int i = inventory.size() - 1; i >= 0; i--) {
+			shape = inventory.get(i);
+			if (shape.isContained(x, y)) return shape;
+		}
+		return null;
+	}
 
 	public void drawPage(Canvas canvas) {
 		currentPage.draw(canvas);
@@ -109,8 +118,8 @@ public class Game {
 	public void drawInventory(Canvas canvas) {
 		float curX = INVENTORY_SPACING;
 		for(Shape shape: inventory) {
-			shape.setX(curX);
-			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT);
+			shape.setX(curX); //TODO:DOES THIS STUFF WORK
+			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING / 2.0f);
 			shape.draw(canvas);
 			curX += shape.getWidth() + INVENTORY_SPACING;
 		}
