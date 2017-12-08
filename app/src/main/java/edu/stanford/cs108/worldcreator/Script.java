@@ -92,8 +92,9 @@ public class Script{
 			onClick.elementAt(0).add(page);
 			break;
 		case "play":
-			MediaPlayer mp = Game.curGame.getSound(target);
-			if(mp == null) return; //toast
+            if (!media.contains(target)) return;
+            MediaPlayer mp = Game.curGame.getSound(target);
+            if(mp == null) return; //toast
 			onClick.elementAt(1).add(mp);
 			break;
 		case "hide":
@@ -145,8 +146,9 @@ public class Script{
 				onEnter.elementAt(0).add(page);
 				break;
 			case "play":
-				MediaPlayer mp = Game.curGame.getSound(target);
-				if(mp == null) return; //toast
+                if (!media.contains(target)) return;
+                MediaPlayer mp = Game.curGame.getSound(target);
+                if(mp == null) return; //toast
 				onEnter.elementAt(1).add(mp);
 				break;
 			case "hide":

@@ -170,7 +170,7 @@ public class Editor extends AppCompatActivity {
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
         curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
         String string = (String)((EditText) findViewById(R.id.imageName)).getText().toString();
-        if (imageNames.contains(string)) curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
+        if (imageNames.contains(string)) curShape.setImageName(string);
         else curShape.setImageName(""); //TODO TOAST
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
         curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString());
@@ -266,12 +266,14 @@ public class Editor extends AppCompatActivity {
     }
 
     private void addPage(Page page){
+        Log.d("MESSAGER", page.getName());
         String pageStr = "INSERT INTO pages VALUES " +
                 "('" + page.getName() + "','" + Game.curGame.getGameName() + "',NULL);";
         db.execSQL(pageStr);
     }
 
     private  void addShape(Page page, Shape shape){
+        Log.d("MESSAGER", shape.getName());
         String shapeStr = "INSERT INTO shapes VALUES " +
                 "('" +shape.getName() + "','" + Game.curGame.getGameName() + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()

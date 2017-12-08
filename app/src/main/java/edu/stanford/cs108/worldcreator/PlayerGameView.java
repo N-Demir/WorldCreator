@@ -69,6 +69,10 @@ public class PlayerGameView extends View {
         float y = e.getY();
         Shape curShape = Game.curGame.getCurrentShape();
 
+        Log.d("FUCK U RUSS", "curPage: " + Game.curGame.getCurPageName());
+        for(Shape shape: Game.curGame.getCurrentPage().getShapes()){
+            Log.d("FUCK U RUSS", "SHAPES ON PAGE: " + shape.getName());
+        }
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 curShape = Game.curGame.getShapeAtCoords(x, y);
