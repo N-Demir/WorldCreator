@@ -24,7 +24,6 @@ public class Script{
 			onClick.add(i, new Vector<Object>());
 			onEnter.add(i, new Vector<Object>());
 		}
-		Log.d("MESSAGE", input);
 		String[] strs = input.split(";");
 			for (String str : strs) {
 				str.trim();
@@ -53,7 +52,6 @@ public class Script{
 			String target = st.nextToken();
 			switch(action) {
 			case "click":
-				Log.d("MESSAGE", "handleTokens: MADE IT INTO SWITCH");
 				addToOnClick(command, target);
 				break;
 			case "enter":

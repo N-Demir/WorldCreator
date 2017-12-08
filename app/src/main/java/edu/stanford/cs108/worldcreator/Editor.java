@@ -28,6 +28,7 @@ public class Editor extends AppCompatActivity {
         pageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("MESSAGE", "onItemSelected: PAGE LISTENER ");
                 String yew = pageSpinner.getSelectedItem().toString();
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
@@ -44,6 +45,7 @@ public class Editor extends AppCompatActivity {
         shapeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("MESSAGE", "onItemSelected: LISTENER");
                 String shapeName = shapeSpinner.getSelectedItem().toString();
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShape(shapeName));
                 setShapeFields();
@@ -134,7 +136,6 @@ public class Editor extends AppCompatActivity {
     public void onDeleteShape(View view) {} //TODO:IMPLEMENTTTTTT
 
     public void onUpdateShape(View view) {
-        Log.d("MESSAGE", "onUpdateShape: " + ((EditText)findViewById(R.id.imageName)).getText().toString());
         //read in all shape EditTexts and update curShape with their values
         Shape curShape = Game.curGame.getCurrentShape();
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
@@ -155,6 +156,7 @@ public class Editor extends AppCompatActivity {
     }
 
     private void setShapeFields(){
+        Log.d("MESSAGE", "setShapeFields: RESETING FIELDS");
         Shape shape = Game.curGame.getCurrentShape();
         ((EditText) findViewById(R.id.xCord)).setText(Float.toString(shape.getX()));
         ((EditText) findViewById(R.id.yCord)).setText(Float.toString(shape.getY()));
@@ -170,7 +172,6 @@ public class Editor extends AppCompatActivity {
         if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
         else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
 
-        updateShapeSpinner();
         findViewById(R.id.EditorView).invalidate();
     }
 
@@ -194,7 +195,7 @@ public class Editor extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shapeNames);
         spinner.setAdapter(adapter);
         if(shapeNames.size() == 0) return;
-        spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
+        //spinner.setSelection(adapter.getPosition(Game.curGame.getCurrentShape().getName()));
     }
 
     private void setDefaultShapeFields() {

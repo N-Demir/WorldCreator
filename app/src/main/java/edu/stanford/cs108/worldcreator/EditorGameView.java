@@ -27,7 +27,6 @@ public class EditorGameView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         width = w;
         height = h;
     }
@@ -44,11 +43,9 @@ public class EditorGameView extends View {
         //TODO: Extension = touch resizing?
         float x = e.getX();
         float y = e.getY();
-        Log.d("MESSAGE", "TOUCH EVENT");
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapeAtCoords(x, y));
-                if(Game.curGame.getCurrentShape() != null) Log.d("MESSAGE", "clicked on " + Game.curGame.getCurrentShape().getName());
                 if (Game.curGame.getCurrentShape() != null) {
                     oldX = x;
                     oldY = y;

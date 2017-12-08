@@ -45,19 +45,15 @@ public class Page {
 
 	public Shape getShapeAtCoords(float x, float y) {
 		// This has to be backwards so that we select the top shape
-
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			Shape shape = shapes.get(i);
-			Log.d("MESSAGE", "getShapeAtCoords: "+ shape.getName() +" " + shape.isContained(x, y));
 			if (shape.isContained(x, y)) return shape;
 		}
 		return null;
 	}
 	
 	public void draw(Canvas canvas) {
-		Log.d("MESSAGE", "draw: drawing current page");
 		for(Shape shape: shapes) {
-			Log.d("MESSAGE", "PAGE FOUND A SHAPE");
 			shape.draw(canvas);
 		}
 	}

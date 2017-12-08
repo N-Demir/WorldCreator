@@ -158,7 +158,6 @@ public class Shape {
 	public void draw(Canvas canvas) {
 		if (hidden) return; //TODO: Account for being in editor
 		if(!text.isEmpty()) {
-			Log.d("MESSAGE", "here:" + text);
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
 			paint.setTextSize(16);
@@ -166,7 +165,6 @@ public class Shape {
 			canvas.drawRect(x,y,width,height,paint);
 		} else if(!imageName.isEmpty()) {
 			//TODO: DOES THIS WORK
-            Log.d("MESSAGE", "draw: drawing image: " + imageName);
             Context context = MainActivity.curContext;
 			int imageID = context.getResources().getIdentifier(imageName, "drawable",
 					context.getPackageName());
