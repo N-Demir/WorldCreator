@@ -88,7 +88,7 @@ public class Editor extends AppCompatActivity {
 
         if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
         else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
-        if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.moveable);
+        if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
         else ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.notMovable);
     }
 
@@ -149,7 +149,7 @@ public class Editor extends AppCompatActivity {
         String heightStr = ((EditText) findViewById(R.id.height)).getText().toString();
         String shapeName  = ((EditText) findViewById(R.id.shapeName)).getText().toString();
         ((EditText) findViewById(R.id.shapeName)).setText("");
-        boolean movable = ((RadioButton) findViewById(R.id.moveable)).isChecked();
+        boolean movable = ((RadioButton) findViewById(R.id.movable)).isChecked();
         boolean visible = ((RadioButton) findViewById(R.id.isVisible)).isChecked();
         int prevNum = shapeCount- 1;
         if (checkEmpty(shapeName) || shapeName.equals("shape" + prevNum)){

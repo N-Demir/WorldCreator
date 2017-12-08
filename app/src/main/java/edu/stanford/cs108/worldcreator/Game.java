@@ -33,8 +33,7 @@ public class Game {
 		pages.add(currentPage);
 
 		// TODO not sure this is the best way to construct a first object
-		currentShape = new Shape("default", (float)0, (float)0);
-		currentShape.setImageName("carrot");
+        currentShape = new Shape ("default", 10, 10, 200, 200, 1, 0, "carrot", "", "");
 		currentPage.addShape(currentShape);
 	}
 
