@@ -112,7 +112,7 @@ public class Game {
 	}
 
 	public boolean isAShapeUnder(float x, float y, Shape shape) {
-
+        return true;
 	}
 
 	public void drawPage(Canvas canvas) {

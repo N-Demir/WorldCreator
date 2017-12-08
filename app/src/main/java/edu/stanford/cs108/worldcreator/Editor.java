@@ -171,8 +171,7 @@ public class Editor extends AppCompatActivity {
         curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
         curShape.setImageName(((EditText)findViewById(R.id.imageName)).getText().toString());
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
-        curShape.setScript(new Script(((EditText)findViewById(R.id.scriptText)).getText().toString()));
-
+        curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString());
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
         
@@ -191,8 +190,8 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.shapeName)).setText(shape.getName());
         ((EditText) findViewById(R.id.imageName)).setText(shape.getImage());
         ((EditText) findViewById(R.id.displayText)).setText(shape.getText());
-        ((EditText) findViewById(R.id.scriptText)).setText(shape.getScript().getScriptString());
-        //update script text
+        ((EditText) findViewById(R.id.scriptText)).setText(shape.getScriptText());
+
         if (shape.getHidden()) ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.notVisible);
         else ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
         if (shape.getMovable()) ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
@@ -275,7 +274,7 @@ public class Editor extends AppCompatActivity {
                 "('" +shape.getName() + "','" + Game.curGame.getGameName() + "','"
                 + page.getName() + "','" + shape.getX() + "','" + shape.getY()
                 + "','" + shape.getHeight() + "','" + shape.getWidth() + "','" + toInt(shape.getMovable())
-                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptName() + "','" + shape.getText() + "',NULL);";
+                + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptText() + "','" + shape.getText() + "',NULL);";
         db.execSQL(shapeStr);
     }
 }
