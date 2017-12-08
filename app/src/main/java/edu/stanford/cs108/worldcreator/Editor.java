@@ -75,7 +75,7 @@ public class Editor extends AppCompatActivity {
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
 
-        findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
+        findViewById(R.id.EditView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
     }
 
     private void setShapeFields(Shape shape){
