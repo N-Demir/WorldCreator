@@ -103,8 +103,12 @@ public class Editor extends AppCompatActivity {
         }
         return true;
     }
-    private boolean checkPageNameLowerCase(String name) {return true;}//TODO:IMPLEMENT: return true if it is a dup
-
+    private boolean checkPageNameLowerCase(String name) {
+        for (Page p: Game.curGame.getPages()) {
+            if (p.getName().toLowerCase().equals(name.toLowerCase())) return true;
+        }
+        return false;
+    }
 
     public void onCreatePage(View view){
         EditText editText = (EditText) findViewById(R.id.pageName);
@@ -194,7 +198,14 @@ public class Editor extends AppCompatActivity {
         }
         return true;
     }
-    private boolean checkShapeNameLowerCase(String name) {return true;} //TODO:IMPLEMENT :true if dup
+    private boolean checkShapeNameLowerCase(String name) {
+        for (Page p: Game.curGame.getPages()) {
+            for (Shape shape: p.getShapes()) {
+                if (shape.getName().toLowerCase().equals(name.toLowerCase())) return true;
+            }
+        }
+        return false;
+    }
 
     public void onCreateShape(View view) {
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
@@ -250,7 +261,7 @@ public class Editor extends AppCompatActivity {
             return;
         } else if (!checkShapeNameChars(shapeName)) {
             return;
-        } else if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) { //TODO:LOWERCASE DUPLICATES
+        } else if (checkShapeNameLowerCase(shapeName) && shapeName.equals(Game.curGame.getCurrentShape().getName())) { 
             Toast.makeText(getApplicationContext(), "Shape with name " + shapeName + " already exists",
                     TOAST_LENGTHS).show();
             return;
