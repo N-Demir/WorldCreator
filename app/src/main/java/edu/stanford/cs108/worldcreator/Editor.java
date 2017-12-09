@@ -316,9 +316,11 @@ public class Editor extends AppCompatActivity {
     }
 
     ///////////////////////////DATABASE RELATED STUFF/////////////////////////
-    public void saveGame(View view){
+    public void onSaveGame(View view){
+        MainActivity.loadingFlag = true;
         clearDataBase();
         updateDataBase();
+        MainActivity.loadingFlag = false;
     }
     private void clearDataBase(){
         String sDelete = "DELETE FROM shapes WHERE game='" + Game.curGame.getGameName() + "'";
