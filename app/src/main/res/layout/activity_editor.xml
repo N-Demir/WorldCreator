@@ -223,6 +223,7 @@
                 android:id="@+id/movable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:scaleX="0.75"
                 android:scaleY="0.75"
                 android:text="true" />
@@ -259,6 +260,7 @@
                 android:id="@+id/isVisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:scaleX="0.75"
                 android:scaleY="0.75"
                 android:text="true" />

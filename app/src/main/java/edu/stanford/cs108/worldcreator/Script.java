@@ -16,9 +16,11 @@ public class Script{
 	private Vector<Vector<Object>> onEnter;
 	private String scriptString;
     public static Vector<String> media;
+    private boolean valid;
 	
 	
 	public Script(String input) {
+        valid = true;
 		scriptString = input;
         Log.d("MESSAGE", "Script: ORIGINAL: " + input);
         onClick = new Vector<Vector<Object>>();
@@ -43,6 +45,7 @@ public class Script{
 			if (MainActivity.loadingFlag) return;
 			Toast.makeText(MainActivity.curContext, "Invalid script: trigger must begin with 'on'",
 					Editor.TOAST_LENGTHS).show();
+            valid = false;
 			return;
 		}
 		String action = st.nextToken();
@@ -52,6 +55,7 @@ public class Script{
 			Shape toBeDropped = Game.curGame.getShape(shape);
 			if(toBeDropped == null) {
 				showShapeFailToast(shape);
+                valid = false;
 				return;
 			}
 			Vector<Vector<Object>> temp = new Vector<Vector<Object>>();
@@ -70,6 +74,7 @@ public class Script{
 			if (MainActivity.loadingFlag) return;
 			Toast.makeText(MainActivity.curContext, "Invalid script: no trigger on "
 					+ action, Editor.TOAST_LENGTHS).show();
+            valid = false;
 			return;
 		}
 		while(st.hasMoreTokens()) {
@@ -101,21 +106,25 @@ public class Script{
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: no command of name "
 						+ command, Editor.TOAST_LENGTHS).show();
+        valid = false;
 	}
 	private void showPageFailToast(String target /*page*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: page " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
+        valid = false;
 	}
 	private void showSoundFailToast(String target /*sound*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: sound " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
+        valid = false;
 	}
 	private void showShapeFailToast(String target /*shape*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: shape " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
+        valid = false;
 	}
 
 	public void addToOnClick(String command, String target) {
