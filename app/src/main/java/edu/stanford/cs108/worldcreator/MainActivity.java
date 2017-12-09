@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -139,6 +140,13 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.gname);
         String newGameName = editText.getText().toString();
         if (newGameName.equals("")) return;
+
+        Cursor gamesCursor = db.rawQuery("SELECT * FROM games WHERE name='" + newGameName + "';", null);
+        if (gamesCursor.getCount() == 0) {
+            Toast.makeText(getApplicationContext(), "Game already exists", Editor.TOAST_LENGTHS).show();
+            return;
+        }
+
         editText.setText(""); //NECESSARY?
         Game.curGame = new Game(newGameName); /* Calls the fresh constructor */
 
@@ -195,11 +203,8 @@ public class MainActivity extends AppCompatActivity {
      * @param intent
      */
     private void gotoActivity(Intent intent, View view) {
-        //TODO:FIX BUGS HERE
-
         Vector<Page> document = new Vector<Page>();
         String gameName = ((Cursor) ((Spinner) findViewById(R.id.game_spinner)).getSelectedItem()).getString(0);
-         //TODO:FIGURE OUT HOW TO DO THIS
         Cursor pCursor = db.rawQuery("SELECT * FROM pages WHERE game='" + gameName + "'", null);
         if (pCursor.getCount() == 0) return; //Todo
         Game.curGame = new Game(gameName);
@@ -227,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        updateGameSpinner();
         startActivity(intent);
     }
 }
