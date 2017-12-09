@@ -311,18 +311,18 @@ public class Editor extends AppCompatActivity {
     }
 
     public void setDefaultShapeFields() {
-        ((EditText) findViewById(R.id.xCord)).setText("");
-        ((EditText) findViewById(R.id.yCord)).setText("");
-        ((EditText) findViewById(R.id.width)).setText("");
-        ((EditText) findViewById(R.id.height)).setText("");
+        ((EditText) findViewById(R.id.xCord)).setText("0.0");
+        ((EditText) findViewById(R.id.yCord)).setText("0.0");
+        ((EditText) findViewById(R.id.width)).setText("0.0");
+        ((EditText) findViewById(R.id.height)).setText("0.0");
         ((EditText) findViewById(R.id.shapeName)).setText("");
         ((EditText) findViewById(R.id.imageName)).setText("");
         ((EditText) findViewById(R.id.displayText)).setText("");
         ((EditText) findViewById(R.id.scriptText)).setText("");
         fontSize = DEFAULT_FONT_SIZE;
 
-        ((RadioGroup)findViewById(R.id.visibleGroup)).clearCheck();
-        ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
+        ((RadioGroup) findViewById(R.id.visibleGroup)).check(R.id.isVisible);
+        ((RadioGroup) findViewById(R.id.moveGroup)).check(R.id.movable);
     }
 
     public void onUndo(View view){
