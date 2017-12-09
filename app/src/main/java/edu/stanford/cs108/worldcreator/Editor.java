@@ -217,8 +217,9 @@ public class Editor extends AppCompatActivity {
     }
 
     public void onDeleteShape(View view) {
-        Spinner spinner = (Spinner) findViewById(R.id.shape_spinner);
-        if (Game.curGame.getCurrentPage().getShapes().size() == 1){
+        if (Game.curGame.getCurrentPage().getShapes().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No shape selected", TOAST_LENGTHS);
+        } else if (Game.curGame.getCurrentPage().getShapes().size() == 1){
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(null);
             setDefaultShapeFields();
