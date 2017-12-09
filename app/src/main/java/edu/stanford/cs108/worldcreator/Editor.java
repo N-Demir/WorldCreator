@@ -218,7 +218,6 @@ public class Editor extends AppCompatActivity {
 
     public void onDeleteShape(View view) {
         Spinner spinner = (Spinner) findViewById(R.id.shape_spinner);
-        String  shapeName = spinner.getSelectedItem().toString();
         if (Game.curGame.getCurrentPage().getShapes().size() == 1){
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(null);
@@ -233,6 +232,7 @@ public class Editor extends AppCompatActivity {
 
     public void onUpdateShape(View view) {
         //read in all shape EditTexts and update curShape with their values
+        boolean success = true;
         Shape curShape = Game.curGame.getCurrentShape();
         if (curShape == null) {
             Toast.makeText(getApplicationContext(), "No selected shape", TOAST_LENGTHS).show();
@@ -251,6 +251,18 @@ public class Editor extends AppCompatActivity {
                     TOAST_LENGTHS).show();
             return;
         }
+        Float x = Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString());
+        Float y = Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString());
+        Float width = Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString());
+        Float height = Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString());
+        String imageName = ((EditText) findViewById(R.id.imageName)).getText().toString();
+        String textString = ((EditText)findViewById(R.id.displayText)).getText().toString();
+        String setScript = ((EditText)findViewById(R.id.scriptText)).getText().toString();
+
+
+        //fontsize
+
+
 
         curShape.setName(shapeName); //TODO:MASSIVE ERROR CHECK
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
@@ -267,6 +279,8 @@ public class Editor extends AppCompatActivity {
         curShape.setFontSize(fontSize);
         curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
         curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString()); //TODO: Error checking toasts in here
+
+
         curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
         curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
         
