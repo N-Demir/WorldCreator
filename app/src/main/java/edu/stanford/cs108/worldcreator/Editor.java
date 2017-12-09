@@ -374,7 +374,7 @@ public class Editor extends AppCompatActivity {
         Log.d("MESSAGES", "onUndo: prevShapesStr: " +prevShapes);
         while(st.hasMoreTokens()){
             String pageString = st.nextToken();
-            String[] pageArgs = pageString.split(",", -1);
+            String[] pageArgs = pageString.split("|", -1);
             Page page = new Page(pageArgs[0], pageArgs[1]);
             oldPages.add(page);
         }
@@ -382,7 +382,7 @@ public class Editor extends AppCompatActivity {
         st = new StringTokenizer(prevShapes);
         while(st.hasMoreTokens()){
             String shapeString = st.nextToken();
-            String[] shapeArgs = shapeString.split(",", -1);
+            String[] shapeArgs = shapeString.split("|", -1);
             String parentName = shapeArgs[2];
             Shape shape = new Shape(shapeArgs[0], Float.parseFloat(shapeArgs[3]),
                     Float.parseFloat(shapeArgs[4]), Float.parseFloat(shapeArgs[5]),
@@ -471,16 +471,16 @@ public class Editor extends AppCompatActivity {
     }
 
     public String serializePage(Page page){
-        String pageStr = page.getName() + "," + page.getBackgroundImage() + " ";
+        String pageStr = page.getName() + "|" + page.getBackgroundImage() + " ";
         return pageStr;
     }
 
     public String serializeShape(Page page, Shape shape){
-        String shapeStr = shape.getName() + "," + Game.curGame.getGameName() + ","
-                + page.getName() + "," + shape.getX() + "," + shape.getY()
-                + "," + shape.getHeight() + "," + shape.getWidth() + "," + toInt(shape.getMovable())
-                + "," + toInt(shape.getHidden())+ "," + shape.getImage() + "," + shape.getScriptText() + "," +
-                shape.getText() + "," + shape.getFontSize() + " ";
+        String shapeStr = shape.getName() + "|" + Game.curGame.getGameName() + "|"
+                + page.getName() + "|" + shape.getX() + "|" + shape.getY()
+                + "|" + shape.getHeight() + "|" + shape.getWidth() + "|" + toInt(shape.getMovable())
+                + "|" + toInt(shape.getHidden())+ "|" + shape.getImage() + "|" + shape.getScriptText() + "|" +
+                shape.getText() + "|" + shape.getFontSize() + " ";
         return shapeStr;
     }
 }

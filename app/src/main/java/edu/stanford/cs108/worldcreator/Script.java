@@ -74,7 +74,8 @@ public class Script{
 			if (MainActivity.loadingFlag) return;
 			Toast.makeText(MainActivity.curContext, "Invalid script: no trigger on "
 					+ action, Editor.TOAST_LENGTHS).show();
-            valid = false;
+			Log.d("MESSAGE", "handleTokens: action isnt click or enter");
+			valid = false;
 			return;
 		}
 		while(st.hasMoreTokens()) {
@@ -108,24 +109,28 @@ public class Script{
 		Toast.makeText(MainActivity.curContext, "Invalid script: no command of name "
 						+ command, Editor.TOAST_LENGTHS).show();
         valid = false;
+		Log.d("MESSAGE", "showCmdFailToast: ");
 	}
 	private void showPageFailToast(String target /*page*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: page " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
         valid = false;
+		Log.d("MESSAGE", "showPageFailToast: ");
 	}
 	private void showSoundFailToast(String target /*sound*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: sound " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
         valid = false;
+		Log.d("MESSAGE", "showSoundFailToast: ");
 	}
 	private void showShapeFailToast(String target /*shape*/) {
 		if (MainActivity.loadingFlag) return;
 		Toast.makeText(MainActivity.curContext, "Invalid script: shape " + target
 				+ " could not be found", Editor.TOAST_LENGTHS).show();
         valid = false;
+		Log.d("MESSAGE", "showShapeFailToast: ");
 	}
 
 	public void addToOnClick(String command, String target) {
