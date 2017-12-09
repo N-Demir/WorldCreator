@@ -36,6 +36,7 @@ public class Editor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        setPrevGameState();
 
         final Spinner pageSpinner = (Spinner) findViewById(R.id.page_spinner);
         pageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,6 +156,7 @@ public class Editor extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pageNames);
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getPosition(Game.curGame.getCurPageName()));
+        ((EditText) findViewById(R.id.pageName)).setText(Game.curGame.getCurrentPage().getName());
     }
 
     public void onCreateShape(View view) {
@@ -291,14 +293,16 @@ public class Editor extends AppCompatActivity {
         ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
     }
 
-    private void onUndo(View view){
+    public void onUndo(View view){
         String gameName = Game.curGame.getGameName();
         Game.curGame = new Game(gameName);
         Vector<Page> oldPages =  new Vector<Page>();
         StringTokenizer st = new StringTokenizer(prevPages);
+        Log.d("MESSAGES", "onUndo: prevPagesStr: " +prevPages);
+        Log.d("MESSAGES", "onUndo: prevShapesStr: " +prevShapes);
         while(st.hasMoreTokens()){
             String pageString = st.nextToken();
-            String[] pageArgs = pageString.split(",");
+            String[] pageArgs = pageString.split(",", -1);
             Page page = new Page(pageArgs[0], pageArgs[1]);
             oldPages.add(page);
         }
@@ -306,7 +310,7 @@ public class Editor extends AppCompatActivity {
         st = new StringTokenizer(prevShapes);
         while(st.hasMoreTokens()){
             String shapeString = st.nextToken();
-            String[] shapeArgs = shapeString.split(",");
+            String[] shapeArgs = shapeString.split(",", -1);
             String parentName = shapeArgs[2];
             Shape shape = new Shape(shapeArgs[0], Float.parseFloat(shapeArgs[3]),
                     Float.parseFloat(shapeArgs[4]), Float.parseFloat(shapeArgs[5]),
@@ -327,13 +331,16 @@ public class Editor extends AppCompatActivity {
         }
         Game.curGame.setCurrentShape(Game.curGame.getShape(prevCurShape));
         Game.curGame.changePage(Game.curGame.getPage(prevCurPage));
-        setShapeFields();
+        if(Game.curGame.getCurrentShape() == null) setDefaultShapeFields();
+        else setShapeFields();
+        updatePageSpinner();
+        updateShapeSpinner();
         findViewById(R.id.EditorView).invalidate();
     }
 
     private void setPrevGameState(){
         prevCurPage = Game.curGame.getCurrentPage().getName();
-        prevCurShape = Game.curGame.getCurrentShape().getName();
+        if(Game.curGame.getCurrentShape() != null) prevCurShape = Game.curGame.getCurrentShape().getName();
         prevPages = "";
         prevShapes = "";
         for(Page page: Game.curGame.getPages()){
