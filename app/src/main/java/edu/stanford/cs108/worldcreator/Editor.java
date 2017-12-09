@@ -253,26 +253,35 @@ public class Editor extends AppCompatActivity {
             return;
         }
 
-        Float x = Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString());
-        if (x == null) {
+        Float x = 0.0f;
+        Float y = 0.0f;
+        Float width = 0.0f;
+        Float height = 0.0f;
+
+        String xStr = ((EditText)findViewById(R.id.xCord)).getText().toString();
+        if (xStr.isEmpty()) {
             success = false;
             Toast.makeText(getApplicationContext(), "X must have a float value", TOAST_LENGTHS).show();
-        }
-        Float y = Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString());
-        if (y == null) {
+        } else x = Float.parseFloat(xStr);
+
+        String yStr = ((EditText)findViewById(R.id.yCord)).getText().toString();
+        if (yStr.isEmpty()) {
             success = false;
             Toast.makeText(getApplicationContext(), "Y must have a float value", TOAST_LENGTHS).show();
-        }
-        Float width = Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString());
-        if (width == null) {
+        } else y = Float.parseFloat(yStr);
+
+        String widthStr = ((EditText) findViewById(R.id.width)).getText().toString();
+        if (widthStr.isEmpty()) {
             success = false;
             Toast.makeText(getApplicationContext(), "Width must have a float value", TOAST_LENGTHS).show();
-        }
-        Float height = Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString());
-        if (height == null) {
+        } else width = Float.parseFloat(widthStr);
+
+        String heightStr = ((EditText) findViewById(R.id.height)).getText().toString();
+        if (heightStr.isEmpty()) {
             success = false;
             Toast.makeText(getApplicationContext(), "Height must have a float value", TOAST_LENGTHS).show();
-        }
+        } else height = Float.parseFloat(heightStr);
+
         String imageName = ((EditText) findViewById(R.id.imageName)).getText().toString();
         if (!imageName.isEmpty() && !imageNames.contains(imageName)){
             success = false;
