@@ -100,6 +100,7 @@ public class Script{
 	public boolean droppable(Shape toBeDropped){
 		return onDrop.containsKey(toBeDropped);
 	}
+	public boolean getValid() {return valid;}
 
 
 	private void showCmdFailToast(String command) {

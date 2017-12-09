@@ -86,11 +86,11 @@ public class Editor extends AppCompatActivity {
 
     public void onIncreaseFont(View view){
         fontSize += FONT_SIZE_CHANGE;
-        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS);
+        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS).show();
     }
     public void onDecreaseFont(View view){
         if(fontSize > FONT_SIZE_CHANGE) fontSize -= FONT_SIZE_CHANGE;
-        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS);
+        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS).show();
     }
 
     private boolean checkPageNameChars(String name) {
@@ -218,7 +218,7 @@ public class Editor extends AppCompatActivity {
 
     public void onDeleteShape(View view) {
         if (Game.curGame.getCurrentPage().getShapes().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "No shape selected", TOAST_LENGTHS);
+            Toast.makeText(getApplicationContext(), "No shape selected", TOAST_LENGTHS).show();
         } else if (Game.curGame.getCurrentPage().getShapes().size() == 1){
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(null);
@@ -253,16 +253,40 @@ public class Editor extends AppCompatActivity {
             return;
         }
         Float x = Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString());
+        if (x == null) {
+            success = false;
+        }
         Float y = Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString());
+        if (y == null) {
+            success = false;
+        }
         Float width = Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString());
+        if (width == null) {
+            success = false;
+        }
         Float height = Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString());
+        if (height == null) {
+            success = false;
+        }
         String imageName = ((EditText) findViewById(R.id.imageName)).getText().toString();
+        if (!imageName.isEmpty() && !imageNames.contains(imageName)){
+            success = false;
+            Toast.makeText(getApplicationContext(), "Couldn't find " + imageName + " image", TOAST_LENGTHS).show();
+        }
         String textString = ((EditText)findViewById(R.id.displayText)).getText().toString();
         String setScript = ((EditText)findViewById(R.id.scriptText)).getText().toString();
+        Script temp = new Script(setScript);
+        if (!temp.getValid()) success = false;
+
+        if (success) {
+            //Set everything in current shape
+
+        }
+
 
 
         //fontsize
-
+        if (imageNames.contains(imageName)) curShape.setImageName(imageName);
 
 
         curShape.setName(shapeName); //TODO:MASSIVE ERROR CHECK
