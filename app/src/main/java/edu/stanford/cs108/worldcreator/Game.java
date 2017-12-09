@@ -11,6 +11,7 @@ public class Game {
 	/* Entryway into all current game related things */
 	public static Game curGame;
 
+
 	public static final String INITIAL_PAGE_NAME = "page1";
 	private static final float INVENTORY_SPACING = 50.0f; //x and y spacing
 

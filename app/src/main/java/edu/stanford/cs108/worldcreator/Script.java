@@ -28,12 +28,11 @@ public class Script{
 			onEnter.add(i, new Vector<Object>());
 		}
 		String[] strs = input.split(";");
-			for (String str : strs) {
-                Log.d("MESSAGE", "Script: SPLIT: " + str);
-				str.trim();
-				StringTokenizer st = new StringTokenizer(str);
-				handleTokens(st);
-			}
+		for (String str : strs) {
+			Log.d("MESSAGE", "Script: SPLIT: " + str);
+			StringTokenizer st = new StringTokenizer(str);
+			handleTokens(st);
+		}
 	}
 	
 	private void handleTokens(StringTokenizer st) {

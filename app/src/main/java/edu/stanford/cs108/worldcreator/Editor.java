@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
@@ -25,6 +26,11 @@ public class Editor extends AppCompatActivity {
     private int shapeCount =1;
     private int fontSize = DEFAULT_FONT_SIZE;
     public static Vector<String> imageNames;
+
+    private String prevPages;
+    private String prevShapes;
+    private String prevCurShape;
+    private String prevCurPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,11 +291,64 @@ public class Editor extends AppCompatActivity {
         ((RadioGroup) findViewById(R.id.moveGroup)).clearCheck();
     }
 
+    private void onUndo(View view){
+        String gameName = Game.curGame.getGameName();
+        Game.curGame = new Game(gameName);
+        Vector<Page> oldPages =  new Vector<Page>();
+        StringTokenizer st = new StringTokenizer(prevPages);
+        while(st.hasMoreTokens()){
+            String pageString = st.nextToken();
+            String[] pageArgs = pageString.split(",");
+            Page page = new Page(pageArgs[0], pageArgs[1]);
+            oldPages.add(page);
+        }
+
+        st = new StringTokenizer(prevShapes);
+        while(st.hasMoreTokens()){
+            String shapeString = st.nextToken();
+            String[] shapeArgs = shapeString.split(",");
+            String parentName = shapeArgs[2];
+            Shape shape = new Shape(shapeArgs[0], Float.parseFloat(shapeArgs[3]),
+                    Float.parseFloat(shapeArgs[4]), Float.parseFloat(shapeArgs[5]),
+                    Float.parseFloat(shapeArgs[6]), Integer.parseInt(shapeArgs[7]),
+                    Integer.parseInt(shapeArgs[8]), shapeArgs[9],
+                    shapeArgs[11], shapeArgs[10], Integer.parseInt(shapeArgs[12]));
+            for(Page page: oldPages){
+                if(parentName.equals(page.getName())) page.addShape(shape);
+            }
+        }
+        Game.curGame = new Game(oldPages, gameName);
+
+        //reseting scripts to accomodate references created after scripts initially ingested
+        for(Page page: Game.curGame.getPages()){
+            for(Shape shape: page.getShapes()){
+                shape.setScriptText(shape.getScriptText());
+            }
+        }
+        Game.curGame.setCurrentShape(Game.curGame.getShape(prevCurShape));
+        Game.curGame.changePage(Game.curGame.getPage(prevCurPage));
+        setShapeFields();
+        findViewById(R.id.EditorView).invalidate();
+    }
+
+    private void setPrevGameState(){
+        prevCurPage = Game.curGame.getCurrentPage().getName();
+        prevCurShape = Game.curGame.getCurrentShape().getName();
+        prevPages = "";
+        prevShapes = "";
+        for(Page page: Game.curGame.getPages()){
+            prevPages += serializePage(page);
+            for(Shape shape: page.getShapes()) prevShapes += serializeShape(page, shape);
+        }
+    }
+
     ///////////////////////////DATABASE RELATED STUFF/////////////////////////
     public void saveGame(View view){
+        setPrevGameState();
         clearDataBase();
         updateDataBase();
     }
+
     private void clearDataBase(){
         String sDelete = "DELETE FROM shapes WHERE game='" + Game.curGame.getGameName() + "'";
         db.execSQL(sDelete);
@@ -327,5 +386,19 @@ public class Editor extends AppCompatActivity {
                 + "','" + toInt(shape.getHidden())+ "','" + shape.getImage() + "','" + shape.getScriptText() + "','" +
                 shape.getText() + "','" + shape.getFontSize() +"',NULL);";
         db.execSQL(shapeStr);
+    }
+
+    public String serializePage(Page page){
+        String pageStr = page.getName() + "," + page.getBackgroundImage() + " ";
+        return pageStr;
+    }
+
+    public String serializeShape(Page page, Shape shape){
+        String shapeStr = shape.getName() + "," + Game.curGame.getGameName() + ","
+                + page.getName() + "," + shape.getX() + "," + shape.getY()
+                + "," + shape.getHeight() + "," + shape.getWidth() + "," + toInt(shape.getMovable())
+                + "," + toInt(shape.getHidden())+ "," + shape.getImage() + "," + shape.getScriptText() + "," +
+                shape.getText() + "," + shape.getFontSize() + " ";
+        return shapeStr;
     }
 }

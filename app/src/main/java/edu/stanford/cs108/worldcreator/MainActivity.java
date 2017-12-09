@@ -211,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
             document.add(cur);
         }
         Game.curGame = new Game(document, gameName);
+
+        //reseting scripts to accomodate references created after scripts initially ingested
         for(Page page: Game.curGame.getPages()){
             for(Shape shape: page.getShapes()){
                 shape.setScriptText(shape.getScriptText());
