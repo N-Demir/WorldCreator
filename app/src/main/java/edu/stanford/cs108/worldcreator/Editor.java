@@ -261,7 +261,7 @@ public class Editor extends AppCompatActivity {
             return;
         } else if (!checkShapeNameChars(shapeName)) {
             return;
-        } else if (checkShapeNameLowerCase(shapeName) && shapeName.equals(Game.curGame.getCurrentShape().getName())) { 
+        } else if (checkShapeNameLowerCase(shapeName) && !shapeName.equals(Game.curGame.getCurrentShape().getName())) {
             Toast.makeText(getApplicationContext(), "Shape with name " + shapeName + " already exists",
                     TOAST_LENGTHS).show();
             return;
@@ -302,9 +302,12 @@ public class Editor extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Couldn't find " + imageName + " image", TOAST_LENGTHS).show();
         }
         String textString = ((EditText)findViewById(R.id.displayText)).getText().toString();
-        String setScript = ((EditText)findViewById(R.id.scriptText)).getText().toString();
-        Script temp = new Script(setScript);
-        if (!temp.getValid()) success = false;
+        String scriptString = ((EditText)findViewById(R.id.scriptText)).getText().toString();
+        Script temp = new Script(scriptString);
+        if (!temp.getValid()) {
+            //Log.d("NIKITASLOG", "SUCCESS from script is FALSE");
+            success = false;
+        }
 
         if (success) {
             //Set everything in current shape
@@ -315,7 +318,9 @@ public class Editor extends AppCompatActivity {
             curShape.setHeight(height);
             curShape.setImageName(imageName);
             curShape.setText(textString);
-            curShape.setScript(temp);
+            curShape.setScriptText(scriptString);
+            //Log.d("NIKITASLOG", "Script: " + curShape.getScriptText());
+            //Log.d("NIKITASLOG", "ScriptString: " + scriptString);
             curShape.setFontSize(fontSize);
             curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
             curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());

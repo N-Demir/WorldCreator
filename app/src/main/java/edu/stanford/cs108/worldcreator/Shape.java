@@ -13,13 +13,15 @@ import android.util.Log;
 import java.util.Vector;
 
 public class Shape {
+	private static final float BORDER_WIDTH = 10.0f;
+
 	private static final float OUTLINE_SELECTED_WIDTH = 10.0f;
 	private static final int OUTLINE_SELECTED_COLOR = Color.GREEN;
 	private static final Paint.Style OUTLINE_SELECTED_STYLE = Paint.Style.STROKE;
 	private static final Paint outlineSelectedPaint;
 
-	private static final int defaultWidth = 20;
-	private static final int defaultHeight = 20;
+	private static final float defaultWidth = 40.0f;
+	private static final float defaultHeight = 40.0f;
 	private static final int defaultFontSize = 30;
 
 	static{
@@ -195,6 +197,10 @@ public class Shape {
 		this.x += xAmount;
 		this.y += yAmount;
 	}
+
+	/*public boolean onBorder(float x, float y) {
+		if (x >= this.x && x <= this.x + BORDER_WIDTH)
+	}*/
 	
 	public void draw(Canvas canvas, boolean editor) {
 		if (hidden && !editor) return;
