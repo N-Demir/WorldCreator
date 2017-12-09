@@ -45,6 +45,8 @@ public class Editor extends AppCompatActivity {
                 String yew = pageSpinner.getSelectedItem().toString();
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
+                ((EditText)findViewById(R.id.pageName)).setText(Game.curGame.getCurPageName());
+                ((EditText)findViewById(R.id.backgroundImage)).setText(Game.curGame.getCurrentPage().getBackgroundImage());
                 updateShapeSpinner();
                 findViewById(R.id.EditorView).invalidate();
             }
@@ -86,11 +88,11 @@ public class Editor extends AppCompatActivity {
 
     public void onIncreaseFont(View view){
         fontSize += FONT_SIZE_CHANGE;
-        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS);
+        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS).show();
     }
     public void onDecreaseFont(View view){
         if(fontSize > FONT_SIZE_CHANGE) fontSize -= FONT_SIZE_CHANGE;
-        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS);
+        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS).show();
     }
 
     private boolean checkPageNameChars(String name) {
@@ -149,7 +151,7 @@ public class Editor extends AppCompatActivity {
         if (imageNames.contains(backgroundImageName)) Game.curGame.getCurrentPage().setBackgroundImage(backgroundImageName);
         else if (!backgroundImageName.isEmpty()) Toast.makeText(getApplicationContext(),
                 "Couldn't find background image with name: " + backgroundImageName, TOAST_LENGTHS).show();
-        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa"); //TODO WhaT??
+        else Game.curGame.getCurrentPage().setBackgroundImage("");
         findViewById(R.id.EditorView).invalidate();
 
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
@@ -157,6 +159,7 @@ public class Editor extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Can't update page with empty name", TOAST_LENGTHS).show();
             return;
         } else {
+            if (newName.equals(Game.curGame.getCurPageName())) return;
             if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
                 Toast.makeText(getApplicationContext(), "Can't rename starting page "
                         + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
@@ -218,7 +221,7 @@ public class Editor extends AppCompatActivity {
 
     public void onDeleteShape(View view) {
         if (Game.curGame.getCurrentPage().getShapes().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "No shape selected", TOAST_LENGTHS);
+            Toast.makeText(getApplicationContext(), "No shape selected", TOAST_LENGTHS).show();
         } else if (Game.curGame.getCurrentPage().getShapes().size() == 1){
             Game.curGame.getCurrentPage().removeShape(Game.curGame.getCurrentShape());
             Game.curGame.setCurrentShape(null);
@@ -239,55 +242,77 @@ public class Editor extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No selected shape", TOAST_LENGTHS).show();
             return;
         }
-        Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
+        //Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
 
-        if (!checkShapeNameChars(shapeName)) return;
-
         if (shapeName.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Can't update" + " shape with empty name", TOAST_LENGTHS).show();
+            Toast.makeText(getApplicationContext(), "Can't update shape with empty name", TOAST_LENGTHS).show();
+            return;
+        } else if (!checkShapeNameChars(shapeName)) {
             return;
         } else if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) { //TODO:LOWERCASE DUPLICATES
             Toast.makeText(getApplicationContext(), "Shape with name " + shapeName + " already exists",
                     TOAST_LENGTHS).show();
             return;
         }
-        Float x = Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString());
-        Float y = Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString());
-        Float width = Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString());
-        Float height = Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString());
+
+        Float x = 0.0f;
+        Float y = 0.0f;
+        Float width = 0.0f;
+        Float height = 0.0f;
+
+        String xStr = ((EditText)findViewById(R.id.xCord)).getText().toString();
+        if (xStr.isEmpty()) {
+            success = false;
+            Toast.makeText(getApplicationContext(), "X must have a float value", TOAST_LENGTHS).show();
+        } else x = Float.parseFloat(xStr);
+
+        String yStr = ((EditText)findViewById(R.id.yCord)).getText().toString();
+        if (yStr.isEmpty()) {
+            success = false;
+            Toast.makeText(getApplicationContext(), "Y must have a float value", TOAST_LENGTHS).show();
+        } else y = Float.parseFloat(yStr);
+
+        String widthStr = ((EditText) findViewById(R.id.width)).getText().toString();
+        if (widthStr.isEmpty()) {
+            success = false;
+            Toast.makeText(getApplicationContext(), "Width must have a float value", TOAST_LENGTHS).show();
+        } else width = Float.parseFloat(widthStr);
+
+        String heightStr = ((EditText) findViewById(R.id.height)).getText().toString();
+        if (heightStr.isEmpty()) {
+            success = false;
+            Toast.makeText(getApplicationContext(), "Height must have a float value", TOAST_LENGTHS).show();
+        } else height = Float.parseFloat(heightStr);
+
         String imageName = ((EditText) findViewById(R.id.imageName)).getText().toString();
+        if (!imageName.isEmpty() && !imageNames.contains(imageName)){
+            success = false;
+            Toast.makeText(getApplicationContext(), "Couldn't find " + imageName + " image", TOAST_LENGTHS).show();
+        }
         String textString = ((EditText)findViewById(R.id.displayText)).getText().toString();
         String setScript = ((EditText)findViewById(R.id.scriptText)).getText().toString();
+        Script temp = new Script(setScript);
+        if (!temp.getValid()) success = false;
 
+        if (success) {
+            //Set everything in current shape
+            curShape.setName(shapeName);
+            curShape.setX(x);
+            curShape.setY(y);
+            curShape.setWidth(width);
+            curShape.setHeight(height);
+            curShape.setImageName(imageName);
+            curShape.setText(textString);
+            curShape.setScript(temp);
+            curShape.setFontSize(fontSize);
+            curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
+            curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
 
-        //fontsize
-
-
-
-        curShape.setName(shapeName); //TODO:MASSIVE ERROR CHECK
-        curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
-        curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
-        curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
-        curShape.setHeight(Float.parseFloat(((EditText) findViewById(R.id.height)).getText().toString()));
-        String string = (String)((EditText) findViewById(R.id.imageName)).getText().toString();
-        if (imageNames.contains(string)) curShape.setImageName(string);
-        else {
-            curShape.setImageName("");
-            Toast.makeText(getApplicationContext(), "Couldn't find " + string + " image", TOAST_LENGTHS).show();
+            updateShapeSpinner();
+            findViewById(R.id.EditorView).invalidate();
         }
-        Log.d("MESSAGE", "onUpdateShape: FONTSIZE: " + fontSize);
-        curShape.setFontSize(fontSize);
-        curShape.setText(((EditText)findViewById(R.id.displayText)).getText().toString());
-        curShape.setScriptText(((EditText)findViewById(R.id.scriptText)).getText().toString()); //TODO: Error checking toasts in here
-
-
-        curShape.setMovable(((RadioButton)findViewById(R.id.movable)).isChecked());
-        curShape.setHidden(((RadioButton)findViewById(R.id.notVisible)).isChecked());
-        
-        updateShapeSpinner();
-
-        findViewById(R.id.EditorView).invalidate(); //TODO:IMPLEMENT EVERYWHERE?
+        //Log.d("MESSAGE", "onUpdateShape: FONTSIZE: " + fontSize);
     }
 
     public void setShapeFields(){
