@@ -44,6 +44,8 @@ public class Shape {
 	private Page page;
 	private boolean inventoryItem;
 	private int fontSize;
+    private float tempWidth;
+    private float tempHeight;
 
 	public Shape(String sName){
 		name = sName;
@@ -58,6 +60,8 @@ public class Shape {
 		scriptText = "";
 		fontSize = defaultFontSize;
 		script = new Script("");
+        tempHeight = height;
+        tempWidth = width;
 	}
 
 	public Shape (String sName, float xCord, float yCord, float h, float w,
@@ -77,6 +81,8 @@ public class Shape {
 		scriptText = script;
 		fontSize = fSize;
 		this.script =  new Script(script);
+        tempHeight = height;
+        tempWidth = width;
 	}
 
 	public Shape(String shapeName, float xCord, float yCord) {
@@ -92,6 +98,8 @@ public class Shape {
 		height = defaultHeight;
 		script = new Script("");
 		scriptText = "";
+        tempHeight = height;
+        tempWidth = width;
 	}
 	
 	public void executeOnClick() {
@@ -157,6 +165,8 @@ public class Shape {
 	public boolean inInventory() { return inventoryItem;}
 	public Page getPage() { return page;}
 	public int getFontSize() { return fontSize;}
+    public float getTempWidth() { return tempWidth;}
+    public float getTempHeight(){ return tempHeight;}
 
 	public void setFontSize(int size){ fontSize = size;}
 	public void setHidden(boolean bool) { hidden = bool;}
@@ -171,6 +181,8 @@ public class Shape {
 	public void setScript(Script temp) { script = temp;}
 	public void setInventoryStatus(boolean bool) { inventoryItem = bool;}
 	public void setPage(Page temp) { page = temp;}
+    public void setTempWidth(float val) { tempWidth =val;}
+    public void setTempHeight(float val) { tempHeight = val;}
 	public void setScriptText(String text) {
 		scriptText = text;
 		script = new Script(scriptText);
@@ -219,4 +231,50 @@ public class Shape {
 			canvas.drawRect(x, y, x + width, y + height, paint);
 		}
 	}
+
+	public float inventoryDraw(Canvas canvas, float maxHeight){
+        if(hidden) return width;
+        if (PlayerGameView.drawOutline && PlayerGameView.selectedShapeName.equals(name)) {
+            canvas.drawRect(x, y, x + width, y + height, outlineSelectedPaint);
+        }
+        Paint paint = null;
+        if(!text.isEmpty()) {
+            paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(fontSize);
+            Rect bounds = new Rect();
+            paint.getTextBounds(text, 0, text.length(), bounds);
+            for(int i = 1; bounds.height() > maxHeight; i++){
+                paint.setTextSize(fontSize - i);
+                paint.getTextBounds(text, 0, text.length(), bounds);
+            }
+            width = bounds.width();
+            height = bounds.height();
+            canvas.drawText(text, x, y + height, paint);
+            return width;
+        } else if(!imageName.isEmpty()) {
+            Context context = MainActivity.curContext;
+            int imageID = context.getResources().getIdentifier(imageName, "drawable",
+                    context.getPackageName());
+            BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(imageID,
+                    context.getTheme());
+            if(height > maxHeight){
+                float multiplier = maxHeight/height;
+                width = multiplier * width;
+                height = maxHeight;
+            }
+            canvas.drawBitmap(image.getBitmap(), null, new RectF(x, y, x + width, y + height), paint);
+            return width;
+        } else {
+            paint = new Paint(); //TODO: THIS SHOULD BE DONE ONCE AND STATICALLY FOR EFFICIENCY
+            paint.setColor(Color.LTGRAY);
+            if(height > maxHeight){
+                float multiplier = maxHeight/height;
+                width = multiplier * width;
+                height = maxHeight;
+            }
+            canvas.drawRect(x, y, x + width, y + height, paint);
+            return width;
+        }
+    }
 }

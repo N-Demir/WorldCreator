@@ -98,12 +98,14 @@ public class Game {
 
 
 	public void addToInventory(Shape shape) {
-		Log.d("MESSAGE", "addtoI");
+		shape.setTempWidth(shape.getWidth());
+		shape.setTempHeight(shape.getHeight());
 		inventory.add(shape);
 		Game.curGame.getCurrentPage().removeShape(shape);
 	}
 	public void removeFromInventory(Shape shape) {
-        Log.d("MESSAGE", "removefromI");
+		shape.setWidth(shape.getTempWidth());
+		shape.setHeight(shape.getTempHeight());
 		inventory.remove(shape);
 		Game.curGame.getCurrentPage().addShape(shape);
 	}
@@ -144,11 +146,12 @@ public class Game {
 
 	public void drawInventory(Canvas canvas) {
 		float curX = INVENTORY_SPACING;
+		float maxHeight = PlayerGameView.SEPARATOR_HEIGHT - INVENTORY_SPACING;
 		for(Shape shape: inventory) {
 			shape.setX(curX); //TODO:DOES THIS STUFF WORK
 			shape.setY(PlayerGameView.height - PlayerGameView.SEPARATOR_HEIGHT + INVENTORY_SPACING / 2.0f);
-			shape.draw(canvas, false);
-			curX += shape.getWidth() + INVENTORY_SPACING;
+			float tempWidth = shape.inventoryDraw(canvas, maxHeight);
+			curX += tempWidth + INVENTORY_SPACING;
 		}
 	}
 	
