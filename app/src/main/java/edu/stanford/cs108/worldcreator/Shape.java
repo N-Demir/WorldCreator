@@ -196,7 +196,11 @@ public class Shape {
 			paint.setColor(Color.BLACK);
 			paint.setTextSize(fontSize);
 			if(editor && hidden) paint.setAlpha(64);
-			canvas.drawText(text, x, y, paint);
+			Rect bounds = new Rect();
+			paint.getTextBounds(text, 0, text.length(), bounds);
+			width = bounds.width();
+			height = bounds.height();
+			canvas.drawText(text, x, y + height, paint);
 		} else if(!imageName.isEmpty()) {
             Context context = MainActivity.curContext;
 			int imageID = context.getResources().getIdentifier(imageName, "drawable",
