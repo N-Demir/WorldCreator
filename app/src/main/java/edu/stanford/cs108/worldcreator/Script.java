@@ -7,6 +7,7 @@ import java.util.Vector;
 import java.util.StringTokenizer;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Script{
 	//these arrays are of length 4 and contain targets for goto, play, show, and hide, respectively
@@ -38,13 +39,21 @@ public class Script{
 	private void handleTokens(StringTokenizer st) {
 		if (!st.hasMoreTokens()) return;
 		String first = st.nextToken();
-		if(!first.equals("on")) return; //toast
+		if(!first.equals("on")) {
+			if (MainActivity.loadingFlag) return;
+			Toast.makeText(MainActivity.curContext, "Invalid script: trigger must begin with 'on'",
+					Editor.TOAST_LENGTHS).show();
+			return;
+		}
 		String action = st.nextToken();
 		if(action.equals("drop")){
 			String shape = st.nextToken();
             Log.d("MESSAGE", "Script: DROP: " + shape);
 			Shape toBeDropped = Game.curGame.getShape(shape);
-			if(toBeDropped == null) return; //toast
+			if(toBeDropped == null) {
+				showShapeFailToast(shape);
+				return;
+			}
 			Vector<Vector<Object>> temp = new Vector<Vector<Object>>();
 			for(int i = 0; i < 4; i++) temp.add(i, new Vector<Object>());
 			onDrop.put(toBeDropped, temp);
@@ -57,7 +66,12 @@ public class Script{
 			return;
 		}
 
-		if(!action.equals("click") && !action.equals("enter")) return; // toast
+		if(!action.equals("click") && !action.equals("enter")) {
+			if (MainActivity.loadingFlag) return;
+			Toast.makeText(MainActivity.curContext, "Invalid script: no trigger on "
+					+ action, Editor.TOAST_LENGTHS).show();
+			return;
+		}
 		while(st.hasMoreTokens()) {
 			String command = st.nextToken();
 			String target = st.nextToken();
@@ -81,83 +95,150 @@ public class Script{
 	public boolean droppable(Shape toBeDropped){
 		return onDrop.containsKey(toBeDropped);
 	}
-	
+
+
+	private void showCmdFailToast(String command) {
+		if (MainActivity.loadingFlag) return;
+		Toast.makeText(MainActivity.curContext, "Invalid script: no command of name "
+						+ command, Editor.TOAST_LENGTHS).show();
+	}
+	private void showPageFailToast(String target /*page*/) {
+		if (MainActivity.loadingFlag) return;
+		Toast.makeText(MainActivity.curContext, "Invalid script: page " + target
+				+ " could not be found", Editor.TOAST_LENGTHS).show();
+	}
+	private void showSoundFailToast(String target /*sound*/) {
+		if (MainActivity.loadingFlag) return;
+		Toast.makeText(MainActivity.curContext, "Invalid script: sound " + target
+				+ " could not be found", Editor.TOAST_LENGTHS).show();
+	}
+	private void showShapeFailToast(String target /*shape*/) {
+		if (MainActivity.loadingFlag) return;
+		Toast.makeText(MainActivity.curContext, "Invalid script: shape " + target
+				+ " could not be found", Editor.TOAST_LENGTHS).show();
+	}
+
 	public void addToOnClick(String command, String target) {
-		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) return; //toast
+		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) {
+			showCmdFailToast(command);
+			return; //TODO EXPAND TO ALL POSSIBLE ADDED COMMANDS
+		}
 		switch(command) {
 		case "goto":
 			Page page = Game.curGame.getPage(target);
-			if(page == null) return; //toast
+			if(page == null) {
+				showPageFailToast(target);
+				return;
+			}
 			onClick.elementAt(0).add(page);
 			break;
 		case "play":
             if (!media.contains(target)) return;
             MediaPlayer mp = Game.curGame.getSound(target);
-            if(mp == null) return; //toast
+            if(mp == null) {
+				showSoundFailToast(target);
+				return;
+			}
 			onClick.elementAt(1).add(mp);
 			break;
 		case "hide":
 			Shape shape = Game.curGame.getShape(target);
-			if(shape == null) return; //toast
+			if(shape == null) {
+				showShapeFailToast(target);
+				return;
+			}
 			onClick.elementAt(2).add(shape);
 			break;
 		case "show":
 			Shape shape2 = Game.curGame.getShape(target);
-			if(shape2 == null) return; //toast
+			if(shape2 == null) {
+				showShapeFailToast(target);
+				return;
+			}
 			onClick.elementAt(3).add(shape2);
 			break;
 		}
 	}
 
 	public void addToOnDrop(Shape key, String command, String target) {
-		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) return; //toast
+		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) {
+			showCmdFailToast(command);
+			return; //TODO: Make more robust
+		}
 		switch(command) {
 		case "goto":
 			Page page = Game.curGame.getPage(target);
-			if(page == null) return; //toast
+			if(page == null) {
+				showPageFailToast(target);
+				return;
+			}
 			onDrop.get(key).elementAt(0).add(page);
 			break;
 		case "play":
 		    if (!media.contains(target)) return;
 			MediaPlayer mp = Game.curGame.getSound(target);
-			if(mp == null) return; //toast
+			if(mp == null) {
+				showSoundFailToast(target);
+				return;
+			}
 			onDrop.get(key).elementAt(1).add(mp);
 			break;
 		case "hide":
 			Shape shape = Game.curGame.getShape(target);
-			if(shape == null) return; //toast
+			if(shape == null) {
+				showShapeFailToast(target);
+				return;
+			}
 			onDrop.get(key).elementAt(2).add(shape);
 			break;
 		case "show":
 			Shape shape2 = Game.curGame.getShape(target);
-			if(shape2 == null) return; //toast
+			if(shape2 == null) {
+				showShapeFailToast(target);
+				return;
+			}
 			onDrop.get(key).elementAt(3).add(shape2);
 			break;
 		}
 	}
 
 	public void addToOnEnter(String command, String target) {
-		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) return; //toast
+		if(!command.equals("goto") && !command.equals("play") && !command.equals("hide") && !command.equals("show")) {
+			showCmdFailToast(command);
+			return;
+		}
 		switch(command) {
 			case "goto":
 				Page page = Game.curGame.getPage(target);
-				if(page == null) return; //toast
+				if(page == null) {
+					showPageFailToast(target);
+					return;
+				}
 				onEnter.elementAt(0).add(page);
 				break;
 			case "play":
                 if (!media.contains(target)) return;
                 MediaPlayer mp = Game.curGame.getSound(target);
-                if(mp == null) return; //toast
+                if(mp == null) {
+					showSoundFailToast(target);
+					return;
+				}
 				onEnter.elementAt(1).add(mp);
 				break;
 			case "hide":
 				Shape shape = Game.curGame.getShape(target);
-				if(shape == null) return; //toast
+				if(shape == null) {
+					showShapeFailToast(target);
+					return;
+				}
 				onEnter.elementAt(2).add(shape);
 				break;
 			case "show":
 				Shape shape2 = Game.curGame.getShape(target);
-				if(shape2 == null) return; //toast
+				if(shape2 == null) {
+					showShapeFailToast(target);
+					return;
+				}
 				onEnter.elementAt(3).add(shape2);
 				break;
 		}

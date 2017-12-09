@@ -26,13 +26,14 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity {
     /* So that other classes can access resources */
     public static Context curContext;
+    public static boolean loadingFlag;
     SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainActivity.curContext = getApplicationContext();
+
         Vector<String> canDraw = new Vector<String>();
         Vector<String> canPlay = new Vector<String>();
         Field[] drawables = edu.stanford.cs108.worldcreator.R.drawable.class.getFields();
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
         if (gamesCursor.getCount() == 0) setButtonsEnabled(false);
         else setButtonsEnabled(true);
         updateGameSpinner();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        curContext = getApplicationContext();
+        loadingFlag = true;
     }
 
     /**

@@ -19,11 +19,10 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Editor extends AppCompatActivity {
-    private static final int TOAST_LENGTHS = Toast.LENGTH_SHORT;
+    public static final int TOAST_LENGTHS = Toast.LENGTH_SHORT;
     private static final int DEFAULT_FONT_SIZE = 30;
+    private static final int FONT_SIZE_CHANGE = 2;
     SQLiteDatabase db;
-    private int count = 2; //TODO: But what about database storage
-    private int shapeCount =1;
     private int fontSize = DEFAULT_FONT_SIZE;
     public static Vector<String> imageNames;
 
@@ -78,34 +77,52 @@ public class Editor extends AppCompatActivity {
         setTitle("Editing: " + Game.curGame.getGameName());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.curContext = getApplicationContext();
+        MainActivity.loadingFlag = false;
+    }
+
     public void onIncreaseFont(View view){
-        fontSize += 2;
+        fontSize += FONT_SIZE_CHANGE;
+        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS);
     }
-
     public void onDecreaseFont(View view){
-        if(fontSize > 2) fontSize -= 2;
+        if(fontSize > FONT_SIZE_CHANGE) fontSize -= FONT_SIZE_CHANGE;
+        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS);
     }
 
+    private boolean checkPageNameChars(String name) {
+        if (name.contains(" ") || name.contains(",")) {
+            Toast.makeText(getApplicationContext(), "Page name cannot have spaces or commas",
+                    TOAST_LENGTHS).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean checkPageNameLowerCase(String name) {return true;}//TODO:IMPLEMENT: return true if it is a dup
 
- //TODO implement create
+
     public void onCreatePage(View view){
         EditText editText = (EditText) findViewById(R.id.pageName);
-        String newGame = editText.getText().toString();
-        String checker = newGame.toLowerCase();
-        if (newGame.isEmpty() || Game.curGame.getPage(checker) != null) {
+        String newPage = editText.getText().toString();
+        if (!checkPageNameChars(newPage)) return;
+        boolean duplicate = checkPageNameLowerCase(newPage);
+        if (newPage.isEmpty() || duplicate) {
             Vector<String> myNames = new Vector<String>();
             for (Page page : Game.curGame.getPages()) {
                 myNames.add(page.getName().toLowerCase());
             }
             for (int i = 1; i <= myNames.size() + 1; i++){
-                newGame = "page" + i;
-                if (!myNames.contains(newGame)) break;
+                newPage = "page" + i;
+                if (!myNames.contains(newPage)) break;
             }
         }
-        Game.curGame.changePage(new Page(newGame, ""));
+        Game.curGame.changePage(new Page(newPage, ""));
         Game.curGame.addPage(Game.curGame.getCurrentPage());
         updatePageSpinner();
-        editText.setText(newGame);
+        editText.setText(newPage);
         findViewById(R.id.EditorView).invalidate();
     }
 
@@ -134,18 +151,25 @@ public class Editor extends AppCompatActivity {
                 "Couldn't find background image with name: " + backgroundImageName, TOAST_LENGTHS).show();
         else Game.curGame.getCurrentPage().setBackgroundImage("fdsa"); //TODO WhaT??
         findViewById(R.id.EditorView).invalidate();
-        if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
-            Toast.makeText(getApplicationContext(), "Can't rename starting page "
-                    + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
-            return;
-        }
+
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
-        if (Game.curGame.getPage(newName) != null) {
-            Toast.makeText(getApplicationContext(), "Page name " + newName
-                    + " already in use", TOAST_LENGTHS).show();
+        if (newName.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Can't update page with empty name", TOAST_LENGTHS).show();
             return;
+        } else {
+            if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
+                Toast.makeText(getApplicationContext(), "Can't rename starting page "
+                        + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
+                return;
+            }
+            if (!checkPageNameChars(newName)) return;
+            if (checkPageNameLowerCase(newName)) {
+                Toast.makeText(getApplicationContext(), "Page name " + newName
+                        + " already in use", TOAST_LENGTHS).show();
+                return;
+            }
+            Game.curGame.getCurrentPage().setName(newName);
         }
-        Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }
 
@@ -159,10 +183,22 @@ public class Editor extends AppCompatActivity {
         ((EditText) findViewById(R.id.pageName)).setText(Game.curGame.getCurrentPage().getName());
     }
 
+    private boolean checkShapeNameChars(String name) {
+        if (name.contains(" ") || name.contains(",")) {
+            Toast.makeText(getApplicationContext(), "Shape name cannot have spaces or commas",
+                    TOAST_LENGTHS).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean checkShapeNameLowerCase(String name) {return true;} //TODO:IMPLEMENT :true if dup
+
     public void onCreateShape(View view) {
         String shapeName = (((EditText)findViewById(R.id.shapeName)).getText().toString());
-        String checker = shapeName.toLowerCase();
-        if (shapeName.isEmpty() || Game.curGame.getShape(checker) != null) { //TODO: DOES THIS WORK RIGHT WITH LOWERCASE?
+        if (!checkShapeNameChars(shapeName)) return;
+
+        boolean duplicate = checkShapeNameLowerCase(shapeName);
+        if (shapeName.isEmpty() || duplicate) {
             Set<String> allShapeNames = new HashSet<String>();
             for (Page p : Game.curGame.getPages())
                 for (Shape shape : p.getShapes())
@@ -204,15 +240,19 @@ public class Editor extends AppCompatActivity {
         }
         Log.d("MESSAGE", Game.curGame.getCurrentShape().getName());
         String shapeName = ((EditText)findViewById(R.id.shapeName)).getText().toString();
-        if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) { //TODO:LOWERCASE
+
+        if (!checkShapeNameChars(shapeName)) return;
+
+        if (shapeName.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Can't update" + " shape with empty name", TOAST_LENGTHS).show();
+            return;
+        } else if (Game.curGame.getShape(shapeName) != null && !shapeName.equals(curShape.getName())) { //TODO:LOWERCASE DUPLICATES
             Toast.makeText(getApplicationContext(), "Shape with name " + shapeName + " already exists",
                     TOAST_LENGTHS).show();
             return;
-        } else if (shapeName.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Can't update" + " shape with empty name", TOAST_LENGTHS).show();
-            return;
         }
-        curShape.setName(shapeName);
+
+        curShape.setName(shapeName); //TODO:MASSIVE ERROR CHECK
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
@@ -254,14 +294,6 @@ public class Editor extends AppCompatActivity {
 
         findViewById(R.id.EditorView).invalidate();
     }
-
-
-    /*private void createShape(String name, String xStr, String yStr, String height, String width, boolean visible, boolean toMove){
-        Shape newShape = new Shape(name, toFloat(xStr), toFloat(yStr), toFloat(height), toFloat(width), toInt(toMove), toInt(visible), "","","");
-        Game.curGame.getCurrentPage().addShape(newShape);
-        Game.curGame.setCurrentShape(newShape);
-        onUpdateShape(null); //TODO:Is this an issue?
-    }*/
 
     private int toInt(boolean input){
         if (input) return 1;
@@ -350,10 +382,13 @@ public class Editor extends AppCompatActivity {
     }
 
     ///////////////////////////DATABASE RELATED STUFF/////////////////////////
-    public void saveGame(View view){
+
+    public void onSaveGame(View view){
+        MainActivity.loadingFlag = true;
         setPrevGameState();
         clearDataBase();
         updateDataBase();
+        MainActivity.loadingFlag = false;
     }
 
     private void clearDataBase(){
