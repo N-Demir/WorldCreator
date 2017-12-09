@@ -79,9 +79,11 @@ public class Editor extends AppCompatActivity {
 
     public void onIncreaseFont(View view){
         fontSize += FONT_SIZE_CHANGE;
+        Toast.makeText(getApplicationContext(), "Font size increased", TOAST_LENGTHS);
     }
     public void onDecreaseFont(View view){
         if(fontSize > FONT_SIZE_CHANGE) fontSize -= FONT_SIZE_CHANGE;
+        Toast.makeText(getApplicationContext(), "Font size decreased", TOAST_LENGTHS);
     }
 
     private boolean checkPageNameChars(String name) {
