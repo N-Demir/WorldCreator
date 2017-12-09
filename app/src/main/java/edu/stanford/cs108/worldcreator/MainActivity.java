@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         if (newGameName.equals("")) return;
 
         Cursor gamesCursor = db.rawQuery("SELECT * FROM games WHERE name='" + newGameName + "';", null);
-        if (gamesCursor.getCount() == 0) {
+        if (gamesCursor.getCount() != 0) {
             Toast.makeText(getApplicationContext(), "Game already exists", Editor.TOAST_LENGTHS).show();
             return;
         }
