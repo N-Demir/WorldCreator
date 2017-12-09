@@ -244,7 +244,7 @@ public class Editor extends AppCompatActivity {
             return;
         }
 
-        curShape.setName(shapeName);
+        curShape.setName(shapeName); //TODO:MASSIVE ERROR CHECK
         curShape.setX(Float.parseFloat(((EditText)findViewById(R.id.xCord)).getText().toString()));
         curShape.setY(Float.parseFloat(((EditText)findViewById(R.id.yCord)).getText().toString()));
         curShape.setWidth(Float.parseFloat(((EditText) findViewById(R.id.width)).getText().toString()));
