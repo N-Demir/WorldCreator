@@ -74,6 +74,7 @@ public class Editor extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MainActivity.curContext = getApplicationContext();
+        MainActivity.loadingFlag = false;
     }
 
     public void onIncreaseFont(View view){
@@ -142,20 +143,24 @@ public class Editor extends AppCompatActivity {
         else Game.curGame.getCurrentPage().setBackgroundImage("fdsa"); //TODO WhaT??
         findViewById(R.id.EditorView).invalidate();
 
-        if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
-            Toast.makeText(getApplicationContext(), "Can't rename starting page "
-                    + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
-            return;
-        }
-
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
-        if (!checkPageNameChars(newName)) return;
-        if (checkPageNameLowerCase(newName)) {
-            Toast.makeText(getApplicationContext(), "Page name " + newName
-                    + " already in use", TOAST_LENGTHS).show();
+        if (newName.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Can't update page with empty name", TOAST_LENGTHS).show();
             return;
+        } else {
+            if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
+                Toast.makeText(getApplicationContext(), "Can't rename starting page "
+                        + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
+                return;
+            }
+            if (!checkPageNameChars(newName)) return;
+            if (checkPageNameLowerCase(newName)) {
+                Toast.makeText(getApplicationContext(), "Page name " + newName
+                        + " already in use", TOAST_LENGTHS).show();
+                return;
+            }
+            Game.curGame.getCurrentPage().setName(newName);
         }
-        Game.curGame.getCurrentPage().setName(newName);
         updatePageSpinner();
     }
 
