@@ -443,6 +443,7 @@ public class Editor extends AppCompatActivity {
 
     public void onSaveGame(View view){
         MainActivity.loadingFlag = true;
+        Toast.makeText(getApplicationContext(), "Saved", TOAST_LENGTHS).show();
         setPrevGameState();
         clearDataBase();
         updateDataBase();
