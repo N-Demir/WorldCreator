@@ -77,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
         updateGameSpinner();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        curContext = getApplicationContext();
+    }
+
     /**
      * Creates 3 new tables in SQDatabase: Games, Pages, and Shapes
      */

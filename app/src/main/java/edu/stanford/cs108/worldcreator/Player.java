@@ -15,4 +15,10 @@ public class Player extends AppCompatActivity {
         setTitle(Game.curGame.getGameName());
         //TODO: Game.curGame.getCurrentPage().runOnEnters???? NECESSARY?
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.curContext = getApplicationContext();
+    }
 }
