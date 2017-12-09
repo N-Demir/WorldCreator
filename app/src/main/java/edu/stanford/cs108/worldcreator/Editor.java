@@ -385,21 +385,23 @@ public class Editor extends AppCompatActivity {
         String gameName = Game.curGame.getGameName();
         Game.curGame = new Game(gameName);
         Vector<Page> oldPages =  new Vector<Page>();
-        StringTokenizer st = new StringTokenizer(prevPages);
-        Log.d("MESSAGES", "onUndo: prevPagesStr: " +prevPages);
-        Log.d("MESSAGES", "onUndo: prevShapesStr: " +prevShapes);
-        while(st.hasMoreTokens()){
-            String pageString = st.nextToken();
-            String[] pageArgs = pageString.split("|", -1);
+        //StringTokenizer st = new StringTokenizer(prevPages);
+        String[] pageStrings = prevPages.split("\\{", -1);
+        for(int i = 0; i < pageStrings.length - 1; i++){
+            String pageString = pageStrings[i];
+            Log.d("MESSAGE", "onUndo: " + pageString);
+            String[] pageArgs = pageString.split("\\|", -1);
             Page page = new Page(pageArgs[0], pageArgs[1]);
             oldPages.add(page);
         }
 
-        st = new StringTokenizer(prevShapes);
-        while(st.hasMoreTokens()){
-            String shapeString = st.nextToken();
-            String[] shapeArgs = shapeString.split("|", -1);
+        //st = new StringTokenizer(prevShapes);
+        String[] shapeStrings = prevShapes.split("\\{", -1);
+        for(int i = 0; i < shapeStrings.length - 1; i++){
+            String shapeString = shapeStrings[i];
+            String[] shapeArgs = shapeString.split("\\|", -1);
             String parentName = shapeArgs[2];
+            Log.d("MESSAGE", "onUndo: " + shapeString);
             Shape shape = new Shape(shapeArgs[0], Float.parseFloat(shapeArgs[3]),
                     Float.parseFloat(shapeArgs[4]), Float.parseFloat(shapeArgs[5]),
                     Float.parseFloat(shapeArgs[6]), Integer.parseInt(shapeArgs[7]),
@@ -487,7 +489,7 @@ public class Editor extends AppCompatActivity {
     }
 
     public String serializePage(Page page){
-        String pageStr = page.getName() + "|" + page.getBackgroundImage() + " ";
+        String pageStr = page.getName() + "|" + page.getBackgroundImage() + "{";
         return pageStr;
     }
 
@@ -496,7 +498,7 @@ public class Editor extends AppCompatActivity {
                 + page.getName() + "|" + shape.getX() + "|" + shape.getY()
                 + "|" + shape.getHeight() + "|" + shape.getWidth() + "|" + toInt(shape.getMovable())
                 + "|" + toInt(shape.getHidden())+ "|" + shape.getImage() + "|" + shape.getScriptText() + "|" +
-                shape.getText() + "|" + shape.getFontSize() + " ";
+                shape.getText() + "|" + shape.getFontSize() + "{";
         return shapeStr;
     }
 }
