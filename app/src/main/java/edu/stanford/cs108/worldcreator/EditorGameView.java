@@ -18,11 +18,13 @@ public class EditorGameView extends View {
     public static float width, height;
     private float oldX, oldY; //For dragging a shape implementation
     private boolean canDrag; //TODO WAIT WHY
+    private boolean borderResize;
 
     public EditorGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         MainActivity.curContext = context; //NECESSARY?
         canDrag = true;
+        borderResize = false;
     }
 
     /**
@@ -53,6 +55,7 @@ public class EditorGameView extends View {
                 if (temp != null) Game.curGame.setCurrentShape(temp);
                 else canDrag = false;
                 if (Game.curGame.getCurrentShape() != null) {
+                    //borderResize = Game.curGame.getCurrentShape().onBorder(x, y);
                     oldX = x;
                     oldY = y;
                 }
