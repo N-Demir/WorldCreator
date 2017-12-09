@@ -45,6 +45,8 @@ public class Editor extends AppCompatActivity {
                 String yew = pageSpinner.getSelectedItem().toString();
                 Game.curGame.changePage(Game.curGame.getPage(yew));
                 if (Game.curGame.getCurrentPage().getShapes().size() != 0) Game.curGame.setCurrentShape(Game.curGame.getCurrentPage().getShapes().elementAt(0));
+                ((EditText)findViewById(R.id.pageName)).setText(Game.curGame.getCurPageName());
+                ((EditText)findViewById(R.id.backgroundImage)).setText(Game.curGame.getCurrentPage().getBackgroundImage());
                 updateShapeSpinner();
                 findViewById(R.id.EditorView).invalidate();
             }
@@ -149,7 +151,7 @@ public class Editor extends AppCompatActivity {
         if (imageNames.contains(backgroundImageName)) Game.curGame.getCurrentPage().setBackgroundImage(backgroundImageName);
         else if (!backgroundImageName.isEmpty()) Toast.makeText(getApplicationContext(),
                 "Couldn't find background image with name: " + backgroundImageName, TOAST_LENGTHS).show();
-        else Game.curGame.getCurrentPage().setBackgroundImage("fdsa"); //TODO WhaT??
+        else Game.curGame.getCurrentPage().setBackgroundImage("");
         findViewById(R.id.EditorView).invalidate();
 
         String newName = ((EditText)findViewById(R.id.pageName)).getText().toString();
@@ -157,6 +159,7 @@ public class Editor extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Can't update page with empty name", TOAST_LENGTHS).show();
             return;
         } else {
+            if (newName.equals(Game.curGame.getCurPageName())) return;
             if (Game.curGame.getCurPageName().equals(Game.INITIAL_PAGE_NAME)) {
                 Toast.makeText(getApplicationContext(), "Can't rename starting page "
                         + Game.INITIAL_PAGE_NAME, TOAST_LENGTHS).show();
